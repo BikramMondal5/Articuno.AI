@@ -6,7 +6,7 @@ target="_blank"
 title="open repo → 'skill icons'" 
 href="https://github.com/tandpfun/skill-icons#readme">
   <img 
-  alt="skill-icons" width="40" height="40"
+  alt="skill-icons" width="100" height="100"
   src="https://skillicons.dev/icons/?i=js,react,nodejs,mongodb,nextjs,bootstrap,tailwindcss,css,mysql,postman,cpp,python,django,vscode,git,html" 
   />
 </a>
