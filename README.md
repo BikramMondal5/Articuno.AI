@@ -8,7 +8,7 @@ title="open repo → 'skill icons'"
 href="https://github.com/tandpfun/skill-icons#readme">
   <img 
   alt="skill-icons" 
-  src="https://skillicons.dev/icons/?i=arduino,blender,css,flutter,git,github,googlecloud,html,js,json,linux,netlify,nodejs,sql,python,vscode" />
+  src="https://skillicons.dev/icons/?i=arduino,blender,css,flutter,git,github,googlecloud,html,js,linux,netlify,nodejs,python,vscode" />
 </a>
 
 
