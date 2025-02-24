@@ -1,42 +1,53 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 import markdown
-import os
 from openai import OpenAI
-from rich.console import Console
-from rich.markdown import Markdown
 
 # Initializing the app
 app = Flask(__name__)
-console = Console()
 
-@app.route('/')
+@app.route('/', methods=["GET"])
 def home_page():
+    return render_template('index.html')
+
+@app.route('/api/chat', methods=["POST"])
+def chat():
+    # Get JSON data from the request
+    data = request.json
+    user_input = data.get('message', '')
+    
+    if not user_input:
+        return jsonify({"error": "No message provided"}), 400
+    
     # OpenAI API Configuration
-    token = "github-pat"
+    token = "github-PAT"  # Add your API key here
     endpoint = "https://models.inference.ai.azure.com"
     model_name = "gpt-4o"
-    client = OpenAI(
-        base_url=endpoint,
-        api_key=token,
-    )
-    response = client.chat.completions.create(
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant. Respond in well-structured format using headings, lists, and appropriate interactive emojis."},
-            {"role": "user", "content": "Who is the CEO of Google"}
-        ],
-        temperature=1.0,
-        top_p=1.0,
-        max_tokens=1000,
-        model=model_name
-    )
+    
+    try:
+        client = OpenAI(
+            base_url=endpoint,
+            api_key=token,
+        )
+        
+        response = client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": "Your name is Eubyte, developed by edubyte team, a helpful assistant. Respond in well-structured format using headings, lists, spaces after a heading or paragraph and appropriate interactive emojis."},
+                {"role": "user", "content": user_input}
+            ],
+            temperature=1.0,
+            top_p=1.0,
+            max_tokens=1000,
+            model=model_name
+        )
 
-    # Extract response text
-    markdown_output = response.choices[0].message.content 
-    final_response = markdown.markdown(markdown_output)
-    return render_template('index.html', final_response=final_response)
-
+        # Extract response text
+        markdown_output = response.choices[0].message.content 
+        html_response = markdown.markdown(markdown_output)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
