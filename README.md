@@ -1,6 +1,6 @@
 ## 🤖🪄 Articuno.AI v1.0 - "Interact. Innovate. Inspire with AI"
 
-![Articuno.AI Landing Page](./static/icons/Landing-page.png)
+![Articuno.AI Landing Page](./static/icons/Landing-page.png) 
 Articuno V1.0 is an AI powered platform where user can interact with different generative AI including advanced LLMs GPT-40, DeepSeek, Gemini 2.0 Flash, Mistral AI and many more.
 
 ## 🌟 Features 
