@@ -283,7 +283,7 @@ def chat():
         if bot_name == "Articuno.AI":
             # Use Gemini with special weather-focused system prompt
             return process_articuno_weather_request(user_input, image_data)
-        elif bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini":
+        elif bot_name == "Gemini 2.5 Flash" or bot_name.lower() == "gemini":
             return process_gemini_request(user_input, image_data)
         else:
             # Use Azure OpenAI API as fallback

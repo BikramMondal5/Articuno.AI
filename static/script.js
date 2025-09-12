@@ -358,6 +358,7 @@ function showChatbotShowcase(name, avatarId) {
     const showcaseAvatar = document.getElementById('showcase-avatar');
     const showcaseTitle = document.getElementById('showcase-title');
     const showcaseDescription = document.getElementById('showcase-description');
+    const startChatBtn = document.getElementById('start-chat-btn');
     
     if (showcaseAvatar) {
         showcaseAvatar.className = `showcase-avatar ${avatarId}`;
@@ -373,6 +374,28 @@ function showChatbotShowcase(name, avatarId) {
             showcaseDescription.textContent = botInfo.description;
         } else {
             showcaseDescription.textContent = `Your AI assistant for various tasks and conversations.`;
+        }
+    }
+    
+    // Only show the "Start Analysing" button for Articuno.AI
+    if (startChatBtn) {
+        if (name === "Articuno.AI") {
+            startChatBtn.style.display = "block";
+        } else {
+            startChatBtn.style.display = "none";
+            
+            // For other bots, automatically redirect to chat interface after a short delay
+            setTimeout(() => {
+                if (chatbotShowcase) chatbotShowcase.style.display = 'none';
+                if (chatbotInterface) chatbotInterface.style.display = 'flex';
+                
+                // Clear and setup chat history
+                const chatbotChatHistory = document.getElementById('chatbot-chat-history');
+                if (chatbotChatHistory) {
+                    chatbotChatHistory.innerHTML = '';
+                    addAIMessageToHistory(`Hello! I'm ${name}. How can I help you today?`, chatbotChatHistory);
+                }
+            }, 1000); // 1 second delay to allow users to see the bot info
         }
     }
 }
