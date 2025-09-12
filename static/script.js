@@ -71,7 +71,7 @@ const botDescriptions = {
     },
     "Gemini 2.0 Flash": {
         name: "Gemini 2.0 Flash",
-        description: "Fast response times with multimodal capabilities.",
+        description: "Fast response times with multimodal capabilities powered by Google's Gemini AI.",
         avatar: "gemini-avatar"
     },
     "Recipe Queen": {
@@ -537,6 +537,9 @@ async function sendMessage() {
         bot: assistantProfile.name // Include the bot name in the request
     };
     
+    // Debug log to ensure correct bot is being used
+    console.log(`Using bot: ${assistantProfile.name}`);
+    
     // Add image data if an image is selected
     if (selectedImage) {
         payload.image = {
@@ -568,6 +571,11 @@ async function sendMessage() {
 
         if (data.error) {
             console.error("API returned an error:", data.error);
+            // Check if this is a Gemini API key error
+            if (data.error.includes("Gemini API") && assistantProfile.name === "Gemini 2.0 Flash") {
+                addAIMessageToHistory("I'm having trouble connecting to the Gemini API. Please check that your API key in the .env file is valid.", chatbotChatHistory);
+                return;
+            }
             addAIMessageToHistory("Error: " + data.error, chatbotChatHistory);
         } else {
             // Add AI response to chat

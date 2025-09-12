@@ -283,7 +283,7 @@ def chat():
         if bot_name == "Articuno.AI":
             # Use Gemini with special weather-focused system prompt
             return process_articuno_weather_request(user_input, image_data)
-        elif bot_name == "Gemini 2.5 Flash" or bot_name.lower() == "gemini":
+        elif bot_name == "Gemini 2.5 Flash" or bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini":
             return process_gemini_request(user_input, image_data)
         else:
             # Use Azure OpenAI API as fallback
@@ -671,6 +671,13 @@ If the user asks about non-weather topics, gently remind them that you're a weat
 def process_gemini_request(user_input, image_data=None):
     """Process chat request using Google Gemini API"""
     try:
+        # Ensure we have the Gemini API key
+        if not GEMINI_API_KEY:
+            return jsonify({"error": "Gemini API key not configured. Please set GEMINI_API_KEY in .env file."}), 500
+        
+        # Configure Gemini with the API key
+        genai.configure(api_key=GEMINI_API_KEY)
+        
         # Configure the model
         generation_config = {
             "temperature": 0.9,
@@ -679,15 +686,14 @@ def process_gemini_request(user_input, image_data=None):
             "max_output_tokens": 1000,
         }
         
-        # Create system prompt
-        system_prompt = """You are Articuno.AI, a friendly virtual assistant thoughtfully developed by the Edubyte Team to provide 
-        intelligent, user-friendly, and context-aware support. As a helpful assistant, your primary goal is 
-        to deliver accurate, concise, and engaging responses.
-
+        # Create system prompt for Gemini 2.0 Flash
+        gemini_system_prompt = """You are Gemini 2.0 Flash, a fast and versatile AI assistant developed by Google. 
+        You provide concise, accurate, and helpful responses on a wide range of topics.
+        
         🧠 Identity
-        Name: Articuno.AI
-        Developed by: Edubyte Team
-        Role: Friendly, fast, intelligent and supportive virtual assistant
+        Name: Gemini 2.0 Flash
+        Developed by: Google
+        Role: Fast, versatile AI assistant with multimodal capabilities
 
         📝 Response Structure
         - Use clear headings (H1, H2, etc.) to organize information logically.
@@ -701,22 +707,14 @@ def process_gemini_request(user_input, image_data=None):
         - Adapt your communication style based on the user's intent and tone.
         """
         
-        model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
-            generation_config=generation_config,
-            system_instruction=system_prompt
-        )
+        # Create the model using the same method as Articuno.AI
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash", generation_config=generation_config)
         
         # Handle messages with images
         if image_data:
             # Process the image data
             image_format = image_data.get("format", "jpeg")
             image_binary = base64.b64decode(image_data.get("data").split(",")[1])
-            
-            # Create a temporary file to save the image
-            temp_image_path = os.path.join(tempfile.gettempdir(), f"image_{uuid.uuid4().hex}.{image_format}")
-            with open(temp_image_path, "wb") as f:
-                f.write(image_binary)
             
             # Create image part for multimodal request
             image_parts = [
@@ -726,17 +724,24 @@ def process_gemini_request(user_input, image_data=None):
                 }
             ]
             
-            # Generate response with both text and image
-            response = model.generate_content([user_input, image_parts[0]])
+            # Prepare content parts with system instructions similar to Articuno.AI's approach
+            content_parts = [
+                {"role": "user", "parts": [{"text": gemini_system_prompt}]},
+                {"role": "model", "parts": [{"text": "I understand. I'll be Gemini 2.0 Flash, your helpful assistant."}]},
+                {"role": "user", "parts": [{"text": user_input}, image_parts[0]]}
+            ]
             
-            # Clean up temp file
-            try:
-                os.remove(temp_image_path)
-            except:
-                pass
+            # Generate response with both text and image
+            response = model.generate_content(content_parts)
         else:
-            # Text-only request
-            response = model.generate_content(user_input)
+            # Text-only request using the same content parts approach as Articuno.AI
+            content_parts = [
+                {"role": "user", "parts": [{"text": gemini_system_prompt}]},
+                {"role": "model", "parts": [{"text": "I understand. I'll be Gemini 2.0 Flash, your helpful assistant."}]},
+                {"role": "user", "parts": [{"text": user_input}]}
+            ]
+            
+            response = model.generate_content(content_parts)
         
         # Extract response text
         markdown_output = response.text
@@ -843,6 +848,37 @@ def process_azure_openai_request(user_input, image_data=None):
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route('/api/test_gemini', methods=["GET"])
+def test_gemini():
+    """Test if Gemini API key is working"""
+    try:
+        # Ensure we have the Gemini API key
+        if not GEMINI_API_KEY:
+            return jsonify({"status": "error", "message": "Gemini API key not configured. Please set GEMINI_API_KEY in .env file."}), 500
+        
+        # Configure Gemini with the API key
+        genai.configure(api_key=GEMINI_API_KEY)
+        
+        # Create a simple model with the same approach as Articuno.AI
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+        
+        # Test using the content parts approach like Articuno.AI bot
+        test_content = [
+            {"role": "user", "parts": [{"text": "You are a helpful assistant."}]},
+            {"role": "model", "parts": [{"text": "I understand."}]},
+            {"role": "user", "parts": [{"text": "Hello, this is a test message to verify API connection."}]}
+        ]
+        
+        # Make a simple request
+        response = model.generate_content(test_content)
+        
+        # If we get here, the API key is working
+        return jsonify({"status": "success", "message": "Gemini API key is working correctly"})
+    
+    except Exception as e:
+        print(f"Gemini API test error: {str(e)}")
+        return jsonify({"status": "error", "message": f"Gemini API error: {str(e)}"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
