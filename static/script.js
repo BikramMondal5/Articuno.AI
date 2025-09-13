@@ -71,7 +71,7 @@ const botDescriptions = {
     },
     "Gemini 2.0 Flash": {
         name: "Gemini 2.0 Flash",
-        description: "Fast response times with multimodal capabilities powered by Google's Gemini AI.",
+        description: "Fast response times with multimodal capabilities powered by Google's Gemini AI. Supports image analysis and text queries.",
         avatar: "gemini-avatar"
     },
     "Recipe Queen": {
@@ -372,6 +372,19 @@ function showChatbotShowcase(name, avatarId) {
         const botInfo = botDescriptions[name];
         if (botInfo) {
             showcaseDescription.textContent = botInfo.description;
+            
+            // Add special note for Gemini about image uploads
+            if (name === "Gemini 2.0 Flash") {
+                const imageNote = document.createElement('p');
+                imageNote.className = 'feature-note';
+                imageNote.innerHTML = '<strong>✨ New Feature:</strong> Upload images for analysis using the paperclip or camera button!';
+                imageNote.style.marginTop = '10px';
+                imageNote.style.color = '#4285f4';
+                imageNote.style.fontWeight = 'bold';
+                
+                showcaseDescription.appendChild(document.createElement('br'));
+                showcaseDescription.appendChild(imageNote);
+            }
         } else {
             showcaseDescription.textContent = `Your AI assistant for various tasks and conversations.`;
         }
@@ -552,6 +565,26 @@ async function sendMessage() {
     }
 
     try {
+        // If it's an image upload for Gemini, ensure we're using Gemini
+        if (payload.image && assistantProfile.name !== "Gemini 2.0 Flash") {
+            console.log("Image detected - automatically switching to Gemini 2.0 Flash for image analysis");
+            // Store original bot to switch back later if needed
+            const originalBot = {
+                name: assistantProfile.name,
+                avatar: assistantProfile.avatar
+            };
+            
+            // Temporarily switch to Gemini for image analysis
+            assistantProfile.name = "Gemini 2.0 Flash";
+            assistantProfile.avatar = "gemini-avatar";
+            
+            // Update the payload with the new bot
+            payload.bot = "Gemini 2.0 Flash";
+            
+            // Add a note about switching
+            addAIMessageToHistory("Switching to Gemini 2.0 Flash for image analysis capability.", chatbotChatHistory);
+        }
+        
         console.log("Sending request to /api/chat with payload:", payload);
         
         // Fetch AI response

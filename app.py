@@ -283,7 +283,7 @@ def chat():
         if bot_name == "Articuno.AI":
             # Use Gemini with special weather-focused system prompt
             return process_articuno_weather_request(user_input, image_data)
-        elif bot_name == "Gemini 2.5 Flash" or bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini":
+        elif bot_name == "Gemini 2.5 Flash" or bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
             return process_gemini_request(user_input, image_data)
         else:
             # Use Azure OpenAI API as fallback
@@ -705,6 +705,13 @@ def process_gemini_request(user_input, image_data=None):
         - Maintain a professional yet friendly tone.
         - Be concise, yet ensure clarity and completeness.
         - Adapt your communication style based on the user's intent and tone.
+        
+        🖼️ Image Analysis
+        - When provided with an image, describe what you see in detail.
+        - For images with text, read and interpret the text content.
+        - Analyze the context, subjects, and key elements of images.
+        - Answer questions about the image content thoroughly.
+        - If the user asks about something not visible in the image, politely mention that you can only comment on what's visible.
         """
         
         # Create the model using the same method as Articuno.AI
@@ -732,7 +739,17 @@ def process_gemini_request(user_input, image_data=None):
             ]
             
             # Generate response with both text and image
-            response = model.generate_content(content_parts)
+            try:
+                response = model.generate_content(content_parts)
+                print("Successfully generated content with image input")
+            except Exception as e:
+                print(f"Error generating content with image: {str(e)}")
+                # Try with a more explicit instruction if the regular prompt fails
+                instruction_with_image = [
+                    {"role": "user", "parts": [{"text": "You are Gemini 2.0 Flash, a helpful assistant that can analyze images. Please describe what you see in this image and answer any questions about it."}, image_parts[0]]},
+                    {"role": "user", "parts": [{"text": user_input}]}
+                ]
+                response = model.generate_content(instruction_with_image)
         else:
             # Text-only request using the same content parts approach as Articuno.AI
             content_parts = [
