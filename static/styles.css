@@ -18,6 +18,27 @@ body {
     border-right: 1px solid #2D2D2D;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #a855f7 #2D2D2D;
+}
+
+/* Custom scrollbar for sidebar (Webkit browsers) */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #2D2D2D;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #a855f7;
+    border-radius: 6px;
+    border: 2px solid #2D2D2D;
 }
 
 .search-container {
@@ -158,6 +179,8 @@ body {
     background-image: radial-gradient(circle, rgba(37, 38, 43, 0.9) 1px, transparent 1px);
     background-size: 15px 15px;
     background-position: 0 0;
+    min-height: 100vh;
+    overflow-y: auto;
 }
 
 .content-area {
@@ -194,7 +217,9 @@ body {
 .edubyte-text {
     background: linear-gradient(90deg, #ff7eb3, #ff758c, #ff5c74, #a05195);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: transparent;
     font-weight: 700;
 }
 
