@@ -57,22 +57,22 @@ const botDescriptions = {
     "Articuno.AI": {
         name: "Articuno.AI",
         description: "Your AI-powered weather assistant for forecasts, conditions, and climate information.",
-        avatar: "Articuno-avatar"
+        avatar: "icons/articuno.png"
     },
     "GPT-4o": {
         name: "GPT-4o",
         description: "Advanced multimodal capabilities for text and vision tasks.",
-        avatar: "gpt-4o-avatar"
+        avatar: "icons/openai-logo.jpg"
     },
     "DeepSeek R1": {
         name: "DeepSeek R1",
         description: "Specialized for code generation and technical reasoning.",
-        avatar: "DeepSeek-avatar"
+        avatar: "icons/deepseek-logo-icon.png"
     },
     "Gemini 2.0 Flash": {
         name: "Gemini 2.0 Flash",
         description: "Fast response times with multimodal capabilities powered by Google's Gemini AI. Supports image analysis and text queries.",
-        avatar: "gemini-avatar"
+        avatar: "icons/Gemini.png"
     },
     "Recipe Queen": {
         name: "Recipe Queen",
