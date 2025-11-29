@@ -108,6 +108,12 @@ body {
     background-image: url('icons/openai-logo.jpg');
 }
 
+#gpt-4o-mini-avatar {
+    background-image: url('icons/openai-logo.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
 #DeepSeek-avatar {
     background-image: url('icons/deepseek-logo-icon.png');
 }
@@ -610,6 +616,12 @@ body {
 }
 
 #gpt-4o-avatar{
+    background-image: url("icons/openai-logo.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+#gpt-4o-mini-avatar{
     background-image: url("icons/openai-logo.jpg");
     background-size: cover;
     background-position: center;
