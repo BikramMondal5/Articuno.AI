@@ -120,6 +120,12 @@ body {
     background-position: center;
 }
 
+#grok3-mini-avatar {
+    background-image: url('https://designcompass.org/wp-content/uploads/2025/02/Grok-new-logo-08-1536x1152.png');
+    background-size: cover;
+    background-position: center;
+}
+
 #DeepSeek-avatar {
     background-image: url('icons/deepseek-logo-icon.png');
 }
@@ -1133,6 +1139,10 @@ body {
     background-image: url('icons/openai-logo.jpg');
 }
 
+#showcase-avatar.gpt-4o-mini-avatar {
+    background-image: url('icons/gpt-4o-mini-logo.png');
+}
+
 #showcase-avatar.DeepSeek-avatar {
     background-image: url('icons/deepseek-logo-icon.png');
 }
@@ -1143,6 +1153,20 @@ body {
 
 #showcase-avatar.wikipedia-avatar {
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/2244px-Wikipedia-logo-v2.svg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#showcase-avatar.grok3-avatar {
+    background-image: url('https://designcompass.org/wp-content/uploads/2025/02/Grok-new-logo-08-1536x1152.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#showcase-avatar.grok3-mini-avatar {
+    background-image: url('https://designcompass.org/wp-content/uploads/2025/02/Grok-new-logo-08-1536x1152.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

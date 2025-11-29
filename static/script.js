@@ -74,6 +74,11 @@ const botDescriptions = {
         description: "xAI's advanced AI assistant with a witty personality. Combines deep knowledge with humor and a rebellious edge. Perfect for engaging conversations and challenging conventional thinking.",
         avatar: "https://designcompass.org/wp-content/uploads/2025/02/Grok-new-logo-08-1536x1152.png"
     },
+    "Grok-3 Mini": {
+        name: "Grok-3 Mini",
+        description: "The compact yet powerful sibling of Grok-3 by xAI. Fast, witty, and intelligent responses with personality packed into a smaller package. Perfect for quick, engaging interactions with that signature Grok attitude!",
+        avatar: "https://designcompass.org/wp-content/uploads/2025/02/Grok-new-logo-08-1536x1152.png"
+    },
     "DeepSeek R1": {
         name: "DeepSeek R1",
         description: "Specialized for code generation and technical reasoning.",
