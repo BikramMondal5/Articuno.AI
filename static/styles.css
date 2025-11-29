@@ -931,12 +931,12 @@ body {
 }
 
 .ai-message {
-    background-color: #2D2D2D;
+    background-color: transparent;
     color: #f9f9f9;
     margin-right: auto;
     border-radius: 18px;
     border-top-left-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: none;
 }
 
 .loading-message {
@@ -1028,13 +1028,13 @@ body {
 
 /* Code block container */
 .ai-message pre {
-    background-color: #000000;
+    background-color: #0d1117;
     padding: 0;
     border-radius: 8px;
     overflow: hidden;
     margin: 16px 0;
     position: relative;
-    border: 1px solid #2D2D2D;
+    border: 1px solid #30363d;
 }
 
 /* Code block content */
@@ -1042,8 +1042,8 @@ body {
     display: block;
     padding: 20px;
     overflow-x: auto;
-    background-color: #000000;
-    color: #e0e0e0;
+    background-color: #0d1117;
+    color: #e6edf3;
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
     font-size: 0.9em;
     line-height: 1.6;
@@ -1092,59 +1092,114 @@ body {
     content: "\f00c"; /* FontAwesome check icon */
 }
 
-/* Syntax highlighting for code blocks on black background */
-.ai-message pre code .hljs-comment,
-.ai-message pre code .hljs-quote {
-    color: #6a9955;
+/* Syntax highlighting for code blocks - GitHub Dark Theme */
+/* Pygments codehilite classes */
+.ai-message .codehilite,
+.ai-message .highlight {
+    background-color: #0d1117 !important;
 }
 
-.ai-message pre code .hljs-keyword,
-.ai-message pre code .hljs-selector-tag,
-.ai-message pre code .hljs-literal,
-.ai-message pre code .hljs-type {
-    color: #c586c0;
+.ai-message .codehilite pre,
+.ai-message .highlight pre {
+    background-color: #0d1117 !important;
+    margin: 0;
 }
 
-.ai-message pre code .hljs-string,
-.ai-message pre code .hljs-attribute {
-    color: #ce9178;
+/* Comments */
+.ai-message pre code .c,
+.ai-message pre code .c1,
+.ai-message pre code .cm,
+.ai-message pre code .cp {
+    color: #8b949e;
+    font-style: italic;
 }
 
-.ai-message pre code .hljs-number {
-    color: #b5cea8;
+/* Keywords */
+.ai-message pre code .k,
+.ai-message pre code .kc,
+.ai-message pre code .kd,
+.ai-message pre code .kn,
+.ai-message pre code .kp,
+.ai-message pre code .kr,
+.ai-message pre code .kt {
+    color: #ff7b72;
 }
 
-.ai-message pre code .hljs-built_in,
-.ai-message pre code .hljs-builtin-name {
-    color: #4ec9b0;
+/* Strings */
+.ai-message pre code .s,
+.ai-message pre code .s1,
+.ai-message pre code .s2,
+.ai-message pre code .sb,
+.ai-message pre code .sc,
+.ai-message pre code .sd {
+    color: #a5d6ff;
 }
 
-.ai-message pre code .hljs-function,
-.ai-message pre code .hljs-title {
-    color: #dcdcaa;
+/* Numbers */
+.ai-message pre code .m,
+.ai-message pre code .mf,
+.ai-message pre code .mh,
+.ai-message pre code .mi,
+.ai-message pre code .mo {
+    color: #79c0ff;
 }
 
-.ai-message pre code .hljs-variable,
-.ai-message pre code .hljs-name {
-    color: #9cdcfe;
+/* Functions */
+.ai-message pre code .nf,
+.ai-message pre code .fm {
+    color: #d2a8ff;
 }
 
-.ai-message pre code .hljs-tag {
-    color: #569cd6;
+/* Classes */
+.ai-message pre code .nc,
+.ai-message pre code .nn {
+    color: #f0883e;
 }
 
-.ai-message pre code .hljs-class,
-.ai-message pre code .hljs-selector-class,
-.ai-message pre code .hljs-selector-id {
-    color: #4ec9b0;
+/* Variables and Names */
+.ai-message pre code .n,
+.ai-message pre code .na,
+.ai-message pre code .nb,
+.ai-message pre code .ni,
+.ai-message pre code .nl,
+.ai-message pre code .nv {
+    color: #e6edf3;
 }
 
-.ai-message pre code .hljs-meta {
-    color: #808080;
+/* Built-in functions */
+.ai-message pre code .nb {
+    color: #79c0ff;
 }
 
-.ai-message pre code .hljs-regexp {
-    color: #d16969;
+/* Operators */
+.ai-message pre code .o,
+.ai-message pre code .ow {
+    color: #ff7b72;
+}
+
+/* Tags (HTML) */
+.ai-message pre code .nt {
+    color: #7ee787;
+}
+
+/* Attributes */
+.ai-message pre code .na {
+    color: #79c0ff;
+}
+
+/* Decorators */
+.ai-message pre code .nd {
+    color: #d2a8ff;
+}
+
+/* Boolean */
+.ai-message pre code .bp {
+    color: #79c0ff;
+}
+
+/* Special */
+.ai-message pre code .si {
+    color: #a5d6ff;
 }
 
 /* Scrollbar for code blocks */
@@ -1153,17 +1208,17 @@ body {
 }
 
 .ai-message pre code::-webkit-scrollbar-track {
-    background: #1a1a1a;
+    background: #0d1117;
     border-radius: 4px;
 }
 
 .ai-message pre code::-webkit-scrollbar-thumb {
-    background: #3D3D3D;
+    background: #30363d;
     border-radius: 4px;
 }
 
 .ai-message pre code::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #484f58;
 }
 
 /* Ensure emoji display properly */

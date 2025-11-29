@@ -60,9 +60,25 @@ Role: Advanced multimodal AI assistant with strong reasoning capabilities
             model=model
         )
         
-        # Extract response text and convert markdown to HTML
+        # Extract response text and convert markdown to HTML with syntax highlighting
         markdown_output = response.choices[0].message.content
-        html_response = markdown.markdown(markdown_output)
+        html_response = markdown.markdown(
+            markdown_output,
+            extensions=[
+                'fenced_code',
+                'codehilite',
+                'tables',
+                'nl2br'
+            ],
+            extension_configs={
+                'codehilite': {
+                    'css_class': 'highlight',
+                    'linenums': False,
+                    'guess_lang': True,
+                    'noclasses': False
+                }
+            }
+        )
         
         return jsonify({"response": html_response})
     
