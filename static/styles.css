@@ -1052,26 +1052,29 @@ body {
 /* Copy button for code blocks */
 .code-copy-btn {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    background: #2D2D2D;
-    border: 1px solid #444;
+    top: 12px;
+    right: 12px;
+    background: #21262d;
+    border: 1px solid #30363d;
     color: #a855f7;
     padding: 6px 12px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 12px;
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .code-copy-btn:hover {
-    background: #3D3D3D;
+    background: #30363d;
     border-color: #a855f7;
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(168, 85, 247, 0.2);
 }
 
 .code-copy-btn:active {
@@ -1083,8 +1086,8 @@ body {
 }
 
 .code-copy-btn.copied {
-    background: #10b981;
-    border-color: #10b981;
+    background: #238636;
+    border-color: #238636;
     color: white;
 }
 
@@ -1097,12 +1100,19 @@ body {
 .ai-message .codehilite,
 .ai-message .highlight {
     background-color: #0d1117 !important;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 16px 0;
+    position: relative;
+    border: 1px solid #30363d;
 }
 
 .ai-message .codehilite pre,
 .ai-message .highlight pre {
     background-color: #0d1117 !important;
     margin: 0;
+    padding: 20px;
+    overflow-x: auto;
 }
 
 /* Comments */
