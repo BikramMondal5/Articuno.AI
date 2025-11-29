@@ -881,13 +881,8 @@ def process_ministral_3b_request(user_input):
 def process_codestral_2501_request(user_input):
     """Process chat request using Codestral 2501 from GitHub Models"""
     try:
-        # Get response from Codestral 2501 agent
-        response_text = get_codestral_2501_response(user_input)
-        
-        # Convert markdown to HTML
-        html_response = markdown.markdown(response_text)
-        
-        return jsonify({"response": html_response})
+        # Get response from Codestral 2501 agent (already returns jsonified HTML response)
+        return get_codestral_2501_response(user_input)
     
     except Exception as e:
         print(f"Codestral 2501 error: {str(e)}")
