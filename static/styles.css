@@ -148,10 +148,12 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px;
+    padding: 10px 8px;
     margin-left: 20px;
+    margin-bottom: 8px;
     cursor: pointer;
     border-radius: 6px;
+    transition: background 0.2s ease;
 }
 
 .bot-item:hover {
@@ -1290,6 +1292,14 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.start-chat-btn i {
+    font-size: 1.1rem;
 }
 
 .start-chat-btn:hover {
