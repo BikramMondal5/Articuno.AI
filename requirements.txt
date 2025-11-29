@@ -17,3 +17,4 @@ langchain-community==0.4.1
 langchain-google-genai
 wikipedia
 Pygments==2.17.2
+pymongo==4.6.1

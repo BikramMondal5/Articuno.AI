@@ -285,6 +285,23 @@ body {
     font-size: 14px;
 }
 
+.new-session-btn {
+    background: transparent;
+    border: 1px solid #444;
+    color: #a855f7;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.new-session-btn:hover {
+    background: #a855f7;
+    color: #fff;
+    border-color: #a855f7;
+}
+
 .recent-chats {
     padding: 8px;
 }
@@ -302,6 +319,77 @@ body {
 
 .recent-chat-item:hover {
     background: #2D2D2D;
+}
+
+/* Session Item Styles */
+.session-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    background: #1a1a1a;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.session-item:hover {
+    background: #2D2D2D;
+    border-color: #444;
+}
+
+.session-item.active {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(192, 132, 252, 0.1));
+    border-color: #a855f7;
+}
+
+.session-info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.session-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.session-meta {
+    font-size: 11px;
+    color: #888;
+}
+
+.session-delete-btn {
+    background: transparent;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.session-item:hover .session-delete-btn {
+    opacity: 1;
+}
+
+.session-delete-btn:hover {
+    background: #ff5c74;
+    color: #fff;
+}
+
+.no-sessions {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    font-size: 13px;
 }
 
 /* Main Content Styles */
