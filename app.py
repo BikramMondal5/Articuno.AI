@@ -6,13 +6,14 @@ import json
 import base64
 import speech_recognition as sr
 import io
-import tempfile
+import tempfile 
 import uuid
 from pydub import AudioSegment
 import google.generativeai as genai
 import re
 import traceback
 from dotenv import load_dotenv
+from agent.wikipedia_agent import get_wikipedia_response
 
 # Load environment variables from .env file
 load_dotenv()
@@ -283,6 +284,9 @@ def chat():
         if bot_name == "Articuno.AI":
             # Use Gemini with special weather-focused system prompt
             return process_articuno_weather_request(user_input, image_data)
+        elif bot_name == "Wikipedia Bot":
+            # Use Wikipedia agent for search
+            return process_wikipedia_request(user_input)
         elif bot_name == "Gemini 2.5 Flash" or bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
             return process_gemini_request(user_input, image_data)
         else:
@@ -769,6 +773,22 @@ def process_gemini_request(user_input, image_data=None):
     except Exception as e:
         print(f"Gemini API error: {str(e)}")
         return jsonify({"error": f"Error with Gemini API: {str(e)}"}), 500
+
+def process_wikipedia_request(user_input):
+    """Process chat request using Wikipedia Agent"""
+    try:
+        # Get response from Wikipedia agent
+        response_text = get_wikipedia_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"Wikipedia Agent error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with Wikipedia Agent: {str(e)}"}), 500
 
 def process_azure_openai_request(user_input, image_data=None):
     """Process chat request using Azure OpenAI API"""

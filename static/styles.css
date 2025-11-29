@@ -116,6 +116,33 @@ body {
     background-image: url('icons/Gemini.png');
 }
 
+#wikipedia-avatar {
+    /* Temporary fallback - replace with actual Wikipedia logo when available */
+    background: linear-gradient(135deg, #3a0647, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    position: relative;
+}
+
+#wikipedia-avatar::after {
+    content: 'W';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Uncomment below and remove above when you have the Wikipedia logo */
+/* 
+#wikipedia-avatar {
+    background-image: url('icons/wikipedia-logo.png');
+}
+*/
+
 #recipe-queen-avatar {
     background-image: url('icons/chef-logo.jpg');
 }
@@ -604,6 +631,9 @@ body {
     background-image: url("icons/Gemini.png");
     background-size: cover;
     background-position: center;
+}
+#wikipedia-avatar{
+    /* This styling is set above - no need to duplicate */
 }
 #recipe-queen-avatar{
     background-image: url("icons/chef-logo.jpg");
@@ -1098,6 +1128,33 @@ body {
 #showcase-avatar.gemini-avatar {
     background-image: url('icons/Gemini.png');
 }
+
+#showcase-avatar.wikipedia-avatar {
+    /* Temporary fallback - same as sidebar avatar */
+    background: linear-gradient(135deg, #3a0647, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 42px;
+    position: relative;
+}
+
+#showcase-avatar.wikipedia-avatar::after {
+    content: 'W';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Uncomment below when you have the Wikipedia logo */
+/*
+#showcase-avatar.wikipedia-avatar {
+    background-image: url('icons/wikipedia-logo.png');
+}
+*/
 
 #showcase-avatar.recipe-queen-avatar {
     background-image: url('icons/chef-logo.jpg');
