@@ -82,7 +82,7 @@ const botDescriptions = {
     "GPT-4o-mini": {
         name: "GPT-4o-mini",
         description: "A fast and efficient AI assistant powered by OpenAI's GPT-4o-mini model via GitHub Models. Perfect for quick responses and general assistance.",
-        avatar: "icons/gpt-4o-mini-logo.png"
+        avatar: "icons/openai-logo.jpg"
     },
     "Grok-3": {
         name: "Grok-3",
@@ -376,7 +376,7 @@ function switchActiveModel(name, avatarId) {
     assistantProfile.name = name;
     assistantProfile.avatar = avatarId;
     
-    // Update the chat input header
+    // Update the chat input header at the bottom
     const chatInputHeader = document.querySelector('.chat-input-header');
     if (chatInputHeader) {
         const headerAvatar = chatInputHeader.querySelector('.bot-avatar');
@@ -391,7 +391,7 @@ function switchActiveModel(name, avatarId) {
         }
     }
     
-    // Update the chatbot header info in interface
+    // Update the chatbot header info in the chat interface
     if (chatbotName) {
         chatbotName.textContent = name;
     }
@@ -403,9 +403,17 @@ function switchActiveModel(name, avatarId) {
         }
     }
     
-    // Update avatar in header
-    if (document.getElementById('chatbot-avatar-display')) {
-        document.getElementById('chatbot-avatar-display').id = avatarId;
+    // Update avatar in chatbot interface header - THIS IS THE KEY FIX
+    const chatbotAvatarDisplay = document.querySelector('.chatbot-header .chatbot-avatar');
+    if (chatbotAvatarDisplay) {
+        // Update the ID to match the new bot's avatar
+        chatbotAvatarDisplay.id = avatarId;
+    }
+    
+    // Also update the showcase avatar if it's visible
+    const showcaseAvatar = document.getElementById('showcase-avatar');
+    if (showcaseAvatar) {
+        showcaseAvatar.className = `showcase-avatar ${avatarId}`;
     }
 }
 
