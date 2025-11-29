@@ -15,6 +15,16 @@ import traceback
 from dotenv import load_dotenv
 from agent.wikipedia_agent import get_wikipedia_response
 
+# Import GPT-4o-mini function with proper module name
+import sys
+sys.path.append(os.path.dirname(__file__))
+try:
+    from agent.gpt_4o_mini import get_gpt4o_mini_response
+except ImportError:
+    # Fallback if import fails
+    def get_gpt4o_mini_response(message):
+        return "GPT-4o-mini is currently unavailable."
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -285,7 +295,10 @@ def chat():
         elif bot_name == "Wikipedia Bot":
             # Use Wikipedia agent for search
             return process_wikipedia_request(user_input)
-        elif bot_name == "Gemini 2.5 Flash" or bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
+        elif bot_name == "GPT-4o-mini":
+            # Use GPT-4o-mini from GitHub Models
+            return process_gpt4o_mini_request(user_input)
+        elif bot_name == "Gemini 2.0 Flash" or bot_name == "Gemini 2.5 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
             return process_gemini_request(user_input, image_data)
         else:
             # Use Azure OpenAI API as fallback
@@ -787,6 +800,22 @@ def process_wikipedia_request(user_input):
         print(f"Wikipedia Agent error: {str(e)}")
         traceback.print_exc()
         return jsonify({"error": f"Error with Wikipedia Agent: {str(e)}"}), 500
+
+def process_gpt4o_mini_request(user_input):
+    """Process chat request using GPT-4o-mini from GitHub Models"""
+    try:
+        # Get response from GPT-4o-mini agent
+        response_text = get_gpt4o_mini_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"GPT-4o-mini error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with GPT-4o-mini: {str(e)}"}), 500
 
 def process_azure_openai_request(user_input, image_data=None):
     """Process chat request using Azure OpenAI API"""
