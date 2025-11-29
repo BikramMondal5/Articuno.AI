@@ -33,7 +33,7 @@ Articuno V1.0 is an AI powered platform where user can interact with different g
 ### 🤖 Agents
 - **Articuno.AI:** Your intelligent weather assistant powered by Gemini, providing real-time forecasts, emergency alerts, and seamless integration with Gmail, Slack, and Twilio. 🌦️
 
-- **Wikipedia Bot:** Quick access to Wikipedia knowledge with instant article summaries and information retrieval. 📚
+- **Wikipedia DeepSearch:** Quick access to Wikipedia knowledge with instant article summaries and information retrieval. 📚
 
 ### 🧠 AI Assistants
 - **GPT-4o:** OpenAI's flagship model with advanced multimodal capabilities for text, vision, and code generation. 💡
