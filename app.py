@@ -20,14 +20,12 @@ load_dotenv()
 
 # Set FFmpeg path explicitly
 try:
-    # Use the specific FFmpeg path from environment variable
     ffmpeg_path = os.getenv("FFMPEG_PATH")
     
     if os.path.isfile(ffmpeg_path):
         AudioSegment.converter = ffmpeg_path
         print(f"FFmpeg found at: {ffmpeg_path}")
     else:
-        # Try to find ffmpeg in common Windows locations as fallback
         possible_ffmpeg_paths = [
             r"C:\Program Files\ffmpeg\bin\ffmpeg.exe",
             r"C:\ffmpeg\bin\ffmpeg.exe",
