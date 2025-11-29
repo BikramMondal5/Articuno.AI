@@ -1108,6 +1108,12 @@ function addAIMessageToHistory(htmlContent, targetChatHistory = chatHistory) {
 
     targetChatHistory.appendChild(messageContainer);
     targetChatHistory.scrollTop = targetChatHistory.scrollHeight;
+    
+    // Add copy buttons to any code blocks in this message
+    setTimeout(() => {
+        console.log('Adding copy buttons to new AI message');
+        addCopyButtonsToElement(messageDiv);
+    }, 100);
 }
 
 // Handle send button click
@@ -1658,9 +1664,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to add copy buttons to all code blocks
 function addCopyButtonsToCodeBlocks() {
+    console.log('Initializing copy buttons for code blocks...');
+    
     // Use MutationObserver to detect when new messages with code are added
     const chatHistory = document.getElementById('chatbot-chat-history');
-    if (!chatHistory) return;
+    if (!chatHistory) {
+        console.log('Chat history element not found');
+        return;
+    }
+    
+    console.log('Chat history found, adding copy buttons to existing code blocks');
     
     // Add copy buttons to existing code blocks
     addCopyButtonsToElement(chatHistory);
@@ -1670,6 +1683,7 @@ function addCopyButtonsToCodeBlocks() {
         mutations.forEach((mutation) => {
             mutation.addedNodes.forEach((node) => {
                 if (node.nodeType === 1) { // Element node
+                    console.log('New node added, checking for code blocks');
                     addCopyButtonsToElement(node);
                 }
             });
@@ -1680,19 +1694,35 @@ function addCopyButtonsToCodeBlocks() {
         childList: true,
         subtree: true
     });
+    
+    console.log('MutationObserver set up successfully');
 }
 
 // Function to add copy buttons to code blocks in a specific element
 function addCopyButtonsToElement(element) {
-    const codeBlocks = element.querySelectorAll('pre code');
+    // Select all code blocks including those wrapped in highlight/codehilite divs
+    const codeBlocks = element.querySelectorAll('pre code, .highlight pre, .codehilite pre');
+    
+    console.log(`Found ${codeBlocks.length} code blocks in element`);
     
     codeBlocks.forEach((codeBlock) => {
-        const pre = codeBlock.parentElement;
+        // Get the pre element (might be the codeBlock itself or its parent)
+        const pre = codeBlock.tagName === 'PRE' ? codeBlock : codeBlock.parentElement;
+        
+        // For highlight/codehilite wrappers, get the actual pre element
+        let targetPre = pre;
+        if (pre.parentElement && (pre.parentElement.classList.contains('highlight') || 
+            pre.parentElement.classList.contains('codehilite'))) {
+            targetPre = pre.parentElement;
+        }
         
         // Skip if copy button already exists
-        if (pre.querySelector('.code-copy-btn')) {
+        if (targetPre.querySelector('.code-copy-btn')) {
+            console.log('Copy button already exists, skipping');
             return;
         }
+        
+        console.log('Creating copy button for code block');
         
         // Create copy button
         const copyBtn = document.createElement('button');
@@ -1705,7 +1735,9 @@ function addCopyButtonsToElement(element) {
             e.preventDefault();
             e.stopPropagation();
             
-            const code = codeBlock.textContent;
+            // Get code from the actual code element
+            const codeElement = pre.querySelector('code') || pre;
+            const code = codeElement.textContent;
             
             try {
                 await navigator.clipboard.writeText(code);
@@ -1753,9 +1785,11 @@ function addCopyButtonsToElement(element) {
             }
         });
         
-        // Add button to pre element
-        pre.style.position = 'relative';
-        pre.insertBefore(copyBtn, pre.firstChild);
+        // Add button to the target element
+        targetPre.style.position = 'relative';
+        targetPre.insertBefore(copyBtn, targetPre.firstChild);
+        
+        console.log('Copy button added successfully');
     });
 }
 
