@@ -1651,5 +1651,111 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Adding direct event listener to Use Location button');
         useLocationBtn.addEventListener('click', useCurrentLocation);
     }
+    
+    // Add copy functionality to code blocks
+    addCopyButtonsToCodeBlocks();
 });
+
+// Function to add copy buttons to all code blocks
+function addCopyButtonsToCodeBlocks() {
+    // Use MutationObserver to detect when new messages with code are added
+    const chatHistory = document.getElementById('chatbot-chat-history');
+    if (!chatHistory) return;
+    
+    // Add copy buttons to existing code blocks
+    addCopyButtonsToElement(chatHistory);
+    
+    // Observe for new code blocks being added
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === 1) { // Element node
+                    addCopyButtonsToElement(node);
+                }
+            });
+        });
+    });
+    
+    observer.observe(chatHistory, {
+        childList: true,
+        subtree: true
+    });
+}
+
+// Function to add copy buttons to code blocks in a specific element
+function addCopyButtonsToElement(element) {
+    const codeBlocks = element.querySelectorAll('pre code');
+    
+    codeBlocks.forEach((codeBlock) => {
+        const pre = codeBlock.parentElement;
+        
+        // Skip if copy button already exists
+        if (pre.querySelector('.code-copy-btn')) {
+            return;
+        }
+        
+        // Create copy button
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'code-copy-btn';
+        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+        copyBtn.setAttribute('title', 'Copy code to clipboard');
+        
+        // Add click event
+        copyBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const code = codeBlock.textContent;
+            
+            try {
+                await navigator.clipboard.writeText(code);
+                
+                // Show success feedback
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyBtn.classList.add('copied');
+                
+                // Reset button after 2 seconds
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+                
+            } catch (err) {
+                console.error('Failed to copy code:', err);
+                
+                // Fallback method for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    copyBtn.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                } catch (err2) {
+                    console.error('Fallback copy failed:', err2);
+                    copyBtn.innerHTML = '<i class="fas fa-times"></i> Failed';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    }, 2000);
+                }
+                
+                document.body.removeChild(textArea);
+            }
+        });
+        
+        // Add button to pre element
+        pre.style.position = 'relative';
+        pre.insertBefore(copyBtn, pre.firstChild);
+    });
+}
 
