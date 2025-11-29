@@ -74,6 +74,11 @@ const botDescriptions = {
         description: "Fast response times with multimodal capabilities powered by Google's Gemini AI. Supports image analysis and text queries.",
         avatar: "icons/Gemini.png"
     },
+    "Wikipedia Bot": {
+        name: "Wikipedia Bot",
+        description: "Your intelligent Wikipedia search assistant powered by LangChain. Ask any question and get accurate, well-cited information from Wikipedia.",
+        avatar: "icons/wikipedia-logo.png"
+    },
     "Recipe Queen": {
         name: "Recipe Queen",
         description: "Your culinary assistant for recipes, cooking tips, and meal planning.",
