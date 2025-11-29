@@ -69,6 +69,11 @@ const botDescriptions = {
         description: "A fast and efficient AI assistant powered by OpenAI's GPT-4o-mini model via GitHub Models. Perfect for quick responses and general assistance.",
         avatar: "icons/gpt-4o-mini-logo.png"
     },
+    "Grok-3": {
+        name: "Grok-3",
+        description: "xAI's advanced AI assistant with a witty personality. Combines deep knowledge with humor and a rebellious edge. Perfect for engaging conversations and challenging conventional thinking.",
+        avatar: "https://designcompass.org/wp-content/uploads/2025/02/Grok-new-logo-08-1536x1152.png"
+    },
     "DeepSeek R1": {
         name: "DeepSeek R1",
         description: "Specialized for code generation and technical reasoning.",
