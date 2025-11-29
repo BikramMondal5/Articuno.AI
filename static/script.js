@@ -64,6 +64,11 @@ const botDescriptions = {
         description: "Advanced multimodal capabilities for text and vision tasks.",
         avatar: "icons/openai-logo.jpg"
     },
+    "GPT-4o-mini": {
+        name: "GPT-4o-mini",
+        description: "A fast and efficient AI assistant powered by OpenAI's GPT-4o-mini model via GitHub Models. Perfect for quick responses and general assistance.",
+        avatar: "icons/gpt-4o-mini-logo.png"
+    },
     "DeepSeek R1": {
         name: "DeepSeek R1",
         description: "Specialized for code generation and technical reasoning.",
