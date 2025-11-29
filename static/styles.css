@@ -118,8 +118,9 @@ body {
 
 #wikipedia-avatar {
     /* Temporary fallback - replace with actual Wikipedia logo when available */
-    background: linear-gradient(135deg, #3a0647, #8b5cf6);
-    display: flex;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/2244px-Wikipedia-logo-v2.svg.png");
+    background-size: cover;
+    background-position: center;
     align-items: center;
     justify-content: center;
     color: white;
@@ -129,19 +130,12 @@ body {
 }
 
 #wikipedia-avatar::after {
-    content: 'W';
+    content: ' ';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
-/* Uncomment below and remove above when you have the Wikipedia logo */
-/* 
-#wikipedia-avatar {
-    background-image: url('icons/wikipedia-logo.png');
-}
-*/
 
 #recipe-queen-avatar {
     background-image: url('icons/chef-logo.jpg');
@@ -1130,31 +1124,11 @@ body {
 }
 
 #showcase-avatar.wikipedia-avatar {
-    /* Temporary fallback - same as sidebar avatar */
-    background: linear-gradient(135deg, #3a0647, #8b5cf6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    font-size: 42px;
-    position: relative;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/2244px-Wikipedia-logo-v2.svg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
-
-#showcase-avatar.wikipedia-avatar::after {
-    content: 'W';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* Uncomment below when you have the Wikipedia logo */
-/*
-#showcase-avatar.wikipedia-avatar {
-    background-image: url('icons/wikipedia-logo.png');
-}
-*/
 
 #showcase-avatar.recipe-queen-avatar {
     background-image: url('icons/chef-logo.jpg');
