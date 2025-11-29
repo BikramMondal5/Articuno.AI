@@ -65,6 +65,30 @@ except ImportError:
     def get_deepseek_v3_response(message):
         return "DeepSeek V3 is currently unavailable."
 
+# Import Articuno Weather function
+try:
+    from agent.articuno_weather import get_articuno_weather_response
+except ImportError:
+    # Fallback if import fails
+    def get_articuno_weather_response(message, image_data=None):
+        return jsonify({"error": "Articuno Weather is currently unavailable."}), 500
+
+# Import Gemini Flash function
+try:
+    from agent.gemini_flash import get_gemini_flash_response
+except ImportError:
+    # Fallback if import fails
+    def get_gemini_flash_response(message, image_data=None):
+        return jsonify({"error": "Gemini 2.0 Flash is currently unavailable."}), 500
+
+# Import GPT-4o function
+try:
+    from agent.gpt_4o import get_gpt4o_response
+except ImportError:
+    # Fallback if import fails
+    def get_gpt4o_response(message, image_data=None):
+        return jsonify({"error": "GPT-4o is currently unavailable."}), 500
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -330,8 +354,11 @@ def chat():
     try:
         # Check which bot is selected and use appropriate API
         if bot_name == "Articuno.AI":
-            # Use Gemini with special weather-focused system prompt
-            return process_articuno_weather_request(user_input, image_data)
+            # Use Articuno Weather agent
+            return get_articuno_weather_response(user_input, image_data)
+        elif bot_name == "GPT-4o":
+            # Use GPT-4o agent
+            return get_gpt4o_response(user_input, image_data)
         elif bot_name == "Wikipedia Bot":
             # Use Wikipedia agent for search
             return process_wikipedia_request(user_input)
@@ -354,113 +381,23 @@ def chat():
             # Use DeepSeek V3 0324 from GitHub Models
             return process_deepseek_v3_request(user_input)
         elif bot_name == "Gemini 2.0 Flash" or bot_name == "Gemini 2.5 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
-            return process_gemini_request(user_input, image_data)
+            # Use Gemini Flash agent
+            return get_gemini_flash_response(user_input, image_data)
         else:
-            # Use Azure OpenAI API as fallback
-            return process_azure_openai_request(user_input, image_data)
+            # Use GPT-4o as fallback
+            return get_gpt4o_response(user_input, image_data)
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-def detect_location_from_message(message):
-    """
-    Extracts location information from a user message.
-    
-    Args:
-        message (str): The user message to analyze
-        
-    Returns:
-        str or None: Detected location name or None if no location found
-    """
-    # Enhanced location detection - look for common location query patterns
-    location_patterns = [
-        r"weather\s+(?:in|at|for)\s+([A-Za-z\s,]+)",  # "weather in London"
-        r"(?:in|at)\s+([A-Za-z\s,]+?)(?:\s+weather|\?|$)",  # "in Paris weather"
-        r"^([A-Za-z\s,]+?)(?:\s+weather|\?|$)",  # "Tokyo weather"
-        r"^([A-Za-z\s,]+?)$",  # Just the location name
-        r"weather (?:of|for|in|at)\s+([A-Za-z\s,]+)",  # "weather of Tokyo"
-        r"weather(?:.+?)(?:of|for|in|at)\s+([A-Za-z\s,]+)",  # "weather report of London"
-        r"(?:show|get|tell|give)(?:.+?)weather(?:.+?)(?:of|for|in|at)\s+([A-Za-z\s,]+)",  # "give me weather of London"
-        r"(?:show|get|tell|give)(?:.+?)(?:of|for|in|at)\s+([A-Za-z\s,]+?)(?:\s+weather|\?|$)",  # "give me of London weather"
-        r"(?:how is|what is|what's)(?:.+?)weather(?:.+?)(?:of|for|in|at)\s+([A-Za-z\s,]+)",  # "how is the weather in London"
-        r"(?:how's|what's)(?:.+?)(?:of|for|in|at)\s+([A-Za-z\s,]+?)(?:\s+weather|\?|$)",  # "what's in London weather like"
-        r"(?:temperature|forecast|climate|humidity|wind|conditions)(?:.+?)(?:in|at|for)\s+([A-Za-z\s,]+)",  # "temperature in Berlin"
-        r"(?:will it rain|is it sunny|is it hot|is it cold)(?:.+?)(?:in|at)\s+([A-Za-z\s,]+)",  # "will it rain in Seattle"
-        r"what's the (?:weather|temperature|forecast)(?:.+?)(?:in|at|for)\s+([A-Za-z\s,]+)"  # "what's the forecast for Chicago"
-    ]
-    
-    for pattern in location_patterns:
-        match = re.search(pattern, message, re.IGNORECASE)
-        if match:
-            location = match.group(1).strip()
-            # Remove trailing punctuation if any
-            location = re.sub(r'[.,;:!?]+$', '', location)
-            return location
-    
-    # As a fallback, try to find any city name mentioned in the query
-    # This is a simple approach - in a production system, you might use NER (Named Entity Recognition)
-    words = message.split()
-    for word in words:
-        # Clean the word of punctuation
-        clean_word = re.sub(r'[.,;:!?]+$', '', word)
-        # If the word starts with a capital letter and is at least 3 characters, it might be a location
-        if len(clean_word) >= 3 and clean_word[0].isupper() and clean_word.lower() not in [
-            "what", "where", "when", "why", "how", "can", "could", "would", 
-            "should", "will", "shall", "the", "this", "that", "these", "those",
-            "give", "show", "tell", "about", "weather", "forecast", "temperature",
-            "conditions", "articuno", "hello", "thanks", "thank", "please", "good",
-            "morning", "afternoon", "evening", "night", "today", "tomorrow", "yesterday"
-        ]:
-            return clean_word
-    
-    return None
+# ===================================================================
+# NOTE: The following model-specific functions have been moved to separate agent files:
+# - Articuno Weather functions -> agent/articuno_weather.py
+# - Gemini Flash functions -> agent/gemini_flash.py  
+# - GPT-4o functions -> agent/gpt_4o.py
+# ===================================================================
 
-def fetch_weather_data(location):
-    """
-    Fetches weather data from OpenWeather API for a specific location.
-    
-    Args:
-        location (str): The location to fetch weather data for
-        
-    Returns:
-        dict: Weather data for the location or error information
-    """
-    try:
-        # Fetch current weather
-        current_url = f"{OPENWEATHER_BASE_URL}/weather"
-        params = {
-            "q": location,
-            "appid": OPENWEATHER_API_KEY,
-            "units": "metric"  # Use metric units (Celsius)
-        }
-        
-        response = requests.get(current_url, params=params)
-        if response.status_code != 200:
-            return {"error": f"Weather API error: {response.status_code} - {response.json().get('message', 'Unknown error')}"}
-        
-        current_data = response.json()
-        
-        # Fetch forecast (5 days / 3 hours)
-        forecast_url = f"{OPENWEATHER_BASE_URL}/forecast"
-        forecast_response = requests.get(forecast_url, params=params)
-        
-        if forecast_response.status_code != 200:
-            return {
-                "current": current_data,
-                "forecast_error": f"Forecast API error: {forecast_response.status_code}"
-            }
-        
-        forecast_data = forecast_response.json()
-        
-        # Return combined weather data
-        return {
-            "current": current_data,
-            "forecast": forecast_data
-        }
-    except Exception as e:
-        return {"error": f"Error fetching weather data: {str(e)}"}
-
-def format_weather_data_for_gemini(weather_data, location):
+def old_format_weather_data_for_gemini(weather_data, location):
     """
     Formats weather data into a structured prompt for Gemini model.
     
@@ -581,8 +518,11 @@ Remember to present the information in a well-structured way, including:
     except Exception as e:
         return f"Error formatting weather data: {str(e)}"
 
-def process_articuno_weather_request(user_input, image_data=None):
-    """Process chat request specifically for Articuno.AI as a weather assistant"""
+# OLD FUNCTION - Now handled by agent/articuno_weather.py
+# def process_articuno_weather_request(user_input, image_data=None):
+def process_articuno_weather_request_OLD(user_input, image_data=None):
+    """DEPRECATED: Process chat request specifically for Articuno.AI as a weather assistant
+    This function has been moved to agent/articuno_weather.py"""
     try:
         # Configure the model
         generation_config = {
@@ -738,8 +678,11 @@ If the user asks about non-weather topics, gently remind them that you're a weat
         traceback.print_exc()  # Print the full stack trace for debugging
         return jsonify({"error": f"Error with Articuno Weather API: {str(e)}"}), 500
 
-def process_gemini_request(user_input, image_data=None):
-    """Process chat request using Google Gemini API"""
+# OLD FUNCTION - Now handled by agent/gemini_flash.py
+# def process_gemini_request(user_input, image_data=None):
+def process_gemini_request_OLD(user_input, image_data=None):
+    """DEPRECATED: Process chat request using Google Gemini API
+    This function has been moved to agent/gemini_flash.py"""
     try:
         # Ensure we have the Gemini API key
         if not GEMINI_API_KEY:
@@ -952,8 +895,11 @@ def process_deepseek_v3_request(user_input):
         traceback.print_exc()
         return jsonify({"error": f"Error with DeepSeek V3: {str(e)}"}), 500
 
-def process_azure_openai_request(user_input, image_data=None):
-    """Process chat request using Azure OpenAI API"""
+# OLD FUNCTION - Now handled by agent/gpt_4o.py
+# def process_azure_openai_request(user_input, image_data=None):
+def process_azure_openai_request_OLD(user_input, image_data=None):
+    """DEPRECATED: Process chat request using Azure OpenAI API  
+    This function has been moved to agent/gpt_4o.py"""
     # OpenAI API Configuration from environment variables
     token = os.getenv("AZURE_OPENAI_API_KEY")
     endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
