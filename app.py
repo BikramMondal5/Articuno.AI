@@ -81,6 +81,18 @@ except ImportError:
     def get_gemini_flash_response(message, image_data=None):
         return jsonify({"error": "Gemini 2.0 Flash is currently unavailable."}), 500
 
+# Import Gemini 2.5 Flash function
+try:
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("gemini_25_flash", "agent/gemini_2.5_flash.py")
+    gemini_25_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(gemini_25_module)
+    get_gemini_25_flash_response = gemini_25_module.get_gemini_flash_response
+except Exception:
+    # Fallback if import fails
+    def get_gemini_25_flash_response(message, image_data=None):
+        return jsonify({"error": "Gemini 2.5 Flash is currently unavailable."}), 500
+
 # Import GPT-4o function
 try:
     from agent.gpt_4o import get_gpt4o_response
@@ -380,8 +392,11 @@ def chat():
         elif bot_name == "DeepSeek V3":
             # Use DeepSeek V3 0324 from GitHub Models
             return process_deepseek_v3_request(user_input)
-        elif bot_name == "Gemini 2.0 Flash" or bot_name == "Gemini 2.5 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
-            # Use Gemini Flash agent
+        elif bot_name == "Gemini 2.5 Flash":
+            # Use Gemini 2.5 Flash agent
+            return get_gemini_25_flash_response(user_input, image_data)
+        elif bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
+            # Use Gemini 2.0 Flash agent
             return get_gemini_flash_response(user_input, image_data)
         else:
             # Use GPT-4o as fallback

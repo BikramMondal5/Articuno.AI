@@ -69,7 +69,7 @@ def get_gemini_flash_response(user_input, image_data=None):
         """
         
         # Create the model using the same method as Articuno.AI
-        model = genai.GenerativeModel(model_name="gemini-1.5-flash", generation_config=generation_config)
+        model = genai.GenerativeModel(model_name="gemini-2.0-flash", generation_config=generation_config)
         
         # Handle messages with images
         if image_data:
@@ -124,10 +124,4 @@ def get_gemini_flash_response(user_input, image_data=None):
         print(f"Gemini API error: {str(e)}")
         return jsonify({"error": f"Error with Gemini API: {str(e)}"}), 500
 
-
-# For testing in terminal (when run directly)
-if __name__ == "__main__":
-    test_message = "Explain quantum computing in simple terms"
-    print(f"User: {test_message}")
-    response = get_gemini_flash_response(test_message)
-    print(f"Gemini 2.0 Flash: {response}")
+   

@@ -97,11 +97,16 @@ const botDescriptions = {
     "DeepSeek V3": {
         name: "DeepSeek V3",
         description: "Advanced AI assistant with strong reasoning capabilities and comprehensive problem-solving skills. Developed by DeepSeek, this model excels at understanding complex queries and providing detailed, well-structured responses.",
-        avatar: "icons/deepseek-logo-icon.png"
+        avatar: "icons/deepseek-logo-icon.png" 
     },
     "Gemini 2.0 Flash": {
         name: "Gemini 2.0 Flash",
         description: "Fast response times with multimodal capabilities powered by Google's Gemini AI. Supports image analysis and text queries.",
+        avatar: "icons/Gemini.png"
+    },
+    "Gemini 2.5 Flash": {
+        name: "Gemini 2.5 Flash",
+        description: "Google's latest and most advanced Gemini model with enhanced multimodal capabilities, faster response times, and improved reasoning. Supports both text and image analysis with state-of-the-art performance.",
         avatar: "icons/Gemini.png"
     },
     "Wikipedia Bot": {

@@ -152,6 +152,10 @@ body {
     background-image: url('icons/Gemini.png');
 }
 
+#gemini-25-avatar {
+    background-image: url('icons/Gemini.png');
+}
+
 #wikipedia-avatar {
     /* Temporary fallback - replace with actual Wikipedia logo when available */
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/2244px-Wikipedia-logo-v2.svg.png");
@@ -394,6 +398,10 @@ body {
 }
 
 #gemini-model {
+    background-image: url("icons/Gemini.png");
+}
+
+#gemini-25-model {
     background-image: url("icons/Gemini.png");
 }
 
@@ -674,6 +682,11 @@ body {
 }
 
 #gemini-avatar{
+    background-image: url("icons/Gemini.png");
+    background-size: cover;
+    background-position: center;
+}
+#gemini-25-avatar{
     background-image: url("icons/Gemini.png");
     background-size: cover;
     background-position: center;
