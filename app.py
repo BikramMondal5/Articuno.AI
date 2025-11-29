@@ -41,6 +41,14 @@ except ImportError:
     def get_grok3_mini_response(message):
         return "Grok-3 Mini is currently unavailable."
 
+# Import Ministral 3B function
+try:
+    from agent.Ministral_3B import get_ministral_3b_response
+except ImportError:
+    # Fallback if import fails
+    def get_ministral_3b_response(message):
+        return "Ministral 3B is currently unavailable."
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -320,6 +328,9 @@ def chat():
         elif bot_name == "Grok-3 Mini":
             # Use Grok-3 Mini from GitHub Models
             return process_grok3_mini_request(user_input)
+        elif bot_name == "Ministral 3B":
+            # Use Ministral 3B from GitHub Models
+            return process_ministral_3b_request(user_input)
         elif bot_name == "Gemini 2.0 Flash" or bot_name == "Gemini 2.5 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
             return process_gemini_request(user_input, image_data)
         else:
@@ -870,6 +881,22 @@ def process_grok3_mini_request(user_input):
         print(f"Grok-3 Mini error: {str(e)}")
         traceback.print_exc()
         return jsonify({"error": f"Error with Grok-3 Mini: {str(e)}"}), 500
+
+def process_ministral_3b_request(user_input):
+    """Process chat request using Ministral 3B from GitHub Models"""
+    try:
+        # Get response from Ministral 3B agent
+        response_text = get_ministral_3b_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"Ministral 3B error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with Ministral 3B: {str(e)}"}), 500
 
 def process_azure_openai_request(user_input, image_data=None):
     """Process chat request using Azure OpenAI API"""

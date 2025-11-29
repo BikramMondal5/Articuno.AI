@@ -126,6 +126,13 @@ body {
     background-position: center;
 }
 
+#ministral-3b-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 #DeepSeek-avatar {
     background-image: url('icons/deepseek-logo-icon.png');
 }
@@ -1168,6 +1175,13 @@ body {
 #showcase-avatar.grok3-mini-avatar {
     background-image: url('https://designcompass.org/wp-content/uploads/2025/02/Grok-new-logo-08-1536x1152.png');
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#showcase-avatar.ministral-3b-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg');
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 }
