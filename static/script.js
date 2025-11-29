@@ -210,7 +210,18 @@ function initializeUIHandlers() {
             e.stopPropagation();
             const modelCard = btn.closest('.model-card');
             const modelName = modelCard.querySelector('h3').textContent;
-            const modelAvatar = modelCard.querySelector('.model-avatar').id;
+            const modelAvatarFromCard = modelCard.querySelector('.model-avatar').id;
+            
+            // Map model card avatar IDs to the correct bot avatar IDs used in botDescriptions
+            const avatarMap = {
+                'codestral-model': 'codestral-2501-avatar',
+                'deepseek-v3-model': 'DeepSeek-V3-avatar',
+                'gemini-25-model': 'gemini-25-avatar',
+                'gpt4-mini-model': 'gpt-4o-mini-avatar'
+            };
+            
+            // Use the mapped avatar ID or fallback to the original if not in the map
+            const modelAvatar = avatarMap[modelAvatarFromCard] || modelAvatarFromCard;
             
             // Update the active model
             switchActiveModel(modelName, modelAvatar);
