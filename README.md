@@ -29,17 +29,32 @@ Articuno V1.0 is an AI powered platform where user can interact with different g
 - **Deployment:** TBD
 
 ## 🧠 Available AI Models 
-- **Articuno.AI:** Your friendly weather assistant that keeps you informed, safe, and one step ahead. 🌦️
 
-- **GPT-40:** OpenAI one of the most advanced multimodal AI with superior text and code generation capabilities. 💡
-  
-- **DeepSeek:** An open-weight AI model optimized for reasoning and coding tasks. 🐳
-  
-- **Gemini 2.0 Flash:** A lightweight, fast-response LLM developed by Google. ⚡
-  
-- **Recipe Queen:** Your culinary assistant for recipes, cooking tips, and meal planning. 🍳
+### 🤖 Agents
+- **Articuno.AI:** Your intelligent weather assistant powered by Gemini, providing real-time forecasts, emergency alerts, and seamless integration with Gmail, Slack, and Twilio. 🌦️
 
-- **Spoiler Alert:** More interactive AI models are coming soon! ☢️
+- **Wikipedia Bot:** Quick access to Wikipedia knowledge with instant article summaries and information retrieval. 📚
+
+### 🧠 AI Assistants
+- **GPT-4o:** OpenAI's flagship model with advanced multimodal capabilities for text, vision, and code generation. 💡
+
+- **GPT-4o-mini:** Efficient and cost-effective variant of GPT-4o with strong performance across tasks. ⚡
+
+- **DeepSeek R1:** Open-weight reasoning model optimized for complex problem-solving and coding tasks. 🐳
+
+- **DeepSeek V3:** Advanced 671B parameter model with superior reasoning and comprehensive capabilities. 🚀
+
+- **Gemini 2.0 Flash:** Google's fast-response multimodal LLM with excellent balance of speed and quality. ✨
+
+- **Gemini 2.5 Flash:** Latest Gemini model with enhanced reasoning and multimodal understanding capabilities. 🌟
+
+- **Grok-3:** xAI's powerful 314B parameter model with real-time information access and advanced reasoning. 🧠
+
+- **Grok-3 Mini:** Compact version of Grok-3 optimized for faster responses while maintaining quality. ⚡
+
+- **Ministral 3B:** Mistral AI's compact 3B parameter model optimized for edge deployment and efficiency. 🪶
+
+- **Codestral 2501:** Mistral AI's specialized 22B parameter model designed for code generation and technical tasks. 💻
 
 ## ⚙️ Installation
 
