@@ -261,7 +261,7 @@ function initializeUIHandlers() {
             if (showcaseTitle === "Articuno.AI") {
                 showWeatherModal();
             } else {
-                // Original functionality for other bots
+                // For all other bots, enter chat interface
                 const showcaseAvatar = document.getElementById('showcase-avatar').className;
                 
                 // Hide showcase and show chat interface
@@ -445,26 +445,17 @@ function showChatbotShowcase(name, avatarId) {
         }
     }
     
-    // Only show the "Start Analysing" button for Articuno.AI
+    // Show the start button for all bots
     if (startChatBtn) {
+        // Update button text based on bot type
         if (name === "Articuno.AI") {
-            startChatBtn.style.display = "block";
+            startChatBtn.innerHTML = '<i class="fas fa-cloud-sun"></i> Start Analysing';
         } else {
-            startChatBtn.style.display = "none";
-            
-            // For other bots, automatically redirect to chat interface after a short delay
-            setTimeout(() => {
-                if (chatbotShowcase) chatbotShowcase.style.display = 'none';
-                if (chatbotInterface) chatbotInterface.style.display = 'flex';
-                
-                // Clear and setup chat history
-                const chatbotChatHistory = document.getElementById('chatbot-chat-history');
-                if (chatbotChatHistory) {
-                    chatbotChatHistory.innerHTML = '';
-                    addAIMessageToHistory(`Hello! I'm ${name}. How can I help you today?`, chatbotChatHistory);
-                }
-            }, 1000); // 1 second delay to allow users to see the bot info
+            startChatBtn.innerHTML = '<i class="fas fa-comments"></i> Start Chat';
         }
+        
+        // Always show the button
+        startChatBtn.style.display = "block";
     }
 }
 
