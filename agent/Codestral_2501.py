@@ -157,9 +157,23 @@ def get_codestral_2501_response(user_message):
         markdown_output = response.choices[0].message.content
         
         # Use markdown with extensions for better code highlighting and formatting
+        # Configure codehilite to use CSS classes instead of inline styles
         html_response = markdown.markdown(
             markdown_output,
-            extensions=['fenced_code', 'codehilite', 'tables', 'nl2br']
+            extensions=[
+                'fenced_code',
+                'codehilite',
+                'tables',
+                'nl2br'
+            ],
+            extension_configs={
+                'codehilite': {
+                    'css_class': 'highlight',
+                    'linenums': False,
+                    'guess_lang': True,
+                    'noclasses': False
+                }
+            }
         )
         
         return jsonify({"response": html_response})
