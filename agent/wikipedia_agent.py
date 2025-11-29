@@ -7,29 +7,43 @@ import os
 
 load_dotenv()
 
-os.environ["GOOGLE_API_KEY"] = os.getenv("GEMINI_API_KEY")
+# Only set GOOGLE_API_KEY if GEMINI_API_KEY exists
+gemini_key = os.getenv("GEMINI_API_KEY")
+if gemini_key:
+    os.environ["GOOGLE_API_KEY"] = gemini_key
 
-# Create custom tools
-wikipedia = WikipediaAPIWrapper()
+# Lazy initialization of agent
+_agent = None
+_wikipedia = None
 
-@tool
-def search_wikipedia(query: str) -> str:
-    """Search Wikipedia for information about a given topic or query when you don't get the answer from your trained data"""
-    return wikipedia.run(query)
+def _get_agent():
+    """Lazy initialization of the Wikipedia agent."""
+    global _agent, _wikipedia
+    
+    if _agent is None:
+        # Create custom tools
+        _wikipedia = WikipediaAPIWrapper()
 
-# Create model
-model = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash", 
-    temperature=0.7,
-)
+        @tool
+        def search_wikipedia(query: str) -> str:
+            """Search Wikipedia for information about a given topic or query when you don't get the answer from your trained data"""
+            return _wikipedia.run(query)
 
-# Create agent
-tools = [search_wikipedia]
-agent = create_agent(
-    model, 
-    tools,
-    system_prompt="You are a helpful Wikipedia assistant. Use the Wikipedia search tool to answer questions with accurate information. After gathering information, provide a clear, well-formatted answer with proper citations from Wikipedia. Present the information in a friendly and conversational way."
-)
+        # Create model
+        model = ChatGoogleGenerativeAI(
+            model="gemini-2.0-flash", 
+            temperature=0.7,
+        )
+
+        # Create agent
+        tools = [search_wikipedia]
+        _agent = create_agent(
+            model, 
+            tools,
+            system_prompt="You are a helpful Wikipedia assistant. Use the Wikipedia search tool to answer questions with accurate information. After gathering information, provide a clear, well-formatted answer with proper citations from Wikipedia. Present the information in a friendly and conversational way."
+        )
+    
+    return _agent
 
 def get_wikipedia_response(user_query: str) -> str:
     """
@@ -43,6 +57,7 @@ def get_wikipedia_response(user_query: str) -> str:
         str: The agent's response as a string
     """
     try:
+        agent = _get_agent()
         response = agent.invoke({
             "messages": [{"role": "user", "content": user_query}]
         })
