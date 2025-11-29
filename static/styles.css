@@ -74,11 +74,71 @@ body {
     padding: 8px;
 }
 
+/* Bot Category Styles */
+.bot-category {
+    margin-bottom: 12px;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.category-header:hover {
+    background: #2D2D2D;
+}
+
+.category-icon {
+    font-size: 12px;
+    color: #a855f7;
+    transition: transform 0.3s ease;
+}
+
+.category-header.collapsed .category-icon {
+    transform: rotate(-90deg);
+}
+
+.category-title {
+    flex: 1;
+    font-weight: 600;
+    font-size: 13px;
+    color: #e0e0e0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.category-count {
+    font-size: 11px;
+    color: #888;
+    background: #2D2D2D;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.category-bots {
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+}
+
+.category-bots.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
 .bot-item {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 8px;
+    margin-left: 20px;
     cursor: pointer;
     border-radius: 6px;
 }

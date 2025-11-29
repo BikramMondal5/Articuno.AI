@@ -1,3 +1,18 @@
+// Category dropdown toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click handlers to category headers
+    document.querySelectorAll('.category-header').forEach(header => {
+        header.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+            const categoryBots = document.getElementById(`${category}-bots`);
+            
+            // Toggle collapsed class
+            this.classList.toggle('collapsed');
+            categoryBots.classList.toggle('collapsed');
+        });
+    });
+});
+
 // Add hover effect to tool items
 document.querySelectorAll('.tool-item, .grid-item, .model-card, .tool-card').forEach(item => {
     item.addEventListener('mouseenter', () => {
