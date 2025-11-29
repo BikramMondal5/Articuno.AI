@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 import markdown
 import os
 import requests
@@ -8,12 +8,15 @@ import speech_recognition as sr
 import io
 import tempfile 
 import uuid
+from datetime import datetime
 from pydub import AudioSegment
 import google.generativeai as genai
 import re
 import traceback
 from dotenv import load_dotenv
 from agent.wikipedia_agent import get_wikipedia_response
+from database.db_manager import get_db_manager
+from bson import json_util
 
 # Import GPT-4o-mini function with proper module name
 import sys
@@ -142,6 +145,13 @@ OPENWEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5"
 
 # Initializing the app
 app = Flask(__name__)
+
+# Set a secret key for session management
+app.secret_key = os.getenv("SECRET_KEY", os.urandom(24).hex())
+
+# Initialize database manager
+MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://127.0.0.1:27017/")
+db_manager = get_db_manager(MONGODB_URI)
 
 @app.route('/', methods=["GET"])
 def home_page():
@@ -352,6 +362,110 @@ def transcribe():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/session/new', methods=["POST"])
+def create_new_session():
+    """Create a new chat session"""
+    try:
+        data = request.json or {}
+        bot_name = data.get('bot', 'Articuno.AI')
+        user_id = session.get('user_id', 'anonymous')
+        
+        # Create new session in database
+        session_id = db_manager.create_session(user_id=user_id, bot_name=bot_name)
+        
+        # Store session_id in Flask session
+        session['current_session_id'] = session_id
+        
+        return jsonify({
+            "session_id": session_id,
+            "bot_name": bot_name,
+            "created_at": datetime.utcnow().isoformat()
+        })
+    except Exception as e:
+        print(f"Error creating session: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/session/history/<session_id>', methods=["GET"])
+def get_session_history(session_id):
+    """Get chat history for a specific session"""
+    try:
+        limit = request.args.get('limit', 50, type=int)
+        history = db_manager.get_session_history(session_id, limit=limit)
+        
+        # Convert ObjectId to string for JSON serialization
+        return json.loads(json_util.dumps({"history": history}))
+    except Exception as e:
+        print(f"Error fetching session history: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/session/list', methods=["GET"])
+def list_sessions():
+    """Get list of recent sessions"""
+    try:
+        user_id = session.get('user_id', 'anonymous')
+        limit = request.args.get('limit', 10, type=int)
+        
+        sessions = db_manager.get_user_sessions(user_id=user_id, limit=limit)
+        
+        # Convert ObjectId to string for JSON serialization
+        return json.loads(json_util.dumps({"sessions": sessions}))
+    except Exception as e:
+        print(f"Error listing sessions: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/session/<session_id>/stats', methods=["GET"])
+def get_session_statistics(session_id):
+    """Get statistics for a session"""
+    try:
+        stats = db_manager.get_session_stats(session_id)
+        
+        if not stats:
+            return jsonify({"error": "Session not found"}), 404
+        
+        return json.loads(json_util.dumps(stats))
+    except Exception as e:
+        print(f"Error fetching session stats: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/session/<session_id>/delete', methods=["DELETE"])
+def delete_session(session_id):
+    """Delete a session and all its messages"""
+    try:
+        db_manager.delete_session(session_id)
+        
+        # Clear from Flask session if it's the current session
+        if session.get('current_session_id') == session_id:
+            session.pop('current_session_id', None)
+        
+        return jsonify({"message": "Session deleted successfully"})
+    except Exception as e:
+        print(f"Error deleting session: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/search', methods=["GET"])
+def search_messages():
+    """Search messages across sessions"""
+    try:
+        query = request.args.get('q', '')
+        session_id = request.args.get('session_id', None)
+        limit = request.args.get('limit', 20, type=int)
+        
+        if not query:
+            return jsonify({"error": "Search query is required"}), 400
+        
+        results = db_manager.search_messages(query, session_id=session_id, limit=limit)
+        
+        return json.loads(json_util.dumps({"results": results}))
+    except Exception as e:
+        print(f"Error searching messages: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/api/chat', methods=["POST"])
 def chat():
     # Get JSON data from the request
@@ -359,50 +473,99 @@ def chat():
     user_input = data.get('message', '')
     image_data = data.get('image', None)
     bot_name = data.get('bot', 'Articuno.AI')
+    session_id = data.get('session_id', None)
+    
+    # Get or create session
+    if not session_id:
+        session_id = session.get('current_session_id')
+        if not session_id:
+            # Create a new session
+            user_id = session.get('user_id', 'anonymous')
+            session_id = db_manager.create_session(user_id=user_id, bot_name=bot_name)
+            session['current_session_id'] = session_id
     
     if not user_input and not image_data:
         return jsonify({"error": "No message or image provided"}), 400
     
     try:
-        # Check which bot is selected and use appropriate API
+        # Get AI response based on selected bot
+        response_data = None
+        
         if bot_name == "Articuno.AI":
-            # Use Articuno Weather agent
-            return get_articuno_weather_response(user_input, image_data)
+            response_data = get_articuno_weather_response(user_input, image_data)
         elif bot_name == "GPT-4o":
-            # Use GPT-4o agent
-            return get_gpt4o_response(user_input, image_data)
+            response_data = get_gpt4o_response(user_input, image_data)
         elif bot_name == "Wikipedia DeepSearch":
-            # Use Wikipedia agent for search
-            return process_wikipedia_request(user_input)
+            response_data = process_wikipedia_request(user_input)
         elif bot_name == "GPT-4o-mini":
-            # Use GPT-4o-mini from GitHub Models
-            return process_gpt4o_mini_request(user_input)
+            response_data = process_gpt4o_mini_request(user_input)
         elif bot_name == "Grok-3":
-            # Use Grok-3 from GitHub Models
-            return process_grok3_request(user_input)
+            response_data = process_grok3_request(user_input)
         elif bot_name == "Grok-3 Mini":
-            # Use Grok-3 Mini from GitHub Models
-            return process_grok3_mini_request(user_input)
+            response_data = process_grok3_mini_request(user_input)
         elif bot_name == "Ministral 3B":
-            # Use Ministral 3B from GitHub Models
-            return process_ministral_3b_request(user_input)
+            response_data = process_ministral_3b_request(user_input)
         elif bot_name == "Codestral 2501":
-            # Use Codestral 2501 from GitHub Models
-            return process_codestral_2501_request(user_input)
+            response_data = process_codestral_2501_request(user_input)
         elif bot_name == "DeepSeek V3":
-            # Use DeepSeek V3 0324 from GitHub Models
-            return process_deepseek_v3_request(user_input)
+            response_data = process_deepseek_v3_request(user_input)
         elif bot_name == "Gemini 2.5 Flash":
-            # Use Gemini 2.5 Flash agent
-            return get_gemini_25_flash_response(user_input, image_data)
+            response_data = get_gemini_25_flash_response(user_input, image_data)
         elif bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
-            # Use Gemini 2.0 Flash agent
-            return get_gemini_flash_response(user_input, image_data)
+            response_data = get_gemini_flash_response(user_input, image_data)
         else:
-            # Use GPT-4o as fallback
-            return get_gpt4o_response(user_input, image_data)
+            response_data = get_gpt4o_response(user_input, image_data)
+        
+        # Extract response text for database storage
+        if response_data and isinstance(response_data, tuple):
+            # Flask response tuple (response, status_code)
+            response_json = response_data[0].get_json()
+            response_text = response_json.get('response', '')
+        elif hasattr(response_data, 'get_json'):
+            # Flask jsonify response
+            response_json = response_data.get_json()
+            response_text = response_json.get('response', '')
+        else:
+            response_text = str(response_data)
+        
+        # Save user message and AI response to database
+        try:
+            db_manager.save_message(
+                session_id=session_id,
+                message=user_input,
+                role='user',
+                bot_name=bot_name,
+                image_data=image_data,
+                response=response_text
+            )
+            
+            # Also save the assistant's response
+            db_manager.save_message(
+                session_id=session_id,
+                message=response_text,
+                role='assistant',
+                bot_name=bot_name
+            )
+        except Exception as db_error:
+            print(f"Error saving to database: {str(db_error)}")
+            traceback.print_exc()
+            # Don't fail the request if database save fails
+        
+        # Return the AI response with session_id
+        if isinstance(response_data, tuple):
+            response_json = response_data[0].get_json()
+            response_json['session_id'] = session_id
+            return jsonify(response_json), response_data[1]
+        elif hasattr(response_data, 'get_json'):
+            response_json = response_data.get_json()
+            response_json['session_id'] = session_id
+            return jsonify(response_json)
+        else:
+            return response_data
     
     except Exception as e:
+        print(f"Error in chat endpoint: {str(e)}")
+        traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
 # ===================================================================

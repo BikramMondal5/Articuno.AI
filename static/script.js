@@ -611,14 +611,22 @@ async function sendMessage() {
         console.log(`Message might contain location: ${mightBeLocation ? 'Yes' : 'No'}`);
     }
 
+    // Get or create session
+    let sessionId = sessionManager.getCurrentSessionId();
+    if (!sessionId || sessionManager.currentBot !== assistantProfile.name) {
+        // Create new session for this bot
+        sessionId = await sessionManager.createSession(assistantProfile.name);
+    }
+
     // Prepare the request payload
     const payload = { 
         message: message,
-        bot: assistantProfile.name // Include the bot name in the request
+        bot: assistantProfile.name, // Include the bot name in the request
+        session_id: sessionId // Include session ID
     };
     
     // Debug log to ensure correct bot is being used
-    console.log(`Using bot: ${assistantProfile.name}`);
+    console.log(`Using bot: ${assistantProfile.name}, Session: ${sessionId}`);
     
     // Add image data if an image is selected
     if (selectedImage) {
@@ -1681,6 +1689,30 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add copy functionality to code blocks
     addCopyButtonsToCodeBlocks();
+    
+    // Initialize session manager and load recent sessions
+    const sessionsList = document.getElementById('sessions-list');
+    if (sessionsList && sessionManager) {
+        sessionManager.renderSessionsList(sessionsList);
+    }
+    
+    // Add event listener for new session button
+    const newSessionBtn = document.getElementById('new-session-btn');
+    if (newSessionBtn && sessionManager) {
+        newSessionBtn.addEventListener('click', async () => {
+            const sessionId = await sessionManager.createSession(assistantProfile.name);
+            if (sessionId) {
+                // Clear chat history
+                if (chatbotChatHistory) {
+                    chatbotChatHistory.innerHTML = '';
+                }
+                // Refresh sessions list
+                sessionManager.renderSessionsList(sessionsList);
+                // Add welcome message
+                addAIMessageToHistory(`Hello! I'm ${assistantProfile.name}. How can I help you today?`, chatbotChatHistory);
+            }
+        });
+    }
 });
 
 // Function to add copy buttons to all code blocks

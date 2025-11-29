@@ -160,10 +160,12 @@
 
         <div class="recent-section">
             <div class="recent-header">
-                <span>Recent</span>
-                <i class="fas fa-ellipsis-h"></i>
+                <span>Recent Sessions</span>
+                <button id="new-session-btn" class="new-session-btn" title="Start new session">
+                    <i class="fas fa-plus"></i>
+                </button>
             </div>
-            <div class="recent-chats">
+            <div class="recent-chats" id="sessions-list">
                 <div class="recent-chat-item">
                     <i class="fas fa-clock"></i>
                     <span>I'm planning a trip to kolkata, what's the weather like this weekend?</span>
@@ -705,6 +707,9 @@
         </div>
     </div>
 
+    <!-- Session Manager -->
+    <script src="{{ url_for('static',filename='session_manager.js') }}"></script>
+    <!-- Main Script -->
     <script src="{{ url_for('static',filename='script.js') }}"></script>
     
     <!-- Inline script to ensure the location button works correctly -->
