@@ -1016,19 +1016,154 @@ body {
     text-decoration: underline;
 }
 
+/* Inline code styling */
 .ai-message code {
-    background-color: #3D3D3D;
-    padding: 2px 4px;
-    border-radius: 3px;
-    font-family: monospace;
+    background-color: #1a1a1a;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #e9d5ff;
 }
 
+/* Code block container */
 .ai-message pre {
-    background-color: #3D3D3D;
-    padding: 16px;
-    border-radius: 6px;
+    background-color: #000000;
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 16px 0;
+    position: relative;
+    border: 1px solid #2D2D2D;
+}
+
+/* Code block content */
+.ai-message pre code {
+    display: block;
+    padding: 20px;
     overflow-x: auto;
-    margin: 10px 0;
+    background-color: #000000;
+    color: #e0e0e0;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+
+/* Copy button for code blocks */
+.code-copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #2D2D2D;
+    border: 1px solid #444;
+    color: #a855f7;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.code-copy-btn:hover {
+    background: #3D3D3D;
+    border-color: #a855f7;
+    transform: translateY(-2px);
+}
+
+.code-copy-btn:active {
+    transform: translateY(0);
+}
+
+.code-copy-btn i {
+    font-size: 14px;
+}
+
+.code-copy-btn.copied {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+}
+
+.code-copy-btn.copied i:before {
+    content: "\f00c"; /* FontAwesome check icon */
+}
+
+/* Syntax highlighting for code blocks on black background */
+.ai-message pre code .hljs-comment,
+.ai-message pre code .hljs-quote {
+    color: #6a9955;
+}
+
+.ai-message pre code .hljs-keyword,
+.ai-message pre code .hljs-selector-tag,
+.ai-message pre code .hljs-literal,
+.ai-message pre code .hljs-type {
+    color: #c586c0;
+}
+
+.ai-message pre code .hljs-string,
+.ai-message pre code .hljs-attribute {
+    color: #ce9178;
+}
+
+.ai-message pre code .hljs-number {
+    color: #b5cea8;
+}
+
+.ai-message pre code .hljs-built_in,
+.ai-message pre code .hljs-builtin-name {
+    color: #4ec9b0;
+}
+
+.ai-message pre code .hljs-function,
+.ai-message pre code .hljs-title {
+    color: #dcdcaa;
+}
+
+.ai-message pre code .hljs-variable,
+.ai-message pre code .hljs-name {
+    color: #9cdcfe;
+}
+
+.ai-message pre code .hljs-tag {
+    color: #569cd6;
+}
+
+.ai-message pre code .hljs-class,
+.ai-message pre code .hljs-selector-class,
+.ai-message pre code .hljs-selector-id {
+    color: #4ec9b0;
+}
+
+.ai-message pre code .hljs-meta {
+    color: #808080;
+}
+
+.ai-message pre code .hljs-regexp {
+    color: #d16969;
+}
+
+/* Scrollbar for code blocks */
+.ai-message pre code::-webkit-scrollbar {
+    height: 8px;
+}
+
+.ai-message pre code::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 4px;
+}
+
+.ai-message pre code::-webkit-scrollbar-thumb {
+    background: #3D3D3D;
+    border-radius: 4px;
+}
+
+.ai-message pre code::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 /* Ensure emoji display properly */
