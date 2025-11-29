@@ -79,6 +79,11 @@ const botDescriptions = {
         description: "The compact yet powerful sibling of Grok-3 by xAI. Fast, witty, and intelligent responses with personality packed into a smaller package. Perfect for quick, engaging interactions with that signature Grok attitude!",
         avatar: "https://designcompass.org/wp-content/uploads/2025/02/Grok-new-logo-08-1536x1152.png"
     },
+    "Ministral 3B": {
+        name: "Ministral 3B",
+        description: "A compact yet powerful AI assistant by Mistral AI, optimized for edge deployment and efficient processing. Delivers fast, intelligent responses with high accuracy in a smaller package.",
+        avatar: "https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg"
+    },
     "DeepSeek R1": {
         name: "DeepSeek R1",
         description: "Specialized for code generation and technical reasoning.",
