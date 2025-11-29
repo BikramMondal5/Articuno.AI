@@ -114,6 +114,12 @@ body {
     background-position: center;
 }
 
+#grok3-avatar {
+    background-image: url('https://designcompass.org/wp-content/uploads/2025/02/Grok-new-logo-08-1536x1152.png');
+    background-size: cover;
+    background-position: center;
+}
+
 #DeepSeek-avatar {
     background-image: url('icons/deepseek-logo-icon.png');
 }
