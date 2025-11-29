@@ -503,19 +503,27 @@ body {
 }
 
 #grok3-model {
-    background-image: url("icons/Grok-Logo.png");
+    background-image: url("https://designcompass.org/wp-content/uploads/2025/02/Grok-new-logo-08-1536x1152.png");
+    background-size: cover;
+    background-position: center;
 }
 
 #ministral-model {
-    background-image: url("icons/Mistral-logo.jpg");
+    background-image: url("https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg");
+    background-size: cover;
+    background-position: center;
 }
 
 #codestral-model {
-    background-image: url("icons/Mistral-logo.jpg");
+    background-image: url("https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg");
+    background-size: cover;
+    background-position: center;
 }
 
 #articuno-model {
-    background-image: url("icons/Articuno-logo.png");
+    background-image: url("icons/articuno.png");
+    background-size: cover;
+    background-position: center;
 }
 
 .model-info {
@@ -804,9 +812,7 @@ body {
     background-size: cover;
     background-position: center;
 }
-#wikipedia-avatar{
-    /* This styling is set above - no need to duplicate */
-}
+
 #recipe-queen-avatar{
     background-image: url("icons/chef-logo.jpg");
     background-size: cover;
@@ -1369,6 +1375,7 @@ body {
 .bot-item.active {
     background: #2D2D2D;
     border-left: 3px solid #a855f7;
+    padding-left: 5px; /* Compensate for border to prevent tilt */
 }
 
 .bot-item.active .bot-avatar {
