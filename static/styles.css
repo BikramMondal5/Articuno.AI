@@ -144,6 +144,10 @@ body {
     background-image: url('icons/deepseek-logo-icon.png');
 }
 
+#DeepSeek-V3-avatar {
+    background-image: url('icons/deepseek-logo-icon.png');
+}
+
 #gemini-avatar {
     background-image: url('icons/Gemini.png');
 }
@@ -382,6 +386,10 @@ body {
 }
 
 #deepseek-model {
+    background-image: url("icons/deepseek-logo-icon.png");
+}
+
+#deepseek-v3-model {
     background-image: url("icons/deepseek-logo-icon.png");
 }
 
@@ -654,6 +662,12 @@ body {
 }
 
 #DeepSeek-avatar{
+    background-image: url("icons/deepseek-logo-icon.png");
+    background-size: cover;
+    background-position: center;
+}
+
+#DeepSeek-V3-avatar{
     background-image: url("icons/deepseek-logo-icon.png");
     background-size: cover;
     background-position: center;

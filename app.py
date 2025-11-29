@@ -57,6 +57,14 @@ except ImportError:
     def get_codestral_2501_response(message):
         return "Codestral 2501 is currently unavailable."
 
+# Import DeepSeek V3 0324 function
+try:
+    from agent.DeepSeek_V3_0324 import get_deepseek_v3_response
+except ImportError:
+    # Fallback if import fails
+    def get_deepseek_v3_response(message):
+        return "DeepSeek V3 is currently unavailable."
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -342,6 +350,9 @@ def chat():
         elif bot_name == "Codestral 2501":
             # Use Codestral 2501 from GitHub Models
             return process_codestral_2501_request(user_input)
+        elif bot_name == "DeepSeek V3":
+            # Use DeepSeek V3 0324 from GitHub Models
+            return process_deepseek_v3_request(user_input)
         elif bot_name == "Gemini 2.0 Flash" or bot_name == "Gemini 2.5 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
             return process_gemini_request(user_input, image_data)
         else:
@@ -924,6 +935,22 @@ def process_codestral_2501_request(user_input):
         print(f"Codestral 2501 error: {str(e)}")
         traceback.print_exc()
         return jsonify({"error": f"Error with Codestral 2501: {str(e)}"}), 500
+
+def process_deepseek_v3_request(user_input):
+    """Process chat request using DeepSeek V3 0324 from GitHub Models"""
+    try:
+        # Get response from DeepSeek V3 agent
+        response_text = get_deepseek_v3_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"DeepSeek V3 error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with DeepSeek V3: {str(e)}"}), 500
 
 def process_azure_openai_request(user_input, image_data=None):
     """Process chat request using Azure OpenAI API"""
