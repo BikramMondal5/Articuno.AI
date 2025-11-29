@@ -133,6 +133,13 @@ body {
     background-repeat: no-repeat;
 }
 
+#codestral-2501-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 #DeepSeek-avatar {
     background-image: url('icons/deepseek-logo-icon.png');
 }

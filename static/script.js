@@ -84,6 +84,11 @@ const botDescriptions = {
         description: "A compact yet powerful AI assistant by Mistral AI, optimized for edge deployment and efficient processing. Delivers fast, intelligent responses with high accuracy in a smaller package.",
         avatar: "https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg"
     },
+    "Codestral 2501": {
+        name: "Codestral 2501",
+        description: "Mistral AI's powerful coding assistant specialized in code generation, debugging, and software development. Provides intelligent, well-documented code solutions across multiple programming languages.",
+        avatar: "https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg"
+    },
     "DeepSeek R1": {
         name: "DeepSeek R1",
         description: "Specialized for code generation and technical reasoning.",
