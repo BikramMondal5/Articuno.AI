@@ -371,7 +371,7 @@ def chat():
         elif bot_name == "GPT-4o":
             # Use GPT-4o agent
             return get_gpt4o_response(user_input, image_data)
-        elif bot_name == "Wikipedia Bot":
+        elif bot_name == "Wikipedia DeepSearch":
             # Use Wikipedia agent for search
             return process_wikipedia_request(user_input)
         elif bot_name == "GPT-4o-mini":

@@ -124,8 +124,8 @@ const botDescriptions = {
         description: "Google's latest and most advanced Gemini model with enhanced multimodal capabilities, faster response times, and improved reasoning. Supports both text and image analysis with state-of-the-art performance.",
         avatar: "icons/Gemini.png"
     },
-    "Wikipedia Bot": {
-        name: "Wikipedia Bot",
+    "Wikipedia DeepSearch": {
+        name: "Wikipedia DeepSearch",
         description: "Your intelligent Wikipedia search assistant powered by LangChain. Ask any question and get accurate, well-cited information from Wikipedia.",
         avatar: "icons/wikipedia-logo.png"
     },
@@ -466,14 +466,16 @@ function showChatbotShowcase(name, avatarId) {
     
     // Show the start button for all bots
     if (startChatBtn) {
-        // Update button text based on bot type
-        if (name === "Articuno.AI") {
-            startChatBtn.innerHTML = '<i class="fas fa-cloud-sun"></i> Start Analysing';
-        } else {
-            startChatBtn.innerHTML = '<i class="fas fa-comments"></i> Start Chat';
-        }
-        
-        // Always show the button
+    // Update button text based on bot type
+    if (name === "Articuno.AI") {
+        startChatBtn.innerHTML = '<i class="fas fa-cloud-sun"></i> Start Analysing';
+    } else if (name === "Wikipedia DeepSearch") {
+        startChatBtn.innerHTML = '<i class="fas fa-search"></i> Start Researching';
+    } else if (name === "Codestral 2501") {
+        startChatBtn.innerHTML = '<i class="fas fa-laptop-code"></i> Happy Coding';
+    } else {
+        startChatBtn.innerHTML = '<i class="fas fa-comments"></i> Start Chat';
+    }        // Always show the button
         startChatBtn.style.display = "block";
     }
 }
