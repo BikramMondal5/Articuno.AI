@@ -285,6 +285,34 @@ body {
     font-size: 14px;
 }
 
+.recent-header span {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.new-session-btn {
+    background: transparent;
+    border: 1px solid #666;
+    color: #666;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 12px;
+}
+
+.new-session-btn:hover {
+    background: #a855f7;
+    border-color: #a855f7;
+    color: white;
+}
+
 .recent-chats {
     padding: 8px;
 }
@@ -293,44 +321,53 @@ body {
 .session-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 12px;
+    gap: 8px;
+    padding: 8px 12px;
     cursor: pointer;
     border-radius: 6px;
-    margin-bottom: 6px;
-    background: #1a1a1a;
+    margin-bottom: 4px;
+    background: transparent;
     border: 1px solid transparent;
     transition: all 0.2s;
+    position: relative;
 }
 
 .session-item:hover {
-    background: #2D2D2D;
-    border-color: #444;
+    background: rgba(45, 45, 45, 0.5);
 }
 
 .session-item.active {
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(192, 132, 252, 0.1));
-    border-color: #a855f7;
+    background: rgba(45, 45, 45, 0.5);
+}
+
+.session-item::before {
+    content: '\f017';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 400;
+    font-size: 14px;
+    color: #888;
+    flex-shrink: 0;
 }
 
 .session-info {
     flex: 1;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .session-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #CCC;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .session-meta {
-    font-size: 11px;
-    color: #888;
+    display: none;
 }
 
 .session-delete-btn {
@@ -342,6 +379,7 @@ body {
     border-radius: 4px;
     opacity: 0;
     transition: all 0.2s;
+    flex-shrink: 0;
 }
 
 .session-item:hover .session-delete-btn {
