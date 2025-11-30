@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.tools import tool
 from langchain.agents import create_agent
+import markdown
 import os
 
 load_dotenv()
@@ -50,14 +51,24 @@ Role: Friendly Full-stack Developer Assistant & Learning Companion
 - **Practical**: Provide real-world examples and actionable solutions
 - **Humble**: Admit when you don't know something and suggest learning together
 
-📝 Response Structure
+📝 Response Structure & Formatting Rules
 - Start with a friendly greeting or acknowledgment
-- Use clear, organized structure with headings when explaining complex topics
-- Include code examples when relevant (properly formatted)
-- Break down complex problems into understandable steps
+- **Always respond in valid Markdown format**
+- Use clear headings (# for H1, ## for H2, ### for H3)
+- **Code blocks MUST use triple-backtick fenced format with language syntax:**
+  ```python
+  ```javascript
+  ```html
+  ```css
+  ```bash
+  etc.
+- Use **bold** for emphasis and *italic* when needed
+- Use `inline code` for small code references
+- Break down complex problems into understandable steps with numbered lists
 - Use emojis naturally to enhance friendliness (but not excessively)
 - End with encouragement or a helpful follow-up suggestion
-- Format responses with proper markdown for better readability
+- Never escape backticks or add extra indentation in code blocks
+- Explanations must appear outside the code blocks
 
 🎯 Areas of Expertise
 1. **Web Development**: Building modern web applications with React, Next.js, and full-stack solutions
@@ -126,7 +137,7 @@ def get_bikram_ai_response(user_message: str) -> str:
         user_message (str): The user's input message
         
     Returns:
-        str: The AI's response in Bikram's friendly and helpful style
+        str: The AI's response in Bikram's friendly and helpful style, with markdown converted to HTML
     """
     try:
         agent = _get_agent()
@@ -135,24 +146,39 @@ def get_bikram_ai_response(user_message: str) -> str:
         })
         
         # Extract the final AI message
+        markdown_output = None
         if response and "messages" in response and len(response["messages"]) > 0:
             # Find the last AI message with content
             for message in reversed(response["messages"]):
                 if hasattr(message, 'content') and message.content and message.__class__.__name__ == 'AIMessage':
-                    return message.content
+                    markdown_output = message.content
+                    break
             
-            # If no AI message found, return a default message
-            return "I couldn't process that request properly. Please try rephrasing your question!"
+            if not markdown_output:
+                markdown_output = "I couldn't process that request properly. Please try rephrasing your question!"
         else:
-            return "No response content found. Please try again."
+            markdown_output = "No response content found. Please try again."
+        
+        # Convert markdown to HTML with code syntax highlighting (same as Codestral 2501)
+        html_response = markdown.markdown(
+            markdown_output,
+            extensions=[
+                'fenced_code',
+                'codehilite',
+                'tables',
+                'nl2br'
+            ],
+            extension_configs={
+                'codehilite': {
+                    'css_class': 'highlight',
+                    'linenums': False,
+                    'guess_lang': True,
+                    'noclasses': False
+                }
+            }
+        )
+        
+        return html_response
     except Exception as e:
         return f"Error: {str(e)}"
 
-
-# For testing in terminal (when run directly)
-if __name__ == "__main__":
-    print("Running Bikram.AI agent...")
-    test_message = "Hey! Can you help me understand how to build a React app with Three.js?"
-    print(f"User: {test_message}")
-    response = get_bikram_ai_response(test_message)
-    print(f"\nBikram.AI: {response}")
