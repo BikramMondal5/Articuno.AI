@@ -1,39 +1,21 @@
-import os
 from dotenv import load_dotenv
-from azure.ai.inference import ChatCompletionsClient
-from azure.ai.inference.models import SystemMessage, UserMessage
-from azure.core.credentials import AzureKeyCredential
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.tools import tool
+from langchain.agents import create_agent
+import os
 
-# Load environment variables
 load_dotenv()
 
-endpoint = "https://models.github.ai/inference"
-model = "gpt-4o-mini"  # Using a reliable model for consistent responses
-token = os.getenv("GITHUB_TOKEN")
+# Only set GOOGLE_API_KEY if GEMINI_API_KEY exists
+gemini_key = os.getenv("GEMINI_API_KEY")
+if gemini_key:
+    os.environ["GOOGLE_API_KEY"] = gemini_key
 
-if not token:
-    raise ValueError("GITHUB_TOKEN not found in environment variables. Please set it in the .env file.")
+# Lazy initialization of agent
+_agent = None
 
-# Initialize the client
-client = ChatCompletionsClient(
-    endpoint=endpoint,
-    credential=AzureKeyCredential(token),
-)
-
-def get_bikram_ai_response(user_message):
-    """
-    Get response from Bikram.AI - A personalized AI assistant reflecting Bikram Mondal's personality.
-    
-    Args:
-        user_message (str): The user's input message
-        
-    Returns:
-        str: The AI's response in Bikram's friendly and helpful style
-    """
-    try:
-        response = client.complete(
-            messages=[
-                SystemMessage("""You are Bikram.AI, a friendly and enthusiastic AI assistant created in the image of Bikram Mondal - a passionate Full-stack Web Developer from India.
+# Define the system prompt that fine-tunes Bikram's personality
+BIKRAM_SYSTEM_PROMPT = """You are Bikram.AI, a friendly and enthusiastic AI assistant created in the image of Bikram Mondal - a passionate Full-stack Web Developer from India.
 
 🧑‍💻 Identity
 Name: Bikram.AI
@@ -109,21 +91,68 @@ Role: Friendly Full-stack Developer Assistant & Learning Companion
 - Building projects that solve real-world problems
 - Staying updated with latest tech trends
 
-Remember: Be genuine, friendly, and always maintain a positive, learning-focused attitude. You're not just an AI - you're a reflection of Bikram's passion for technology, learning, and helping others grow! 🚀✨"""),
-                UserMessage(user_message),
-            ],
+Remember: Be genuine, friendly, and always maintain a positive, learning-focused attitude. You're not just an AI - you're a reflection of Bikram's passion for technology, learning, and helping others grow! 🚀✨"""
+
+
+def _get_agent():
+    """Lazy initialization of the Bikram.AI agent."""
+    global _agent
+    
+    if _agent is None:
+        # Create model with Bikram's personality settings
+        model = ChatGoogleGenerativeAI(
+            model="gemini-2.0-flash", 
             temperature=0.8,  # Slightly more creative and personable
-            top_p=0.95,
-            max_tokens=1200,  # Allow for more detailed, friendly responses
-            model=model
         )
-        return response.choices[0].message.content
+
+        # Create empty tools list (can add tools later for extended functionality)
+        tools = []
+        
+        # Create agent with Bikram's personality
+        _agent = create_agent(
+            model, 
+            tools,
+            system_prompt=BIKRAM_SYSTEM_PROMPT
+        )
+    
+    return _agent
+
+
+def get_bikram_ai_response(user_message: str) -> str:
+    """
+    Get response from Bikram.AI - A personalized AI assistant reflecting Bikram Mondal's personality.
+    
+    Args:
+        user_message (str): The user's input message
+        
+    Returns:
+        str: The AI's response in Bikram's friendly and helpful style
+    """
+    try:
+        agent = _get_agent()
+        response = agent.invoke({
+            "messages": [{"role": "user", "content": user_message}]
+        })
+        
+        # Extract the final AI message
+        if response and "messages" in response and len(response["messages"]) > 0:
+            # Find the last AI message with content
+            for message in reversed(response["messages"]):
+                if hasattr(message, 'content') and message.content and message.__class__.__name__ == 'AIMessage':
+                    return message.content
+            
+            # If no AI message found, return a default message
+            return "I couldn't process that request properly. Please try rephrasing your question!"
+        else:
+            return "No response content found. Please try again."
     except Exception as e:
         return f"Error: {str(e)}"
 
+
 # For testing in terminal (when run directly)
 if __name__ == "__main__":
+    print("Running Bikram.AI agent...")
     test_message = "Hey! Can you help me understand how to build a React app with Three.js?"
     print(f"User: {test_message}")
     response = get_bikram_ai_response(test_message)
-    print(f"Bikram.AI: {response}")
+    print(f"\nBikram.AI: {response}")
