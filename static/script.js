@@ -124,6 +124,16 @@ const botDescriptions = {
         description: "Powerful and sophisticated open-source AI by Meta. With 70 billion parameters, excels at complex reasoning, detailed explanations, and in-depth analysis across diverse topics.",
         avatar: "https://github.com/images/modules/marketplace/models/families/meta.svg"
     },
+    "Cohere Command A": {
+        name: "Cohere Command A",
+        description: "Powerful AI assistant by Cohere with excellent contextual understanding and conversational abilities. Excels at providing detailed explanations and engaging in meaningful conversations.",
+        avatar: "https://github.com/images/modules/marketplace/models/families/cohere.svg"
+    },
+    "Cohere Command R+": {
+        name: "Cohere Command R+",
+        description: "Advanced AI assistant by Cohere with enhanced reasoning capabilities. Delivers comprehensive answers with superior analysis and complex problem-solving abilities.",
+        avatar: "https://github.com/images/modules/marketplace/models/families/cohere.svg"
+    },
     "DeepSeek R1": {
         name: "DeepSeek R1",
         description: "Specialized for code generation and technical reasoning.",
