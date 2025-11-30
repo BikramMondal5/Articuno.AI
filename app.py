@@ -1237,11 +1237,8 @@ def process_cohere_command_r_plus_request(user_input):
 def process_bikram_ai_request(user_input):
     """Process chat request using Bikram.AI"""
     try:
-        # Get response from Bikram.AI agent
-        response_text = get_bikram_ai_response(user_input)
-        
-        # Convert markdown to HTML
-        html_response = markdown.markdown(response_text)
+        # Get response from Bikram.AI agent (already returns HTML with markdown converted)
+        html_response = get_bikram_ai_response(user_input)
         
         return jsonify({"response": html_response})
     

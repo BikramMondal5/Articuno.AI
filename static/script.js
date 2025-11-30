@@ -76,8 +76,8 @@ const botDescriptions = {
     },
     "Bikram.AI": {
         name: "Bikram.AI",
-        description: "Your friendly Full-stack Developer companion! Built with the personality of Bikram Mondal, I'm here to help with web development, coding challenges, and tech exploration. Let's learn and build amazing things together! 🚀",
-        avatar: "Bikram-avatar"
+        description: "Your friendly Full-stack Developer companion! I'm here to help with web development, coding challenges, and tech exploration. Let's learn and build amazing things together! 🚀",
+        avatar: "https://avatars.githubusercontent.com/u/170235967?v=4"
     },
     "GPT-4o": {
         name: "GPT-4o",
