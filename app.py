@@ -84,6 +84,30 @@ except ImportError:
     def get_phi4_mini_response(message):
         return "Phi-4 Mini is currently unavailable."
 
+# Import Meta Llama 3.1 8B function
+try:
+    import importlib.util
+    spec_llama_31 = importlib.util.spec_from_file_location("meta_llama_31_8b", "agent/Meta_Llama_3.1_8B.py")
+    llama_31_module = importlib.util.module_from_spec(spec_llama_31)
+    spec_llama_31.loader.exec_module(llama_31_module)
+    get_llama_31_8b_response = llama_31_module.get_llama_31_8b_response
+except Exception:
+    # Fallback if import fails
+    def get_llama_31_8b_response(message):
+        return "Meta Llama 3.1 8B is currently unavailable."
+
+# Import Meta Llama 3.3 70B function
+try:
+    import importlib.util
+    spec_llama_33 = importlib.util.spec_from_file_location("meta_llama_33_70b", "agent/Meta_Llama_3.3_70B.py")
+    llama_33_module = importlib.util.module_from_spec(spec_llama_33)
+    spec_llama_33.loader.exec_module(llama_33_module)
+    get_llama_33_70b_response = llama_33_module.get_llama_33_70b_response
+except Exception:
+    # Fallback if import fails
+    def get_llama_33_70b_response(message):
+        return "Meta Llama 3.3 70B is currently unavailable."
+
 # Import Articuno Weather function
 try:
     from agent.articuno_weather import get_articuno_weather_response
@@ -529,6 +553,10 @@ def chat():
             response_data = process_phi4_request(user_input)
         elif bot_name == "Phi-4 Mini":
             response_data = process_phi4_mini_request(user_input)
+        elif bot_name == "Meta Llama 3.1 8B":
+            response_data = process_llama_31_8b_request(user_input)
+        elif bot_name == "Meta Llama 3.3 70B":
+            response_data = process_llama_33_70b_request(user_input)
         elif bot_name == "Gemini 2.5 Flash":
             response_data = get_gemini_25_flash_response(user_input, image_data)
         elif bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
@@ -1111,6 +1139,38 @@ def process_phi4_mini_request(user_input):
         print(f"Phi-4 Mini error: {str(e)}")
         traceback.print_exc()
         return jsonify({"error": f"Error with Phi-4 Mini: {str(e)}"}), 500
+
+def process_llama_31_8b_request(user_input):
+    """Process chat request using Meta Llama 3.1 8B from GitHub Models"""
+    try:
+        # Get response from Meta Llama 3.1 8B agent
+        response_text = get_llama_31_8b_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"Meta Llama 3.1 8B error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with Meta Llama 3.1 8B: {str(e)}"}), 500
+
+def process_llama_33_70b_request(user_input):
+    """Process chat request using Meta Llama 3.3 70B from GitHub Models"""
+    try:
+        # Get response from Meta Llama 3.3 70B agent
+        response_text = get_llama_33_70b_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"Meta Llama 3.3 70B error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with Meta Llama 3.3 70B: {str(e)}"}), 500
 
 # OLD FUNCTION - Now handled by agent/gpt_4o.py
 # def process_azure_openai_request(user_input, image_data=None):

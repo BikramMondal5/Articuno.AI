@@ -114,6 +114,16 @@ const botDescriptions = {
         description: "Compact yet powerful reasoning AI by Microsoft. Despite its small size, excels at logical reasoning, problem-solving, and providing clear, well-structured answers.",
         avatar: "https://raw.githubusercontent.com/microsoft/Phi-3CookBook/main/imgs/Phi-3-family.png"
     },
+    "Meta Llama 3.1 8B": {
+        name: "Meta Llama 3.1 8B",
+        description: "Fast and efficient open-source AI assistant by Meta. Delivers the perfect balance of speed and intelligence with helpful, accurate responses across a wide range of topics.",
+        avatar: "https://github.com/images/modules/marketplace/models/families/meta.svg"
+    },
+    "Meta Llama 3.3 70B": {
+        name: "Meta Llama 3.3 70B",
+        description: "Powerful and sophisticated open-source AI by Meta. With 70 billion parameters, excels at complex reasoning, detailed explanations, and in-depth analysis across diverse topics.",
+        avatar: "https://github.com/images/modules/marketplace/models/families/meta.svg"
+    },
     "DeepSeek R1": {
         name: "DeepSeek R1",
         description: "Specialized for code generation and technical reasoning.",

@@ -268,6 +268,20 @@ body {
     background-repeat: no-repeat;
 }
 
+#llama-31-8b-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/meta.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#llama-33-70b-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/meta.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .more-button {
     display: flex;
     align-items: center;
@@ -643,6 +657,20 @@ body {
 
 #phi-4-mini-model {
     background-image: url('https://github.com/images/modules/marketplace/models/families/microsoft.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#llama-31-8b-model {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/meta.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#llama-33-70b-model {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/meta.svg');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -1556,6 +1584,18 @@ body {
     background-repeat: no-repeat;
 }
 
+.chatbot-avatar#llama-31-8b-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/meta.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.chatbot-avatar#llama-33-70b-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/meta.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 .chatbot-info h2 {
     font-size: 20px;
     font-weight: 600;
@@ -1754,6 +1794,20 @@ body {
 
 #showcase-avatar.phi-4-mini-avatar {
     background-image: url('https://github.com/images/modules/marketplace/models/families/microsoft.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#showcase-avatar.llama-31-8b-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/meta.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#showcase-avatar.llama-33-70b-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/meta.svg');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
