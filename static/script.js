@@ -268,6 +268,12 @@ function initializeUIHandlers() {
             // Get current selected bot info
             const showcaseTitle = document.getElementById('showcase-title').textContent;
             
+            // Show the bottom bar (input textarea) when starting chat
+            const bottomBar = document.querySelector('.bottom-bar');
+            if (bottomBar) {
+                bottomBar.style.display = 'block';
+            }
+            
             // Check if it's Articuno.AI to show weather modal
             if (showcaseTitle === "Articuno.AI") {
                 showWeatherModal();
@@ -293,6 +299,12 @@ function initializeUIHandlers() {
     if (modalCloseBtn) {
         modalCloseBtn.addEventListener('click', () => {
             hideWeatherModal();
+            
+            // Show the bottom bar when entering chat
+            const bottomBar = document.querySelector('.bottom-bar');
+            if (bottomBar) {
+                bottomBar.style.display = 'block';
+            }
             
             // When user manually closes the modal, navigate to chat interface
             document.getElementById('chatbot-showcase').style.display = 'none';
@@ -1718,6 +1730,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const sessionsList = document.getElementById('sessions-list');
     if (sessionsList && sessionManager) {
         sessionManager.renderSessionsList(sessionsList);
+    }
+    
+    // Restore session state from localStorage on page load
+    const savedSessionId = localStorage.getItem('current_session_id');
+    const savedBot = localStorage.getItem('current_bot');
+    
+    if (savedSessionId && savedBot) {
+        console.log(`Restoring session: ${savedSessionId} with bot: ${savedBot}`);
+        sessionManager.currentSessionId = savedSessionId;
+        sessionManager.currentBot = savedBot;
+        
+        // Update assistantProfile to match the saved bot
+        assistantProfile.name = savedBot;
+        
+        // Update UI to reflect the saved bot
+        const chatInputHeader = document.querySelector('.chat-input-header');
+        if (chatInputHeader) {
+            const headerName = chatInputHeader.querySelector('.models-name');
+            if (headerName) {
+                headerName.textContent = savedBot;
+            }
+        }
+    }
+    
+    // Hide bottom bar initially until user starts chatting
+    const bottomBar = document.querySelector('.bottom-bar');
+    if (bottomBar) {
+        bottomBar.style.display = 'none';
     }
 });
 
