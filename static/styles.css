@@ -282,6 +282,20 @@ body {
     background-repeat: no-repeat;
 }
 
+#cohere-command-a-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/cohere.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#cohere-command-r-plus-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/cohere.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .more-button {
     display: flex;
     align-items: center;
@@ -644,6 +658,18 @@ body {
 
 #articuno-model {
     background-image: url("icons/articuno.png");
+    background-size: cover;
+    background-position: center;
+}
+
+#cohere-command-a-model {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/cohere.svg');
+    background-size: cover;
+    background-position: center;
+}
+
+#cohere-command-r-plus-model {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/cohere.svg');
     background-size: cover;
     background-position: center;
 }
@@ -1592,6 +1618,18 @@ body {
 
 .chatbot-avatar#llama-33-70b-avatar {
     background-image: url('https://github.com/images/modules/marketplace/models/families/meta.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.chatbot-avatar#cohere-command-a-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/cohere.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.chatbot-avatar#cohere-command-r-plus-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/cohere.svg');
     background-size: contain;
     background-repeat: no-repeat;
 }

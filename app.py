@@ -108,6 +108,22 @@ except Exception:
     def get_llama_33_70b_response(message):
         return "Meta Llama 3.3 70B is currently unavailable."
 
+# Import Cohere Command A function
+try:
+    from agent.cohere_command_a import get_cohere_command_a_response
+except ImportError:
+    # Fallback if import fails
+    def get_cohere_command_a_response(message):
+        return "Cohere Command A is currently unavailable."
+
+# Import Cohere Command R+ function
+try:
+    from agent.Cohere_command_r_plus import get_cohere_command_r_plus_response
+except ImportError:
+    # Fallback if import fails
+    def get_cohere_command_r_plus_response(message):
+        return "Cohere Command R+ is currently unavailable."
+
 # Import Articuno Weather function
 try:
     from agent.articuno_weather import get_articuno_weather_response
@@ -557,6 +573,10 @@ def chat():
             response_data = process_llama_31_8b_request(user_input)
         elif bot_name == "Meta Llama 3.3 70B":
             response_data = process_llama_33_70b_request(user_input)
+        elif bot_name == "Cohere Command A":
+            response_data = process_cohere_command_a_request(user_input)
+        elif bot_name == "Cohere Command R+":
+            response_data = process_cohere_command_r_plus_request(user_input)
         elif bot_name == "Gemini 2.5 Flash":
             response_data = get_gemini_25_flash_response(user_input, image_data)
         elif bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
@@ -1171,6 +1191,38 @@ def process_llama_33_70b_request(user_input):
         print(f"Meta Llama 3.3 70B error: {str(e)}")
         traceback.print_exc()
         return jsonify({"error": f"Error with Meta Llama 3.3 70B: {str(e)}"}), 500
+
+def process_cohere_command_a_request(user_input):
+    """Process chat request using Cohere Command A from GitHub Models"""
+    try:
+        # Get response from Cohere Command A agent
+        response_text = get_cohere_command_a_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"Cohere Command A error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with Cohere Command A: {str(e)}"}), 500
+
+def process_cohere_command_r_plus_request(user_input):
+    """Process chat request using Cohere Command R+ from GitHub Models"""
+    try:
+        # Get response from Cohere Command R+ agent
+        response_text = get_cohere_command_r_plus_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"Cohere Command R+ error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with Cohere Command R+: {str(e)}"}), 500
 
 # OLD FUNCTION - Now handled by agent/gpt_4o.py
 # def process_azure_openai_request(user_input, image_data=None):
