@@ -33,6 +33,8 @@ Articuno V1.0 is an AI powered platform where user can interact with different g
 ### 🤖 Agents
 - **Articuno.AI:** Your intelligent weather assistant powered by Gemini, providing real-time forecasts, emergency alerts, and seamless integration with Gmail, Slack, and Twilio. 🌦️
 
+- **Bikram.AI:** Your friendly Full-stack Developer companion! Built with the personality of Bikram Mondal, specializing in web development, React, Node.js, Three.js, and helping you learn through errors. Let's build amazing things together! 🚀
+
 - **Wikipedia DeepSearch:** Quick access to Wikipedia knowledge with instant article summaries and information retrieval. 📚
 
 ### 🧠 AI Assistants

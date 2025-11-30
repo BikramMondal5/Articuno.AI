@@ -177,6 +177,21 @@ body {
     background-image: url('icons/articuno.png');
 }
 
+#Bikram-avatar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+#Bikram-avatar::before {
+    content: '👨‍💻';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+}
+
 #gpt-4o-avatar {
     background-image: url('icons/openai-logo.jpg');
 }
