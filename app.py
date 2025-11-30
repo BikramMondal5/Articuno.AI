@@ -124,6 +124,14 @@ except ImportError:
     def get_cohere_command_r_plus_response(message):
         return "Cohere Command R+ is currently unavailable."
 
+# Import Bikram.AI function
+try:
+    from agent.Bikram_AI import get_bikram_ai_response
+except ImportError:
+    # Fallback if import fails
+    def get_bikram_ai_response(message):
+        return "Bikram.AI is currently unavailable."
+
 # Import Articuno Weather function
 try:
     from agent.articuno_weather import get_articuno_weather_response
@@ -549,6 +557,8 @@ def chat():
         
         if bot_name == "Articuno.AI":
             response_data = get_articuno_weather_response(user_input, image_data)
+        elif bot_name == "Bikram.AI":
+            response_data = process_bikram_ai_request(user_input)
         elif bot_name == "GPT-4o":
             response_data = get_gpt4o_response(user_input, image_data)
         elif bot_name == "Wikipedia DeepSearch":
@@ -1223,6 +1233,22 @@ def process_cohere_command_r_plus_request(user_input):
         print(f"Cohere Command R+ error: {str(e)}")
         traceback.print_exc()
         return jsonify({"error": f"Error with Cohere Command R+: {str(e)}"}), 500
+
+def process_bikram_ai_request(user_input):
+    """Process chat request using Bikram.AI"""
+    try:
+        # Get response from Bikram.AI agent
+        response_text = get_bikram_ai_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"Bikram.AI error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with Bikram.AI: {str(e)}"}), 500
 
 # OLD FUNCTION - Now handled by agent/gpt_4o.py
 # def process_azure_openai_request(user_input, image_data=None):

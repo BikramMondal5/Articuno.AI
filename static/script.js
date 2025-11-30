@@ -74,6 +74,11 @@ const botDescriptions = {
         description: "Your AI-powered weather assistant for forecasts, conditions, and climate information.",
         avatar: "icons/articuno.png"
     },
+    "Bikram.AI": {
+        name: "Bikram.AI",
+        description: "Your friendly Full-stack Developer companion! Built with the personality of Bikram Mondal, I'm here to help with web development, coding challenges, and tech exploration. Let's learn and build amazing things together! 🚀",
+        avatar: "Bikram-avatar"
+    },
     "GPT-4o": {
         name: "GPT-4o",
         description: "Advanced multimodal capabilities for text and vision tasks.",
@@ -525,6 +530,8 @@ function showChatbotShowcase(name, avatarId) {
     // Update button text based on bot type
     if (name === "Articuno.AI") {
         startChatBtn.innerHTML = '<i class="fas fa-cloud-sun"></i> Start Analysing';
+    } else if (name === "Bikram.AI") {
+        startChatBtn.innerHTML = '<i class="fas fa-rocket"></i> Let\'s Build Together';
     } else if (name === "Wikipedia DeepSearch") {
         startChatBtn.innerHTML = '<i class="fas fa-search"></i> Start Researching';
     } else if (name === "Codestral 2501") {
