@@ -252,7 +252,10 @@ function initializeUIHandlers() {
                 'codestral-model': 'codestral-2501-avatar',
                 'deepseek-v3-model': 'DeepSeek-V3-avatar',
                 'gemini-25-model': 'gemini-25-avatar',
-                'gpt4-mini-model': 'gpt-4o-mini-avatar'
+                'gpt4-mini-model': 'gpt-4o-mini-avatar',
+                'bikram-model': 'Bikram-avatar',
+                'cohere-command-a-model': 'cohere-command-a-avatar',
+                'cohere-command-r-plus-model': 'cohere-command-r-plus-avatar'
             };
             
             // Use the mapped avatar ID or fallback to the original if not in the map
@@ -531,7 +534,7 @@ function showChatbotShowcase(name, avatarId) {
     if (name === "Articuno.AI") {
         startChatBtn.innerHTML = '<i class="fas fa-cloud-sun"></i> Start Analysing';
     } else if (name === "Bikram.AI") {
-        startChatBtn.innerHTML = '<i class="fas fa-rocket"></i> Let\'s Build Together';
+        startChatBtn.innerHTML = '<i class="fas fa-laptop"></i> Let\'s Build Together';
     } else if (name === "Wikipedia DeepSearch") {
         startChatBtn.innerHTML = '<i class="fas fa-search"></i> Start Researching';
     } else if (name === "Codestral 2501") {
@@ -1762,6 +1765,34 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add copy functionality to code blocks
     addCopyButtonsToCodeBlocks();
+    
+    // Initialize "More Models" button toggle functionality
+    const toggleModelsBtn = document.getElementById('toggle-models-btn');
+    if (toggleModelsBtn) {
+        toggleModelsBtn.addEventListener('click', function() {
+            const hiddenModels = document.querySelectorAll('.hidden-model');
+            const isExpanded = this.classList.contains('active');
+            
+            if (isExpanded) {
+                // Collapse - hide models
+                hiddenModels.forEach(model => {
+                    model.classList.remove('show');
+                });
+                this.classList.remove('active');
+                this.innerHTML = '<span>Show More Models</span> <i class="fas fa-chevron-down"></i>';
+                
+                // Smooth scroll to the button
+                this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                // Expand - show models
+                hiddenModels.forEach(model => {
+                    model.classList.add('show');
+                });
+                this.classList.add('active');
+                this.innerHTML = '<span>Show Less Models</span> <i class="fas fa-chevron-up"></i>';
+            }
+        });
+    }
     
     // Initialize session manager and load recent sessions
     const sessionsList = document.getElementById('sessions-list');
