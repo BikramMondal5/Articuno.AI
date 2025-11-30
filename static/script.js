@@ -1759,6 +1759,48 @@ document.addEventListener('DOMContentLoaded', function() {
     if (bottomBar) {
         bottomBar.style.display = 'none';
     }
+    
+    // New session button functionality
+    const newSessionBtn = document.getElementById('new-session-btn');
+    if (newSessionBtn) {
+        newSessionBtn.addEventListener('click', async () => {
+            console.log('Creating new session...');
+            
+            // Clear current session
+            sessionManager.currentSessionId = null;
+            sessionManager.currentBot = assistantProfile.name;
+            localStorage.removeItem('current_session_id');
+            
+            // Create new session
+            const newSessionId = await sessionManager.createSession(assistantProfile.name);
+            
+            // Clear chat history
+            if (chatbotChatHistory) {
+                chatbotChatHistory.innerHTML = '';
+            }
+            
+            // Refresh sessions list
+            if (sessionsList && sessionManager) {
+                sessionManager.renderSessionsList(sessionsList);
+            }
+            
+            // Show main grid layout (home screen)
+            const mainGrid = document.querySelector('.main-grid-layout');
+            const chatbotShowcase = document.getElementById('chatbot-showcase');
+            const chatbotInterface = document.getElementById('chatbot-interface');
+            
+            if (mainGrid) mainGrid.style.display = 'flex';
+            if (chatbotShowcase) chatbotShowcase.style.display = 'none';
+            if (chatbotInterface) chatbotInterface.style.display = 'none';
+            
+            // Hide bottom bar
+            if (bottomBar) {
+                bottomBar.style.display = 'none';
+            }
+            
+            console.log('New session created:', newSessionId);
+        });
+    }
 });
 
 // Function to add copy buttons to all code blocks
