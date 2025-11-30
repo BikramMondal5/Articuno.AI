@@ -206,7 +206,7 @@ function initializeUIHandlers() {
 
     // Model card "Use Model" button handling
     document.querySelectorAll('.use-model-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
             e.stopPropagation();
             const modelCard = btn.closest('.model-card');
             const modelName = modelCard.querySelector('h3').textContent;
@@ -223,8 +223,8 @@ function initializeUIHandlers() {
             // Use the mapped avatar ID or fallback to the original if not in the map
             const modelAvatar = avatarMap[modelAvatarFromCard] || modelAvatarFromCard;
             
-            // Update the active model
-            switchActiveModel(modelName, modelAvatar);
+            // Update the active model (now creates new session if switching bots)
+            await switchActiveModel(modelName, modelAvatar);
             
             // Start chat with this model
             startChatWithPrompt(`Hi, I'd like to use ${modelName} for my queries`);
@@ -241,7 +241,7 @@ function initializeUIHandlers() {
 
     // Bot selection in the sidebar
     document.querySelectorAll('.bot-item').forEach(botItem => {
-        botItem.addEventListener('click', () => {
+        botItem.addEventListener('click', async () => {
             const name = botItem.querySelector('span').textContent;
             const avatar = botItem.querySelector('.bot-avatar').id;
             
@@ -253,8 +253,8 @@ function initializeUIHandlers() {
             // Add active class to clicked bot item
             botItem.classList.add('active');
             
-            // Update the active model
-            switchActiveModel(name, avatar);
+            // Update the active model (now creates new session if switching bots)
+            await switchActiveModel(name, avatar);
 
             // Show chatbot showcase
             showChatbotShowcase(name, avatar);
@@ -286,13 +286,7 @@ function initializeUIHandlers() {
         });
     }
     
-    // Recent chat items click handling
-    document.querySelectorAll('.recent-chat-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const topic = item.querySelector('span').textContent;
-            startChatWithPrompt(topic);
-        });
-    });
+
 
     // Weather modal close button
     const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -369,12 +363,32 @@ function mayContainLocation(message) {
 }
 
 // Switch the active model/assistant
-function switchActiveModel(name, avatarId) {
+async function switchActiveModel(name, avatarId) {
     console.log(`Switching to model: ${name} with avatar: ${avatarId}`);
+    
+    // Check if we're switching to a different bot
+    const isDifferentBot = sessionManager.currentBot && sessionManager.currentBot !== name;
     
     // Update assistant profile
     assistantProfile.name = name;
     assistantProfile.avatar = avatarId;
+    
+    // Create a new session immediately when switching to a different bot
+    if (isDifferentBot) {
+        console.log(`Switching from ${sessionManager.currentBot} to ${name}, creating new session...`);
+        await sessionManager.createSession(name);
+        
+        // Clear the chat history for the new session
+        if (chatbotChatHistory) {
+            chatbotChatHistory.innerHTML = '';
+        }
+        
+        // Refresh the sessions list in the sidebar
+        const sessionsList = document.getElementById('sessions-list');
+        if (sessionsList && sessionManager) {
+            sessionManager.renderSessionsList(sessionsList);
+        }
+    }
     
     // Update the chat input header at the bottom
     const chatInputHeader = document.querySelector('.chat-input-header');
@@ -613,9 +627,13 @@ async function sendMessage() {
 
     // Get or create session
     let sessionId = sessionManager.getCurrentSessionId();
-    if (!sessionId || sessionManager.currentBot !== assistantProfile.name) {
-        // Create new session for this bot
+    if (!sessionId) {
+        // Create new session only if no session exists
         sessionId = await sessionManager.createSession(assistantProfile.name);
+    } else {
+        // Update sessionManager.currentBot to match the current assistant if they differ
+        // This ensures we continue using the existing session
+        sessionManager.currentBot = assistantProfile.name;
     }
 
     // Prepare the request payload
@@ -688,6 +706,12 @@ async function sendMessage() {
         } else {
             // Add AI response to chat
             addAIMessageToHistory(data.response, chatbotChatHistory);
+            
+            // Refresh sessions list to update the history titles
+            const sessionsList = document.getElementById('sessions-list');
+            if (sessionsList && sessionManager) {
+                sessionManager.renderSessionsList(sessionsList);
+            }
         }
     } catch (error) {
         console.error("Error communicating with server:", error);
@@ -1694,24 +1718,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const sessionsList = document.getElementById('sessions-list');
     if (sessionsList && sessionManager) {
         sessionManager.renderSessionsList(sessionsList);
-    }
-    
-    // Add event listener for new session button
-    const newSessionBtn = document.getElementById('new-session-btn');
-    if (newSessionBtn && sessionManager) {
-        newSessionBtn.addEventListener('click', async () => {
-            const sessionId = await sessionManager.createSession(assistantProfile.name);
-            if (sessionId) {
-                // Clear chat history
-                if (chatbotChatHistory) {
-                    chatbotChatHistory.innerHTML = '';
-                }
-                // Refresh sessions list
-                sessionManager.renderSessionsList(sessionsList);
-                // Add welcome message
-                addAIMessageToHistory(`Hello! I'm ${assistantProfile.name}. How can I help you today?`, chatbotChatHistory);
-            }
-        });
     }
 });
 

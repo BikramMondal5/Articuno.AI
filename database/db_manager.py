@@ -64,7 +64,8 @@ class DatabaseManager:
             'created_at': datetime.utcnow(),
             'last_activity': datetime.utcnow(),
             'message_count': 0,
-            'status': 'active'
+            'status': 'active',
+            'last_user_query': None  # Will be updated when first message is sent
         }
         
         self.sessions.insert_one(session_data)
@@ -106,13 +107,19 @@ class DatabaseManager:
         
         self.messages.insert_one(message_data)
         
-        # Update session activity
+        # Update session activity and last_user_query if this is a user message
+        update_data = {
+            '$set': {'last_activity': datetime.utcnow()},
+            '$inc': {'message_count': 1}
+        }
+        
+        # Update last_user_query if this is a user message
+        if role == 'user':
+            update_data['$set']['last_user_query'] = message
+        
         self.sessions.update_one(
             {'session_id': session_id},
-            {
-                '$set': {'last_activity': datetime.utcnow()},
-                '$inc': {'message_count': 1}
-            }
+            update_data
         )
         
         return message_id

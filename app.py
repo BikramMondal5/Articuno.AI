@@ -528,7 +528,7 @@ def chat():
         else:
             response_text = str(response_data)
         
-        # Save user message and AI response to database
+        # Save user message with AI response to database
         try:
             db_manager.save_message(
                 session_id=session_id,
@@ -537,14 +537,6 @@ def chat():
                 bot_name=bot_name,
                 image_data=image_data,
                 response=response_text
-            )
-            
-            # Also save the assistant's response
-            db_manager.save_message(
-                session_id=session_id,
-                message=response_text,
-                role='assistant',
-                bot_name=bot_name
             )
         except Exception as db_error:
             print(f"Error saving to database: {str(db_error)}")
