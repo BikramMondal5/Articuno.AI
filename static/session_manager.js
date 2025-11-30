@@ -300,23 +300,52 @@ class SessionManager {
                     localStorage.setItem('current_session_id', this.currentSessionId);
                     localStorage.setItem('current_bot', this.currentBot);
                     
+                    // Map bot names to their avatar IDs
+                    const botAvatarMap = {
+                        'Articuno.AI': 'Articuno-avatar',
+                        'Wikipedia DeepSearch': 'wikipedia-avatar',
+                        'Codestral 2501': 'codestral-2501-avatar',
+                        'DeepSeek R1': 'DeepSeek-avatar',
+                        'DeepSeek V3': 'DeepSeek-V3-avatar',
+                        'Gemini 2.0 Flash': 'gemini-avatar',
+                        'Gemini 2.5 Flash': 'gemini-25-avatar',
+                        'GPT-4o': 'gpt-4o-avatar',
+                        'GPT-4o-mini': 'gpt-4o-mini-avatar',
+                        'Grok-3': 'grok3-avatar',
+                        'Grok-3 Mini': 'grok3-mini-avatar',
+                        'Ministral 3B': 'ministral-3b-avatar'
+                    };
+                    
+                    const avatarId = botAvatarMap[session.bot_name] || 'Articuno-avatar';
+                    
                     // Update the assistantProfile to match the loaded session's bot
                     if (typeof assistantProfile !== 'undefined') {
                         assistantProfile.name = session.bot_name;
+                        assistantProfile.avatar = avatarId;
                         
                         // Update the UI to reflect the loaded session's bot
                         const chatInputHeader = document.querySelector('.chat-input-header');
                         if (chatInputHeader) {
+                            const headerAvatar = chatInputHeader.querySelector('.bot-avatar');
                             const headerName = chatInputHeader.querySelector('.models-name');
+                            
+                            if (headerAvatar) {
+                                headerAvatar.id = avatarId;
+                            }
                             if (headerName) {
                                 headerName.textContent = session.bot_name;
                             }
                         }
                         
-                        // Update chatbot interface header
+                        // Update chatbot interface header with both name and avatar
                         const chatbotName = document.querySelector('.chatbot-info h2');
                         if (chatbotName) {
                             chatbotName.textContent = session.bot_name;
+                        }
+                        
+                        const chatbotAvatarDisplay = document.querySelector('.chatbot-header .chatbot-avatar');
+                        if (chatbotAvatarDisplay) {
+                            chatbotAvatarDisplay.id = avatarId;
                         }
                     }
                     
@@ -328,6 +357,12 @@ class SessionManager {
                     if (mainGrid) mainGrid.style.display = 'none';
                     if (chatbotShowcase) chatbotShowcase.style.display = 'none';
                     if (chatbotInterface) chatbotInterface.style.display = 'flex';
+                    
+                    // Show the bottom bar when loading a session
+                    const bottomBar = document.querySelector('.bottom-bar');
+                    if (bottomBar) {
+                        bottomBar.style.display = 'block';
+                    }
                     
                     // Display the session history
                     const chatHistory = document.getElementById('chatbot-chat-history');
