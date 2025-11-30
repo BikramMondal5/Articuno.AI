@@ -285,40 +285,8 @@ body {
     font-size: 14px;
 }
 
-.new-session-btn {
-    background: transparent;
-    border: 1px solid #444;
-    color: #a855f7;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    transition: all 0.2s;
-}
-
-.new-session-btn:hover {
-    background: #a855f7;
-    color: #fff;
-    border-color: #a855f7;
-}
-
 .recent-chats {
     padding: 8px;
-}
-
-.recent-chat-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px;
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 14px;
-    color: #CCC;
-}
-
-.recent-chat-item:hover {
-    background: #2D2D2D;
 }
 
 /* Session Item Styles */

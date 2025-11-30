@@ -210,8 +210,15 @@ class SessionManager {
             // Display each message
             history.forEach(msg => {
                 if (msg.role === 'user') {
+                    // Display user message
                     addMessageToHistory(msg.message, true, msg.image_data, chatHistoryElement);
+                    
+                    // Display AI response if it exists
+                    if (msg.response) {
+                        addAIMessageToHistory(msg.response, chatHistoryElement);
+                    }
                 } else if (msg.role === 'assistant') {
+                    // Legacy support for old assistant messages (if any exist)
                     addAIMessageToHistory(msg.message, chatHistoryElement);
                 }
             });
@@ -235,7 +242,7 @@ class SessionManager {
             const sessions = await this.listSessions();
             
             if (sessions.length === 0) {
-                containerElement.innerHTML = '<div class="no-sessions">No recent sessions</div>';
+                containerElement.innerHTML = '<div class="no-sessions">No history yet</div>';
                 return;
             }
 
@@ -250,7 +257,14 @@ class SessionManager {
                 
                 const sessionTitle = document.createElement('div');
                 sessionTitle.className = 'session-title';
-                sessionTitle.textContent = session.bot_name || 'Chat Session';
+                
+                // Use last_user_query as title, truncate if too long
+                let title = session.last_user_query || 'New conversation';
+                if (title.length > 60) {
+                    title = title.substring(0, 57) + '...';
+                }
+                sessionTitle.textContent = title;
+                sessionTitle.title = session.last_user_query || 'New conversation'; // Full text on hover
                 
                 const sessionMeta = document.createElement('div');
                 sessionMeta.className = 'session-meta';
@@ -270,7 +284,7 @@ class SessionManager {
                 deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
                 deleteBtn.onclick = async (e) => {
                     e.stopPropagation();
-                    if (confirm('Delete this session?')) {
+                    if (confirm('Delete this conversation?')) {
                         await this.deleteSession(session.session_id);
                         this.renderSessionsList(containerElement);
                     }
@@ -284,6 +298,36 @@ class SessionManager {
                     this.currentSessionId = session.session_id;
                     this.currentBot = session.bot_name;
                     localStorage.setItem('current_session_id', this.currentSessionId);
+                    localStorage.setItem('current_bot', this.currentBot);
+                    
+                    // Update the assistantProfile to match the loaded session's bot
+                    if (typeof assistantProfile !== 'undefined') {
+                        assistantProfile.name = session.bot_name;
+                        
+                        // Update the UI to reflect the loaded session's bot
+                        const chatInputHeader = document.querySelector('.chat-input-header');
+                        if (chatInputHeader) {
+                            const headerName = chatInputHeader.querySelector('.models-name');
+                            if (headerName) {
+                                headerName.textContent = session.bot_name;
+                            }
+                        }
+                        
+                        // Update chatbot interface header
+                        const chatbotName = document.querySelector('.chatbot-info h2');
+                        if (chatbotName) {
+                            chatbotName.textContent = session.bot_name;
+                        }
+                    }
+                    
+                    // Show chat interface if not already visible
+                    const mainGrid = document.querySelector('.main-grid-layout');
+                    const chatbotShowcase = document.getElementById('chatbot-showcase');
+                    const chatbotInterface = document.getElementById('chatbot-interface');
+                    
+                    if (mainGrid) mainGrid.style.display = 'none';
+                    if (chatbotShowcase) chatbotShowcase.style.display = 'none';
+                    if (chatbotInterface) chatbotInterface.style.display = 'flex';
                     
                     // Display the session history
                     const chatHistory = document.getElementById('chatbot-chat-history');
