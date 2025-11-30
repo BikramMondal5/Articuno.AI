@@ -68,6 +68,22 @@ except ImportError:
     def get_deepseek_v3_response(message):
         return "DeepSeek V3 is currently unavailable."
 
+# Import Phi-4 function
+try:
+    from agent.Phi_4 import get_phi4_response
+except ImportError:
+    # Fallback if import fails
+    def get_phi4_response(message):
+        return "Phi-4 is currently unavailable."
+
+# Import Phi-4 Mini function
+try:
+    from agent.Phi_4_mini import get_phi4_mini_response
+except ImportError:
+    # Fallback if import fails
+    def get_phi4_mini_response(message):
+        return "Phi-4 Mini is currently unavailable."
+
 # Import Articuno Weather function
 try:
     from agent.articuno_weather import get_articuno_weather_response
@@ -509,6 +525,10 @@ def chat():
             response_data = process_codestral_2501_request(user_input)
         elif bot_name == "DeepSeek V3":
             response_data = process_deepseek_v3_request(user_input)
+        elif bot_name == "Phi-4":
+            response_data = process_phi4_request(user_input)
+        elif bot_name == "Phi-4 Mini":
+            response_data = process_phi4_mini_request(user_input)
         elif bot_name == "Gemini 2.5 Flash":
             response_data = get_gemini_25_flash_response(user_input, image_data)
         elif bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
@@ -1059,6 +1079,38 @@ def process_deepseek_v3_request(user_input):
         print(f"DeepSeek V3 error: {str(e)}")
         traceback.print_exc()
         return jsonify({"error": f"Error with DeepSeek V3: {str(e)}"}), 500
+
+def process_phi4_request(user_input):
+    """Process chat request using Phi-4 from GitHub Models"""
+    try:
+        # Get response from Phi-4 agent
+        response_text = get_phi4_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"Phi-4 error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with Phi-4: {str(e)}"}), 500
+
+def process_phi4_mini_request(user_input):
+    """Process chat request using Phi-4 Mini from GitHub Models"""
+    try:
+        # Get response from Phi-4 Mini agent
+        response_text = get_phi4_mini_response(user_input)
+        
+        # Convert markdown to HTML
+        html_response = markdown.markdown(response_text)
+        
+        return jsonify({"response": html_response})
+    
+    except Exception as e:
+        print(f"Phi-4 Mini error: {str(e)}")
+        traceback.print_exc()
+        return jsonify({"error": f"Error with Phi-4 Mini: {str(e)}"}), 500
 
 # OLD FUNCTION - Now handled by agent/gpt_4o.py
 # def process_azure_openai_request(user_input, image_data=None):

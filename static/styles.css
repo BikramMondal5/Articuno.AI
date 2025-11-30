@@ -254,6 +254,20 @@ body {
     background-image: url('icons/chef-logo.jpg');
 }
 
+#phi-4-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/microsoft.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#phi-4-mini-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/microsoft.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .more-button {
     display: flex;
     align-items: center;
@@ -618,6 +632,20 @@ body {
     background-image: url("icons/articuno.png");
     background-size: cover;
     background-position: center;
+}
+
+#phi-4-model {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/microsoft.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#phi-4-mini-model {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/microsoft.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .model-info {
@@ -1516,6 +1544,18 @@ body {
     background-image: url('icons/openai-logo.jpg');
 }
 
+.chatbot-avatar#phi-4-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/microsoft.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.chatbot-avatar#phi-4-mini-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/microsoft.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 .chatbot-info h2 {
     font-size: 20px;
     font-weight: 600;
@@ -1703,6 +1743,20 @@ body {
 
 #showcase-avatar.recipe-queen-avatar {
     background-image: url('icons/chef-logo.jpg');
+}
+
+#showcase-avatar.phi-4-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/microsoft.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#showcase-avatar.phi-4-mini-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/microsoft.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Active bot item styling */

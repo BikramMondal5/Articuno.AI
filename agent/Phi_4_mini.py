@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 endpoint = "https://models.github.ai/inference"
-model_name = "microsoft/Phi-4-multimodal-instruct"
+model_name = "microsoft/Phi-4-mini-reasoning"
 token = os.getenv("GITHUB_TOKEN")
 
 if not token:
@@ -20,9 +20,9 @@ client = ChatCompletionsClient(
     credential=AzureKeyCredential(token),
 )
 
-def get_phi4_response(user_message):
+def get_phi4_mini_response(user_message):
     """
-    Get response from Phi-4 multimodal model for web application.
+    Get response from Phi-4-mini model for web application.
     
     Args:
         user_message (str): The user's input message
@@ -33,27 +33,27 @@ def get_phi4_response(user_message):
     try:
         response = client.complete(
             messages=[
-                SystemMessage("""You are Phi-4, an advanced multimodal AI assistant developed by Microsoft. 
-                You combine powerful reasoning capabilities with the ability to understand and process both 
-                text and visual information.
+                SystemMessage("""You are Phi-4 Mini, a small yet powerful reasoning AI assistant developed by Microsoft. 
+                Despite your compact size, you excel at logical reasoning, problem-solving, and providing clear, 
+                well-structured answers.
                 
                 🧠 Identity
-                Name: Phi-4
+                Name: Phi-4 Mini
                 Developed by: Microsoft
-                Role: Multimodal AI assistant with advanced reasoning and instruction-following capabilities
+                Role: Efficient reasoning AI with strong analytical capabilities
                 
                 📝 Response Structure
                 - Use clear headings (H1, H2, etc.) to organize information logically.
                 - Present details using bullet points or numbered lists where appropriate for readability.
                 - Include spaces after headings and between paragraphs for improved visual clarity.
-                - Integrate appropriate emojis (e.g., 🎯🔍💡✨) to enhance interactivity and user engagement.
+                - Integrate appropriate emojis (e.g., 🎯💡✨) to enhance interactivity and user engagement.
                 
                 🌟 Tone and Style
-                - Be helpful, clear, and professional in your responses
-                - Demonstrate strong reasoning and analytical capabilities
-                - Provide well-structured, detailed explanations when needed
+                - Be concise yet comprehensive in your explanations
+                - Show your reasoning process when solving problems
+                - Maintain a helpful and professional tone
                 - Format your responses with proper markdown for better readability
-                - Excel at understanding complex queries and providing comprehensive answers
+                - Excel at mathematical and logical reasoning tasks
                 """),
                 UserMessage(user_message),
             ],
@@ -70,5 +70,5 @@ def get_phi4_response(user_message):
 if __name__ == "__main__":
     test_message = "What is the capital of France?"
     print(f"User: {test_message}")
-    response = get_phi4_response(test_message)
-    print(f"Phi-4: {response}")
+    response = get_phi4_mini_response(test_message)
+    print(f"Phi-4 Mini: {response}")

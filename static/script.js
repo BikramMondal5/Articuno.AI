@@ -104,6 +104,16 @@ const botDescriptions = {
         description: "Mistral AI's powerful coding assistant specialized in code generation, debugging, and software development. Provides intelligent, well-documented code solutions across multiple programming languages.",
         avatar: "https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg"
     },
+    "Phi-4": {
+        name: "Phi-4",
+        description: "Microsoft's advanced multimodal AI assistant with strong reasoning capabilities. Combines powerful instruction-following with the ability to understand both text and visual information.",
+        avatar: "https://raw.githubusercontent.com/microsoft/Phi-3CookBook/main/imgs/Phi-3-family.png"
+    },
+    "Phi-4 Mini": {
+        name: "Phi-4 Mini",
+        description: "Compact yet powerful reasoning AI by Microsoft. Despite its small size, excels at logical reasoning, problem-solving, and providing clear, well-structured answers.",
+        avatar: "https://raw.githubusercontent.com/microsoft/Phi-3CookBook/main/imgs/Phi-3-family.png"
+    },
     "DeepSeek R1": {
         name: "DeepSeek R1",
         description: "Specialized for code generation and technical reasoning.",
