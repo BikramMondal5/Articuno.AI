@@ -668,6 +668,18 @@ body {
     background-position: center;
 }
 
+#bikram-model {
+    background-image: url('https://avatars.githubusercontent.com/u/170235967?v=4');
+    background-size: cover;
+    background-position: center;
+}
+
+#wikipedia-model {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png');
+    background-size: cover;
+    background-position: center;
+}
+
 #cohere-command-a-model {
     background-image: url('https://github.com/images/modules/marketplace/models/families/cohere.svg');
     background-size: cover;
@@ -735,23 +747,33 @@ body {
 
 .model-stats {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     margin-bottom: 15px;
+    flex-wrap: nowrap;
 }
 
 .stat-item {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
+    text-align: center;
 }
 
 .stat-value {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .stat-label {
-    font-size: 12px;
+    font-size: 11px;
     color: #a0a0a0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .use-model-btn {
@@ -768,6 +790,57 @@ body {
 
 .use-model-btn:hover {
     opacity: 0.9;
+}
+
+/* Hidden Models Styles */
+.hidden-model {
+    display: none;
+}
+
+.hidden-model.show {
+    display: flex;
+}
+
+/* More Models Button Styles */
+.more-models-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.more-models-btn {
+    background: linear-gradient(90deg, #7e22ce, #a855f7);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+.more-models-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+}
+
+.more-models-btn:active {
+    transform: translateY(0);
+}
+
+.more-models-btn i {
+    transition: transform 0.3s ease;
+}
+
+.more-models-btn.active i {
+    transform: rotate(180deg);
 }
 
 /* Featured Tools Styles */
@@ -830,6 +903,7 @@ body {
 /* Bottom Bar Styles */
 .bottom-bar {
     padding: 12px;
+    display: none; /* Hidden by default, shown when start button is clicked */
 }
 
 .action-buttons {
@@ -1586,6 +1660,12 @@ body {
 }
 
 /* Chatbot avatar specific backgrounds for header */
+.chatbot-avatar#Bikram-avatar {
+    background-image: url('https://avatars.githubusercontent.com/u/170235967?v=4');
+    background-size: cover;
+    background-position: center;
+}
+
 .chatbot-avatar#codestral-2501-avatar {
     background-image: url('https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg');
     background-size: contain;
@@ -1760,6 +1840,13 @@ body {
     background-image: url('icons/articuno.png');
 }
 
+#showcase-avatar.Bikram-avatar {
+    background-image: url('https://avatars.githubusercontent.com/u/170235967?v=4');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 #showcase-avatar.gpt-4o-avatar {
     background-image: url('icons/openai-logo.jpg');
 }
@@ -1852,6 +1939,20 @@ body {
 
 #showcase-avatar.llama-33-70b-avatar {
     background-image: url('https://github.com/images/modules/marketplace/models/families/meta.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#showcase-avatar.cohere-command-a-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/cohere.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#showcase-avatar.cohere-command-r-plus-avatar {
+    background-image: url('https://github.com/images/modules/marketplace/models/families/cohere.svg');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
