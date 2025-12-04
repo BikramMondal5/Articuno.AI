@@ -2,6 +2,7 @@ flask==2.3.3
 azure-ai-inference
 azure-core
 markdown==3.5.1
+youtube-transcript-api
 Pygments==2.17.2
 openai
 # SpeechRecognition==3.10.0

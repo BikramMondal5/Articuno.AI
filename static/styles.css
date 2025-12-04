@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -22,7 +22,8 @@ body {
     position: sticky;
     top: 0;
     overflow-y: auto;
-    scrollbar-width: none; /* Hide scrollbar by default */
+    scrollbar-width: none;
+    /* Hide scrollbar by default */
 }
 
 /* Show scrollbar on hover for Firefox */
@@ -34,7 +35,8 @@ body {
 /* Custom scrollbar for sidebar (Webkit browsers) */
 .sidebar::-webkit-scrollbar {
     width: 8px;
-    display: none; /* Hide by default */
+    display: none;
+    /* Hide by default */
 }
 
 /* Show scrollbar on hover */
@@ -177,8 +179,14 @@ body {
     background-image: url('icons/articuno.png');
 }
 
-#Bikram-avatar { 
+#Bikram-avatar {
     background-image: url('https://avatars.githubusercontent.com/u/170235967?v=4');
+    background-size: cover;
+    background-position: center;
+}
+
+#ChatWithVideo-avatar {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/1384/1384060.png');
     background-size: cover;
     background-position: center;
 }
@@ -903,7 +911,8 @@ body {
 /* Bottom Bar Styles */
 .bottom-bar {
     padding: 12px;
-    display: none; /* Hidden by default, shown when start button is clicked */
+    display: none;
+    /* Hidden by default, shown when start button is clicked */
 }
 
 .action-buttons {
@@ -990,10 +999,11 @@ body {
     background: none;
     border: none;
     color: white;
-    height: 30px; 
+    height: 30px;
     font-size: 17px;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    caret-color: #a855f7; /* Purple cursor color */
+    caret-color: #a855f7;
+    /* Purple cursor color */
 }
 
 .chat-input:focus {
@@ -1018,12 +1028,13 @@ body {
     background: #2563EB;
 }
 
-#edubyte-avatar{
+#edubyte-avatar {
     background-image: url("icons/edubyte.jpg");
     background-size: cover;
     cursor: pointer;
 }
-.models-name{
+
+.models-name {
     cursor: pointer;
     font-size: 15px;
     font-weight: 470;
@@ -1034,45 +1045,46 @@ body {
     padding: 7px 14px;
 }
 
-#gpt-4o-avatar{
+#gpt-4o-avatar {
     background-image: url("icons/openai-logo.jpg");
     background-size: cover;
     background-position: center;
 }
 
-#gpt-4o-mini-avatar{
+#gpt-4o-mini-avatar {
     background-image: url("icons/openai-logo.jpg");
     background-size: cover;
     background-position: center;
 }
 
-#DeepSeek-avatar{
+#DeepSeek-avatar {
     background-image: url("icons/deepseek-logo-icon.png");
     background-size: cover;
     background-position: center;
 }
 
-#DeepSeek-V3-avatar{
+#DeepSeek-V3-avatar {
     background-image: url("icons/deepseek-logo-icon.png");
     background-size: cover;
     background-position: center;
 }
 
-#gemini-avatar{
-    background-image: url("icons/Gemini.png");
-    background-size: cover;
-    background-position: center;
-}
-#gemini-25-avatar{
+#gemini-avatar {
     background-image: url("icons/Gemini.png");
     background-size: cover;
     background-position: center;
 }
 
-#recipe-queen-avatar{
+#gemini-25-avatar {
+    background-image: url("icons/Gemini.png");
+    background-size: cover;
+    background-position: center;
+}
+
+#recipe-queen-avatar {
     background-image: url("icons/chef-logo.jpg");
     background-size: cover;
-} 
+}
 
 /* Chat History Styles - Add to your existing CSS file */
 .chat-history {
@@ -1126,7 +1138,8 @@ body {
     margin: 0 10px;
     min-width: 40px;
     position: relative;
-    top: -10px; /* Move profile 10px higher */
+    top: -10px;
+    /* Move profile 10px higher */
 }
 
 .profile-avatar {
@@ -1136,7 +1149,8 @@ body {
     background-color: #3D3D3D;
     background-size: cover;
     background-position: center;
-    margin-bottom: 3px; /* Reduced from 5px */
+    margin-bottom: 3px;
+    /* Reduced from 5px */
     aspect-ratio: 1 / 1;
     object-fit: cover;
 }
@@ -1157,10 +1171,12 @@ body {
     font-size: 12px;
     color: #999;
     text-align: center;
-    margin-top: -2px; /* Added negative margin to move name closer to avatar */
+    margin-top: -2px;
+    /* Added negative margin to move name closer to avatar */
 }
 
-.user-message, .ai-message {
+.user-message,
+.ai-message {
     max-width: 90%;
     padding: 16px 24px;
     border-radius: 12px;
@@ -1231,11 +1247,14 @@ body {
 }
 
 @keyframes shm-dots {
-    0%, 100% { 
+
+    0%,
+    100% {
         transform: translateY(0) scale(0.6);
         opacity: 0.6;
     }
-    50% { 
+
+    50% {
         transform: translateY(-10px) scale(1);
         opacity: 1;
     }
@@ -1243,18 +1262,28 @@ body {
 
 /* Animation for messages */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Markdown styling for AI responses */
-.ai-message h1, .ai-message h2, .ai-message h3 {
+.ai-message h1,
+.ai-message h2,
+.ai-message h3 {
     margin-top: 10px;
     margin-bottom: 8px;
     color: #f9f9f9;
 }
 
-.ai-message ul, .ai-message ol {
+.ai-message ul,
+.ai-message ol {
     margin-left: 20px;
     margin-bottom: 10px;
 }
@@ -1348,7 +1377,8 @@ body {
 }
 
 .code-copy-btn.copied i:before {
-    content: "\f00c"; /* FontAwesome check icon */
+    content: "\f00c";
+    /* FontAwesome check icon */
 }
 
 /* Syntax highlighting for code blocks - GitHub Dark Theme */
@@ -1495,12 +1525,12 @@ body {
     vertical-align: -0.1em;
 }
 
-#msg-container:hover{
+#msg-container:hover {
     border: 1px solid #a855f7;
 }
 
 /* New */
-#options{
+#options {
     position: relative;
     bottom: 10px;
 }
@@ -1610,9 +1640,20 @@ body {
 
 /* Animation for recording indicator */
 @keyframes pulse {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.2); }
-    100% { opacity: 1; transform: scale(1); }
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* Style for microphone button when recording */
@@ -1620,7 +1661,7 @@ body {
     color: #ff5c74;
 }
 
-#Articuno-avatar{
+#Articuno-avatar {
     background-image: url("icons/articuno.png");
     background-size: cover;
     background-position: center;
@@ -1662,6 +1703,12 @@ body {
 /* Chatbot avatar specific backgrounds for header */
 .chatbot-avatar#Bikram-avatar {
     background-image: url('https://avatars.githubusercontent.com/u/170235967?v=4');
+    background-size: cover;
+    background-position: center;
+}
+
+.chatbot-avatar#ChatWithVideo-avatar {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/1384/1384060.png');
     background-size: cover;
     background-position: center;
 }
@@ -1835,6 +1882,28 @@ body {
     transform: translateY(0);
 }
 
+/* YouTube input styling for ChatWithVideo showcase */
+.youtube-showcase-input {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.youtube-showcase-input input:focus {
+    outline: none;
+    border-color: #c084fc;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+}
+
+.youtube-showcase-input button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+}
+
+.youtube-showcase-input button:active {
+    transform: translateY(0);
+}
+
 /* Bot avatar specific backgrounds for showcase */
 #showcase-avatar.Articuno-avatar {
     background-image: url('icons/articuno.png');
@@ -1865,6 +1934,13 @@ body {
 
 #showcase-avatar.wikipedia-avatar {
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/2244px-Wikipedia-logo-v2.svg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#showcase-avatar.ChatWithVideo-avatar {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/1384/1384060.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1962,7 +2038,8 @@ body {
 .bot-item.active {
     background: #2D2D2D;
     border-left: 3px solid #a855f7;
-    padding-left: 5px; /* Compensate for border to prevent tilt */
+    padding-left: 5px;
+    /* Compensate for border to prevent tilt */
 }
 
 .bot-item.active .bot-avatar {
@@ -2000,8 +2077,8 @@ body {
     backdrop-filter: blur(15px);
     border-radius: 20px;
     border: 1px solid rgba(168, 85, 247, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 
-                inset 0 0 30px rgba(168, 85, 247, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+        inset 0 0 30px rgba(168, 85, 247, 0.1);
     padding: 32px;
     color: white;
     animation: modalFadeIn 0.5s forwards;
@@ -2083,8 +2160,8 @@ body {
 .location-input:focus {
     outline: none;
     border-color: #a855f7;
-    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.25), 
-                0 0 20px rgba(168, 85, 247, 0.2);
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.25),
+        0 0 20px rgba(168, 85, 247, 0.2);
 }
 
 .location-input::placeholder {
@@ -2158,7 +2235,7 @@ body {
     transform: translateY(-5px);
     border-color: rgba(168, 85, 247, 0.5);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2),
-                0 0 20px rgba(168, 85, 247, 0.15);
+        0 0 20px rgba(168, 85, 247, 0.15);
 }
 
 .weather-card-icon {
@@ -2218,10 +2295,10 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, 
-        transparent, 
-        rgba(255, 255, 255, 0.2), 
-        transparent);
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent);
     transition: all 0.6s;
 }
 
@@ -2239,6 +2316,7 @@ body {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -2249,10 +2327,12 @@ body {
     0% {
         opacity: 0.7;
     }
+
     50% {
         opacity: 1;
         text-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
     }
+
     100% {
         opacity: 0.7;
     }
@@ -2376,9 +2456,17 @@ body {
 
 /* Animation for the send button */
 @keyframes sending {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .sending {
@@ -2506,9 +2594,17 @@ body {
 
 /* Animation for the send button */
 @keyframes sending {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .sending {
@@ -2569,7 +2665,8 @@ body {
     display: flex;
     align-items: center;
     gap: 4px;
-    color: #10b981; /* Green color for connected status */
+    color: #10b981;
+    /* Green color for connected status */
     font-size: 12px;
 }
 
@@ -2581,6 +2678,7 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #10b981; /* Green color for connected */
+    background-color: #10b981;
+    /* Green color for connected */
     margin-right: 4px;
 }
