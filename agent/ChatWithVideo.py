@@ -15,6 +15,9 @@ ENDPOINT = "https://models.github.ai/inference"
 MODEL_NAME = "openai/gpt-4o"
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 
+# Memory storage for video transcripts per session
+video_memory = {}
+
 # Validate token
 if not GITHUB_TOKEN:
     print("WARNING: GITHUB_TOKEN environment variable is not set for ChatWithVideo!")
@@ -127,47 +130,153 @@ def summarize_transcript(transcript):
         print("=================================\n")
         return {"success": False, "error": f"Summarization error: {str(e)}"}
 
-def process_chatwithvideo_request(youtube_url):
-    """Process ChatWithVideo request with YouTube URL."""
+def answer_question_about_video(question, session_id):
+    """Answer questions about the video using the stored transcript."""
+    if client is None:
+        return {"success": False, "error": "Azure AI client is not initialized. Please check GITHUB_TOKEN."}
+    
+    # Check if we have a transcript in memory for this session
+    if session_id not in video_memory or 'transcript' not in video_memory[session_id]:
+        return {
+            "success": False, 
+            "error": "No video transcript found in memory. Please analyze a video first."
+        }
+    
+    transcript = video_memory[session_id]['transcript']
+    video_id = video_memory[session_id].get('video_id', 'unknown')
+    
+    try:
+        print(f"\n=== Answering question about video {video_id} ===")
+        print(f"Question: {question}")
+        print(f"Transcript length: {len(transcript)} characters")
+        
+        # Build conversation history for context
+        conversation_history = video_memory[session_id].get('conversation_history', [])
+        
+        # Create messages for the AI
+        messages = [
+            SystemMessage(
+                "You are an AI assistant specialized in answering questions about YouTube videos. "
+                "You have access to the full transcript of a video. Use this transcript to provide accurate, "
+                "detailed answers to the user's questions. If the information is not in the transcript, "
+                "say so honestly. Format your responses using Markdown for better readability."
+            ),
+            UserMessage(f"Here is the video transcript:\n\n{transcript}\n\n")
+        ]
+        
+        # Add conversation history
+        for msg in conversation_history[-6:]:  # Keep last 3 exchanges (6 messages)
+            if msg['role'] == 'user':
+                messages.append(UserMessage(msg['content']))
+            else:
+                messages.append(SystemMessage(f"Previous response: {msg['content']}"))
+        
+        # Add current question
+        messages.append(UserMessage(question))
+        
+        response = client.complete(
+            messages=messages,
+            temperature=0.7,
+            top_p=1.0,
+            max_tokens=1000,
+            model=MODEL_NAME
+        )
+        
+        answer = response.choices[0].message.content
+        
+        # Store in conversation history
+        conversation_history.append({'role': 'user', 'content': question})
+        conversation_history.append({'role': 'assistant', 'content': answer})
+        video_memory[session_id]['conversation_history'] = conversation_history
+        
+        print(f"Answer generated successfully")
+        return {"success": True, "answer": answer}
+        
+    except Exception as e:
+        print(f"\n=== Error answering question ===")
+        print(f"Error type: {type(e).__name__}")
+        print(f"Error message: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return {"success": False, "error": f"Error answering question: {str(e)}"}
+
+def process_chatwithvideo_request(user_input, session_id=None):
+    """Process ChatWithVideo request - either analyze a video or answer questions about it."""
     print("\n=== ChatWithVideo request ===")
-    print(f"YouTube URL: {youtube_url}")
+    print(f"User input: {user_input}")
+    print(f"Session ID: {session_id}")
     
-    if not youtube_url:
-        return jsonify({"success": False, "error": "Please enter a YouTube URL"}), 400
+    if not user_input:
+        return jsonify({"success": False, "error": "Please provide input"}), 400
     
-    video_id = extract_video_id(youtube_url)
-    print(f"Extracted video ID: {video_id}")
+    # Check if input is a YouTube URL
+    video_id = extract_video_id(user_input)
     
-    if not video_id:
-        return jsonify({"success": False, "error": "Invalid YouTube URL. Please check and try again."}), 400
-    
-    # Get transcript
-    print("Fetching transcript...")
-    transcript_result = get_transcript(video_id)
-    print(f"Transcript result: success={transcript_result['success']}")
-    
-    if not transcript_result["success"]:
-        print(f"Transcript error: {transcript_result['error']}")
-        return jsonify({"success": False, "error": transcript_result["error"]}), 400
-    
-    print(f"Transcript fetched: {len(transcript_result['transcript'])} characters")
-    
-    # Summarize transcript
-    print("Starting summarization...")
-    summary_result = summarize_transcript(transcript_result["transcript"])
-    print(f"Summarization result: success={summary_result['success']}")
-    
-    if not summary_result["success"]:
-        print(f"Summarization error: {summary_result['error']}")
-        return jsonify({"success": False, "error": summary_result["error"]}), 500
-    
-    # Convert markdown to HTML
-    print("Converting markdown to HTML...")
-    summary_html = markdown.markdown(summary_result["summary"])
-    
-    print("Returning successful response")
-    return jsonify({
-        "success": True,
-        "video_id": video_id,
-        "response": summary_html
-    }), 200
+    if video_id:
+        # This is a YouTube URL - analyze the video
+        print(f"Extracted video ID: {video_id}")
+        
+        # Get transcript
+        print("Fetching transcript...")
+        transcript_result = get_transcript(video_id)
+        print(f"Transcript result: success={transcript_result['success']}")
+        
+        if not transcript_result["success"]:
+            print(f"Transcript error: {transcript_result['error']}")
+            return jsonify({"success": False, "error": transcript_result["error"]}), 400
+        
+        print(f"Transcript fetched: {len(transcript_result['transcript'])} characters")
+        
+        # Store transcript in memory for this session
+        if session_id:
+            video_memory[session_id] = {
+                'transcript': transcript_result['transcript'],
+                'video_id': video_id,
+                'conversation_history': []
+            }
+            print(f"Stored transcript in memory for session {session_id}")
+        
+        # Summarize transcript
+        print("Starting summarization...")
+        summary_result = summarize_transcript(transcript_result["transcript"])
+        print(f"Summarization result: success={summary_result['success']}")
+        
+        if not summary_result["success"]:
+            print(f"Summarization error: {summary_result['error']}")
+            return jsonify({"success": False, "error": summary_result["error"]}), 500
+        
+        # Convert markdown to HTML
+        print("Converting markdown to HTML...")
+        summary_html = markdown.markdown(summary_result["summary"])
+        
+        # Add helpful note about asking questions
+        summary_html += "<br><br><p style='color: #a0a0a0; font-style: italic;'>💬 You can now ask me questions about this video!</p>"
+        
+        print("Returning successful response")
+        return jsonify({
+            "success": True,
+            "video_id": video_id,
+            "response": summary_html
+        }), 200
+    else:
+        # This is a question about the video
+        print("Processing as question about video")
+        
+        if not session_id:
+            return jsonify({
+                "success": False, 
+                "error": "No session ID provided. Cannot retrieve video context."
+            }), 400
+        
+        answer_result = answer_question_about_video(user_input, session_id)
+        
+        if not answer_result["success"]:
+            return jsonify({"success": False, "error": answer_result["error"]}), 400
+        
+        # Convert markdown to HTML
+        answer_html = markdown.markdown(answer_result["answer"])
+        
+        return jsonify({
+            "success": True,
+            "response": answer_html
+        }), 200

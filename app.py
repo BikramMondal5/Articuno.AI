@@ -596,7 +596,7 @@ def chat():
         elif bot_name == "Cohere Command R+":
             response_data = process_cohere_command_r_plus_request(user_input)
         elif bot_name == "ChatWithVideo":
-            response_data = process_chatwithvideo_request(user_input)
+            response_data = process_chatwithvideo_request(user_input, session_id)
         elif bot_name == "Gemini 2.5 Flash":
             response_data = get_gemini_25_flash_response(user_input, image_data)
         elif bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):
