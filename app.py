@@ -202,8 +202,7 @@ try:
         if ffmpeg_path:
             AudioSegment.converter = ffmpeg_path
             print(f"FFmpeg found at: {ffmpeg_path}")
-        else:
-            print("FFmpeg not found in common locations. Relying on PATH environment variable.")
+        
 except Exception as e:
     print(f"Error setting FFmpeg path: {str(e)}")
 

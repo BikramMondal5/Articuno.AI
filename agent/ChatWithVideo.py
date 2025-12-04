@@ -23,14 +23,12 @@ if not GITHUB_TOKEN:
     print("WARNING: GITHUB_TOKEN environment variable is not set for ChatWithVideo!")
     client = None
 else:
-    print(f"ChatWithVideo: GITHUB_TOKEN loaded successfully")
     try:
         # Azure AI Inference client configuration
         client = ChatCompletionsClient(
             endpoint=ENDPOINT,
             credential=AzureKeyCredential(GITHUB_TOKEN),
         )
-        print("ChatWithVideo: Azure AI Inference client initialized successfully")
     except Exception as e:
         print(f"Error initializing Azure AI client for ChatWithVideo: {e}")
         client = None
@@ -53,21 +51,16 @@ def extract_video_id(youtube_url):
 def get_transcript(video_id):
     """Get transcript from YouTube video."""
     try:
-        print(f"Fetching transcript for video ID: {video_id}")
         # Initialize the API client
         ytt_api = YouTubeTranscriptApi()
         
         # Try to get transcript - first try English, then fall back to other languages
         try:
-            print("Attempting to fetch transcript with preferred languages: en, hi, bn")
             fetched_transcript = ytt_api.fetch(video_id, languages=['en', 'hi', 'bn'])
             full_text = " ".join([snippet.text for snippet in fetched_transcript.snippets])
-            print(f"Transcript fetched successfully: {len(full_text)} characters")
             return {"success": True, "transcript": full_text}
         except Exception as fetch_error:
-            print(f"Error fetching with preferred languages: {fetch_error}")
             # Try to list available transcripts and get the first one
-            print("Trying to list all available transcripts...")
             transcript_list = ytt_api.list(video_id)
             
             # Try to find any available transcript
@@ -75,7 +68,6 @@ def get_transcript(video_id):
                 try:
                     fetched = transcript.fetch()
                     full_text = " ".join([snippet.text for snippet in fetched.snippets])
-                    print(f"Transcript found in {transcript.language}: {len(full_text)} characters")
                     return {"success": True, "transcript": full_text}
                 except:
                     continue
@@ -83,13 +75,10 @@ def get_transcript(video_id):
             return {"success": False, "error": "No transcript found for this video."}
             
     except NoTranscriptFound:
-        print("NoTranscriptFound exception")
         return {"success": False, "error": "No transcript found for this video."}
     except TranscriptsDisabled:
-        print("TranscriptsDisabled exception")
         return {"success": False, "error": "Transcripts are disabled for this video."}
     except Exception as e:
-        print(f"Transcript fetch error: {type(e).__name__}: {str(e)}")
         import traceback
         traceback.print_exc()
         return {"success": False, "error": f"Error fetching transcript: {str(e)}"}
@@ -100,12 +89,6 @@ def summarize_transcript(transcript):
         return {"success": False, "error": "Azure AI client is not initialized. Please check GITHUB_TOKEN."}
     
     try:
-        print(f"\n=== Attempting to summarize transcript ===")
-        print(f"Endpoint: {ENDPOINT}")
-        print(f"Model: {MODEL_NAME}")
-        print(f"Transcript length: {len(transcript)} characters")
-        print(f"Client type: {type(client)}")
-        
         response = client.complete(
             messages=[
                 SystemMessage("You're an advanced AI designed to summarize YouTube videos. Extract key information from the transcript including Title of the video, speaker, main topics, key takeaways, Timestamps for Notable Moments, Quotes and Impactful Statements, Analysis Sentiment if possible and notable insights. Format your response using Markdown with proper headings, bullet points, add interactive & appropriate emojis and sections for easy reading. Include a brief overview, key points, and conclusion."),
@@ -117,17 +100,10 @@ def summarize_transcript(transcript):
             model=MODEL_NAME
         )
         
-        print(f"Response received successfully")
-        print(f"Response type: {type(response)}")
         return {"success": True, "summary": response.choices[0].message.content}
     except Exception as e:
-        print(f"\n=== Error during summarization ===")
-        print(f"Error type: {type(e).__name__}")
-        print(f"Error message: {str(e)}")
         import traceback
-        print("Full traceback:")
         traceback.print_exc()
-        print("=================================\n")
         return {"success": False, "error": f"Summarization error: {str(e)}"}
 
 def answer_question_about_video(question, session_id):
@@ -146,10 +122,6 @@ def answer_question_about_video(question, session_id):
     video_id = video_memory[session_id].get('video_id', 'unknown')
     
     try:
-        print(f"\n=== Answering question about video {video_id} ===")
-        print(f"Question: {question}")
-        print(f"Transcript length: {len(transcript)} characters")
-        
         # Build conversation history for context
         conversation_history = video_memory[session_id].get('conversation_history', [])
         
@@ -189,23 +161,15 @@ def answer_question_about_video(question, session_id):
         conversation_history.append({'role': 'assistant', 'content': answer})
         video_memory[session_id]['conversation_history'] = conversation_history
         
-        print(f"Answer generated successfully")
         return {"success": True, "answer": answer}
         
     except Exception as e:
-        print(f"\n=== Error answering question ===")
-        print(f"Error type: {type(e).__name__}")
-        print(f"Error message: {str(e)}")
         import traceback
         traceback.print_exc()
         return {"success": False, "error": f"Error answering question: {str(e)}"}
 
 def process_chatwithvideo_request(user_input, session_id=None):
     """Process ChatWithVideo request - either analyze a video or answer questions about it."""
-    print("\n=== ChatWithVideo request ===")
-    print(f"User input: {user_input}")
-    print(f"Session ID: {session_id}")
-    
     if not user_input:
         return jsonify({"success": False, "error": "Please provide input"}), 400
     
@@ -214,18 +178,11 @@ def process_chatwithvideo_request(user_input, session_id=None):
     
     if video_id:
         # This is a YouTube URL - analyze the video
-        print(f"Extracted video ID: {video_id}")
-        
         # Get transcript
-        print("Fetching transcript...")
         transcript_result = get_transcript(video_id)
-        print(f"Transcript result: success={transcript_result['success']}")
         
         if not transcript_result["success"]:
-            print(f"Transcript error: {transcript_result['error']}")
             return jsonify({"success": False, "error": transcript_result["error"]}), 400
-        
-        print(f"Transcript fetched: {len(transcript_result['transcript'])} characters")
         
         # Store transcript in memory for this session
         if session_id:
@@ -234,25 +191,19 @@ def process_chatwithvideo_request(user_input, session_id=None):
                 'video_id': video_id,
                 'conversation_history': []
             }
-            print(f"Stored transcript in memory for session {session_id}")
         
         # Summarize transcript
-        print("Starting summarization...")
         summary_result = summarize_transcript(transcript_result["transcript"])
-        print(f"Summarization result: success={summary_result['success']}")
         
         if not summary_result["success"]:
-            print(f"Summarization error: {summary_result['error']}")
             return jsonify({"success": False, "error": summary_result["error"]}), 500
         
         # Convert markdown to HTML
-        print("Converting markdown to HTML...")
         summary_html = markdown.markdown(summary_result["summary"])
         
         # Add helpful note about asking questions
         summary_html += "<br><br><p style='color: #a0a0a0; font-style: italic;'>💬 You can now ask me questions about this video!</p>"
         
-        print("Returning successful response")
         return jsonify({
             "success": True,
             "video_id": video_id,
@@ -260,7 +211,6 @@ def process_chatwithvideo_request(user_input, session_id=None):
         }), 200
     else:
         # This is a question about the video
-        print("Processing as question about video")
         
         if not session_id:
             return jsonify({
