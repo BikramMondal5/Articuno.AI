@@ -168,6 +168,14 @@ except ImportError:
     def get_gpt4o_response(message, image_data=None):
         return jsonify({"error": "GPT-4o is currently unavailable."}), 500
 
+# Import ChatWithVideo function
+try:
+    from agent.ChatWithVideo import process_chatwithvideo_request
+except ImportError:
+    # Fallback if import fails
+    def process_chatwithvideo_request(youtube_url):
+        return jsonify({"error": "ChatWithVideo is currently unavailable."}), 500
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -587,6 +595,8 @@ def chat():
             response_data = process_cohere_command_a_request(user_input)
         elif bot_name == "Cohere Command R+":
             response_data = process_cohere_command_r_plus_request(user_input)
+        elif bot_name == "ChatWithVideo":
+            response_data = process_chatwithvideo_request(user_input)
         elif bot_name == "Gemini 2.5 Flash":
             response_data = get_gemini_25_flash_response(user_input, image_data)
         elif bot_name == "Gemini 2.0 Flash" or bot_name.lower() == "gemini" or (image_data and bot_name != "Articuno.AI"):

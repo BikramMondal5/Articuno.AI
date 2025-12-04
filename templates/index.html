@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Articuno.AI - AI powered educational platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
     <link rel="stylesheet" href="{{ url_for('static',filename='styles.css') }}">
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
-        (function() {
+        (function () {
             // EmailJS initialization 
             emailjs.init("M4KE4Wov2aeS2NfWq"); // Replace with your actual EmailJS public key
         })();
     </script>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -30,7 +33,7 @@
                 <div class="category-header" data-category="agents">
                     <i class="fas fa-chevron-down category-icon"></i>
                     <span class="category-title">Agents</span>
-                    <span class="category-count">3</span>
+                    <span class="category-count">4</span>
                 </div>
                 <div class="category-bots" id="agents-bots">
                     <div class="bot-item">
@@ -40,6 +43,10 @@
                     <div class="bot-item">
                         <div class="bot-avatar" id="Bikram-avatar"></div>
                         <span>Bikram.AI</span>
+                    </div>
+                    <div class="bot-item">
+                        <div class="bot-avatar" id="ChatWithVideo-avatar"></div>
+                        <span>ChatWithVideo</span>
                     </div>
                     <div class="bot-item">
                         <div class="bot-avatar" id="wikipedia-avatar"></div>
@@ -207,7 +214,7 @@
                     <h1>Welcome to <span class="edubyte-text">Articuno.AI!</span></h1>
                     <p class="welcome-subtitle">🤖🪄 Interact. Innovate. Inspire with AI</p>
                 </div>
-                
+
                 <!-- Quick Actions Grid -->
                 <div class="grid-container">
                     <div class="grid-item">
@@ -265,11 +272,11 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Models Section -->
                 <div class="models-section">
                     <h2 class="section-title">AI Models</h2>
-                    
+
                     <div class="models-grid" id="models-grid">
                         <!-- Card 1: Articuno.AI -->
                         <div class="model-card" data-model="Articuno.AI">
@@ -280,7 +287,8 @@
                                     <span class="model-badge">Weather Agent</span>
                                 </div>
                             </div>
-                            <p class="model-description">Intelligent weather assistant with real-time forecasts and alerts</p>
+                            <p class="model-description">Intelligent weather assistant with real-time forecasts and
+                                alerts</p>
                             <div class="model-stats">
                                 <div class="stat-item">
                                     <span class="stat-value">Real-time</span>
@@ -297,7 +305,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <!-- Card 2: Bikram.AI -->
                         <div class="model-card" data-model="Bikram.AI">
                             <div class="model-header">
@@ -307,7 +315,8 @@
                                     <span class="model-badge">Developer Assistant</span>
                                 </div>
                             </div>
-                            <p class="model-description">Your friendly Full-stack Developer companion with web dev expertise</p>
+                            <p class="model-description">Your friendly Full-stack Developer companion with web dev
+                                expertise</p>
                             <div class="model-stats">
                                 <div class="stat-item">
                                     <span class="stat-value">Code Gen</span>
@@ -324,7 +333,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <!-- Card 3: Wikipedia DeepSearch -->
                         <div class="model-card" data-model="Wikipedia DeepSearch">
                             <div class="model-header">
@@ -334,7 +343,8 @@
                                     <span class="model-badge">Knowledge Agent</span>
                                 </div>
                             </div>
-                            <p class="model-description">Intelligent Wikipedia search assistant for accurate information</p>
+                            <p class="model-description">Intelligent Wikipedia search assistant for accurate information
+                            </p>
                             <div class="model-stats">
                                 <div class="stat-item">
                                     <span class="stat-value">Deep</span>
@@ -351,7 +361,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <!-- Card 4: GPT-4o -->
                         <div class="model-card" data-model="GPT-4o">
                             <div class="model-header">
@@ -378,7 +388,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <!-- Card 5: DeepSeek V3 -->
                         <div class="model-card" data-model="DeepSeek V3">
                             <div class="model-header">
@@ -388,7 +398,8 @@
                                     <span class="model-badge">DeepSeek</span>
                                 </div>
                             </div>
-                            <p class="model-description">Advanced reasoning and comprehensive problem-solving capabilities</p>
+                            <p class="model-description">Advanced reasoning and comprehensive problem-solving
+                                capabilities</p>
                             <div class="model-stats">
                                 <div class="stat-item">
                                     <span class="stat-value">Reasoning</span>
@@ -405,7 +416,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <!-- Card 6: Gemini 2.5 Flash -->
                         <div class="model-card" data-model="Gemini 2.5 Flash">
                             <div class="model-header">
@@ -415,7 +426,8 @@
                                     <span class="model-badge">Google</span>
                                 </div>
                             </div>
-                            <p class="model-description">Latest Gemini model with enhanced reasoning and multimodal capabilities</p>
+                            <p class="model-description">Latest Gemini model with enhanced reasoning and multimodal
+                                capabilities</p>
                             <div class="model-stats">
                                 <div class="stat-item">
                                     <span class="stat-value">Multilingual</span>
@@ -432,7 +444,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <!-- Card 7: Codestral 2501 -->
                         <div class="model-card" data-model="Codestral 2501">
                             <div class="model-header">
@@ -459,7 +471,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <!-- Card 8: Grok-3 -->
                         <div class="model-card" data-model="Grok-3">
                             <div class="model-header">
@@ -486,7 +498,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <!-- Card 9: Cohere Command R+ -->
                         <div class="model-card" data-model="Cohere Command R+">
                             <div class="model-header">
@@ -496,7 +508,8 @@
                                     <span class="model-badge">Cohere</span>
                                 </div>
                             </div>
-                            <p class="model-description">Enhanced reasoning with comprehensive answers and complex problem-solving</p>
+                            <p class="model-description">Enhanced reasoning with comprehensive answers and complex
+                                problem-solving</p>
                             <div class="model-stats">
                                 <div class="stat-item">
                                     <span class="stat-value">RAG</span>
@@ -513,9 +526,9 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <!-- Hidden Models (will be shown when "More" is clicked) -->
-                        
+
                         <!-- More Models (hidden by default) -->
                         <div class="model-card hidden-model" data-model="DeepSeek R1">
                             <div class="model-header">
@@ -542,7 +555,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <div class="model-card hidden-model" data-model="Gemini 2.0 Flash">
                             <div class="model-header">
                                 <div class="model-avatar" id="gemini-model"></div>
@@ -568,7 +581,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <div class="model-card hidden-model" data-model="GPT-4o-mini">
                             <div class="model-header">
                                 <div class="model-avatar" id="gpt4-mini-model"></div>
@@ -594,7 +607,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <div class="model-card hidden-model" data-model="Grok-3 Mini">
                             <div class="model-header">
                                 <div class="model-avatar" id="grok3-mini-model"></div>
@@ -620,7 +633,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <div class="model-card hidden-model" data-model="Ministral 3B">
                             <div class="model-header">
                                 <div class="model-avatar" id="ministral-model"></div>
@@ -646,7 +659,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <div class="model-card hidden-model" data-model="Cohere Command A">
                             <div class="model-header">
                                 <div class="model-avatar" id="cohere-command-a-model"></div>
@@ -655,7 +668,8 @@
                                     <span class="model-badge">Cohere</span>
                                 </div>
                             </div>
-                            <p class="model-description">Powerful AI with excellent contextual understanding and conversational abilities</p>
+                            <p class="model-description">Powerful AI with excellent contextual understanding and
+                                conversational abilities</p>
                             <div class="model-stats">
                                 <div class="stat-item">
                                     <span class="stat-value">RAG</span>
@@ -672,7 +686,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <div class="model-card hidden-model" data-model="Phi-4">
                             <div class="model-header">
                                 <div class="model-avatar" id="phi-4-model"></div>
@@ -698,7 +712,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <div class="model-card hidden-model" data-model="Phi-4 Mini">
                             <div class="model-header">
                                 <div class="model-avatar" id="phi-4-mini-model"></div>
@@ -724,7 +738,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <div class="model-card hidden-model" data-model="Meta Llama 3.1 8B">
                             <div class="model-header">
                                 <div class="model-avatar" id="llama-31-8b-model"></div>
@@ -750,7 +764,7 @@
                             </div>
                             <button class="use-model-btn">Use Model</button>
                         </div>
-                        
+
                         <div class="model-card hidden-model" data-model="Meta Llama 3.3 70B">
                             <div class="model-header">
                                 <div class="model-avatar" id="llama-33-70b-model"></div>
@@ -777,7 +791,7 @@
                             <button class="use-model-btn">Use Model</button>
                         </div>
                     </div>
-                    
+
                     <!-- More Button -->
                     <div class="more-models-btn-container">
                         <button id="toggle-models-btn" class="more-models-btn">
@@ -786,42 +800,42 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <!-- Featured Tools -->
                 <div class="featured-tools">
                     <h2 class="section-title">Featured Tools</h2>
-                    
+
                     <div class="tools-row">
                         <div class="tool-card">
                             <div class="tool-icon"><i class="fas fa-brain"></i></div>
                             <h3>AI Tutor</h3>
                             <p>Get personalized learning sessions with advanced AI tutoring</p>
                         </div>
-                        
+
                         <div class="tool-card">
                             <div class="tool-icon"><i class="fas fa-file-code"></i></div>
                             <h3>Code Generator</h3>
                             <p>Generate production-ready code in multiple languages</p>
                         </div>
-                        
+
                         <div class="tool-card">
                             <div class="tool-icon"><i class="fas fa-file-alt"></i></div>
                             <h3>Document Summary</h3>
                             <p>Extract key insights and summarize long documents</p>
                         </div>
-                        
+
                         <div class="tool-card">
                             <div class="tool-icon"><i class="fas fa-language"></i></div>
                             <h3>Translation</h3>
                             <p>Translate content between multiple languages with high accuracy</p>
                         </div>
-                        
+
                         <div class="tool-card">
                             <div class="tool-icon"><i class="fas fa-question-circle"></i></div>
                             <h3>Smart Q&A</h3>
                             <p>Advanced question answering with detailed explanations</p>
                         </div>
-                        
+
                         <div class="tool-card">
                             <div class="tool-icon"><i class="fas fa-pen-fancy"></i></div>
                             <h3>Writing Agent</h3>
@@ -836,7 +850,8 @@
                 <div class="showcase-content">
                     <div class="showcase-avatar" id="showcase-avatar"></div>
                     <h1 class="showcase-title" id="showcase-title">Select a Chatbot</h1>
-                    <p class="showcase-description" id="showcase-description">Choose a chatbot from the sidebar to get started</p>
+                    <p class="showcase-description" id="showcase-description">Choose a chatbot from the sidebar to get
+                        started</p>
                     <button class="start-chat-btn" id="start-chat-btn" style="display: none;">Start Analysing</button>
                 </div>
             </div>
@@ -893,29 +908,30 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Weather Modal -->
     <div id="weather-modal-overlay" class="weather-modal-overlay">
         <div class="weather-modal">
             <button id="modal-close-btn" class="modal-close-btn">
                 <i class="fas fa-times"></i>
             </button>
-            
+
             <div class="modal-header">
                 <h2>Weather Analysis</h2>
                 <p>Check weather conditions for your location</p>
             </div>
-            
+
             <div class="location-input-container">
                 <i class="fas fa-map-marker-alt location-input-icon"></i>
-                <input type="text" class="location-input" id="location-input" placeholder="Enter a location (e.g., Kolkata, London)">
+                <input type="text" class="location-input" id="location-input"
+                    placeholder="Enter a location (e.g., Kolkata, London)">
             </div>
-            
+
             <button class="use-location-btn" id="use-location-btn">
                 <i class="fas fa-location-arrow"></i>
                 Use My Current Location
             </button>
-            
+
             <div class="weather-cards-container">
                 <div class="weather-card">
                     <div class="weather-card-icon">
@@ -925,7 +941,7 @@
                     <div class="weather-card-value" id="temperature-value">--°C</div>
                     <div class="weather-card-description" id="temperature-description">Current condition</div>
                 </div>
-                
+
                 <div class="weather-card">
                     <div class="weather-card-icon">
                         <i class="fas fa-wind"></i>
@@ -934,7 +950,7 @@
                     <div class="weather-card-value" id="wind-value">-- km/h</div>
                     <div class="weather-card-description" id="humidity-value">Humidity: --%</div>
                 </div>
-                
+
                 <div class="weather-card">
                     <div class="weather-card-icon">
                         <i class="fas fa-cloud-sun"></i>
@@ -944,7 +960,7 @@
                     <div class="weather-card-description" id="forecast-description">Next 2-3 days</div>
                 </div>
             </div>
-            
+
             <button class="start-analyzing-btn" id="start-analyzing-btn">
                 Start Analyzing
             </button>
@@ -957,27 +973,27 @@
             <button id="email-dialog-close-btn" class="modal-close-btn">
                 <i class="fas fa-times"></i>
             </button>
-            
+
             <div class="modal-header">
                 <h2>Email Weather Report</h2>
                 <p>Send current weather information via email</p>
             </div>
-            
+
             <div class="email-input-container">
                 <i class="fas fa-envelope email-icon"></i>
                 <input type="email" id="recipient-email" placeholder="Enter recipient's email address">
             </div>
-            
+
             <div class="email-input-container">
                 <i class="fas fa-user email-icon"></i>
                 <input type="text" id="recipient-name" placeholder="Enter recipient's name (optional)">
             </div>
-            
+
             <button id="send-weather-email-btn" class="send-weather-email-btn" disabled>
                 <i class="fas fa-paper-plane"></i>
                 Send Weather Report
             </button>
-            
+
             <div id="email-status" class="email-status"></div>
         </div>
     </div>
@@ -986,24 +1002,24 @@
     <script src="{{ url_for('static',filename='session_manager.js') }}"></script>
     <!-- Main Script -->
     <script src="{{ url_for('static',filename='script.js') }}"></script>
-    
+
     <!-- Inline script to ensure the location button works correctly -->
     <script>
         // Direct handler for the location button
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const locationButton = document.getElementById('use-location-btn');
             if (locationButton) {
                 console.log('Adding direct inline handler to location button');
-                
+
                 // Remove any existing listeners first
                 const newLocationButton = locationButton.cloneNode(true);
                 locationButton.parentNode.replaceChild(newLocationButton, locationButton);
-                
+
                 // Add a fresh click handler
-                newLocationButton.addEventListener('click', function(event) {
+                newLocationButton.addEventListener('click', function (event) {
                     event.preventDefault();
                     console.log('Location button clicked from inline script');
-                    
+
                     // Call the useCurrentLocation function from the main script
                     if (typeof useCurrentLocation === 'function') {
                         useCurrentLocation();
@@ -1016,4 +1032,5 @@
         });
     </script>
 </body>
+
 </html>
