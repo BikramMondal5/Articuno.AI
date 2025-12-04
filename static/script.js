@@ -167,7 +167,7 @@ const botDescriptions = {
     "ChatWithVideo": {
         name: "ChatWithVideo",
         description: "Analyze and summarize YouTube videos instantly. Get key insights, timestamps, and detailed breakdowns from any YouTube video.",
-        avatar: "https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
+        avatar: "https://goodly.co.in/wp-content/uploads/2023/10/youtube-logo-png-46016-1.png"
     },
     "Recipe Queen": {
         name: "Recipe Queen",
