@@ -1,6 +1,4 @@
-## 🤖🪄 Articuno.AI v2.0 - "Interact. Innovate. Inspire with AI"
-
-![Articuno.AI Landing Page](./static/icons/Landing-page.png) 
+## 🤖🪄 Articuno.AI v1.0 - "Interact. Innovate. Inspire with AI"
 
 Articuno.AI is a cutting-edge AI-powered platform that brings together 20+ advanced AI models and specialized agents in one unified interface. From weather forecasting to code generation, video analysis to web development assistance - experience the future of AI interaction.
 
@@ -372,9 +370,6 @@ Contributions are welcome! Here's how you can help:
 - Bug fixes and testing
 - Feature enhancements
 
-## 📜 License
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 - OpenAI, Google, xAI, Microsoft, Meta, Cohere, Mistral AI for their amazing AI models
 - GitHub Models for model access infrastructure
@@ -382,16 +377,10 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - The open-source community for various libraries and tools
 
 ## 📊 Project Status
-- **Version:** 2.0
+- **Version:** 1.0
 - **Status:** Active Development
 - **Last Updated:** December 2025
 
 ---
-
-<div align="center">
-
-**Made with ❤️ by Bikram Mondal**
-
-⭐ Star this repo if you find it useful!
-
-</div>
+## 📜 License
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
