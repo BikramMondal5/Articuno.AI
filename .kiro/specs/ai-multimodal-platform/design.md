@@ -2,13 +2,13 @@
 
 ## Overview
 
-This multi-modal, client-centric platform provides secure, privacy-first access to a variety of AI models and specialized agents for tasks such as chat, code assistance, weather lookups, and URL content summarization. It is designed to run primarily in the browser, minimizing server-side infrastructure while enabling safe, auditable integrations with model providers and toolchains.
+This multi-modal, client-centric platform provides secure, privacy-first access to a variety of AI models and specialized agents for tasks such as chat, code assistance, weather lookups, and YouTube video summarization. It is designed to run primarily in the browser, minimizing server-side infrastructure while enabling safe, auditable integrations with model providers and toolchains.
 
 Key goals:
 - Single-signature access for premium models (using a GitHub Personal Access Token)
 - Client-side processing and encrypted credential storage
 - Modular adapters for heterogeneous model APIs
-- Agent pattern for tool-enabled workflows (weather, code validation, URL summarization)
+- Agent pattern for tool-enabled workflows (weather, code validation, YouTube Video summarization)
 - Clear developer and testing contracts to ensure correctness and reliability
 
 ## High-Level Architecture
@@ -139,23 +139,23 @@ interface Tool {
 }
 ```
 
-## URL Content Summarizer (Agent)
+## YouTube Content Summarizer (Agent)
 
 ### Flow
-1. Detect URL in user message
-2. Fetch page HTML (requests with sensible user-agent and timeout)
-3. Extract main content (look for `<article>`, `<main>`, common content containers; strip nav/footer/ads)
-4. Summarize using AI model (return Markdown)
+1. Detect YouTube URL in user message
+2. Fetch the video transcript (using youtube_transcript_api)
+3. Sends the transcript to AI model
+4. Summarize and return Markdown response
 5. Convert Markdown → HTML for frontend display and store session
 
 ### Extraction Strategy
-- Use `requests` + `BeautifulSoup` or equivalent extraction library
-- Remove scripts/styles, then extract main textual nodes
-- Limit the extracted content size to avoid token exhaustion (e.g., first 10k characters)
+- Fetch the transcript using `YouTubeTranscriptApi.get_transcript(video_id)` or by listing available transcripts first.
+- Extract and combine text by iterating over each segment and joining the "text" fields.
+- Handle errors and fallbacks for cases like no transcript, disabled captions, or alternative languages.
 
 ### Summarization Prompt (example)
 ```
-You are an AI summarizer. Extract title, key points, important facts and conclusion.
+You are an AI summarizer for YouTube Video. Extract Title, Speaker, Key Points, Overall Sentiments, Conclusion etc.
 Format the output in Markdown with headings, bullet points and a brief conclusion.
 Keep it concise.
 ```
@@ -224,18 +224,18 @@ interface AppState {
 - Storage manager tests (set/get/remove/clear).
 - Model adapter tests (request normalization, error conditions).
 - Conversation manager tests (isolation, export).
-- URL extractor tests (various HTML structures and edge cases).
+- URL extractor tests (various videos transcript and edge cases).
 
 ### Property-Based Tests
 - Use Hypothesis (Python) and fast-check (TypeScript) for randomized validations:
   - PAT round-trip encryption
   - Conversation isolation and model switching
-  - URL validation across random inputs
+  - Video URL validation across random inputs
 
 ### Integration & E2E
 - Full authentication → model access flows
 - Multi-turn conversations and model switching
-- URL summarizer end-to-end with content extraction and AI summarization
+- YouTube Video summarizer end-to-end with content extraction and AI summarization
 
 ## Security & Performance Considerations
 
