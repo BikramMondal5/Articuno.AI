@@ -8,7 +8,7 @@ import os
 
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
+ 
 try:
     from database.db_manager import get_db_manager
     print("✓ Successfully imported database module")
