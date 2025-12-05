@@ -1,98 +1,397 @@
-## 🤖🪄 Articuno.AI v1.0 - "Interact. Innovate. Inspire with AI"
+## 🤖🪄 Articuno.AI v2.0 - "Interact. Innovate. Inspire with AI"
 
 ![Articuno.AI Landing Page](./static/icons/Landing-page.png) 
-Articuno V1.0 is an AI powered platform where user can interact with different generative AI including advanced LLMs GPT-40, DeepSeek, Gemini 2.0 Flash, Mistral AI and many more.
 
-## 🌟 Features 
-- 🌦️ **Intelligent Weather Agent** - Get real-time weather updates, forecasts, and emergency alerts powered by OpenWeatherMap API.
+Articuno.AI is a cutting-edge AI-powered platform that brings together 20+ advanced AI models and specialized agents in one unified interface. From weather forecasting to code generation, video analysis to web development assistance - experience the future of AI interaction.
 
-- 📧 **Seamless Integrations** - Works with Gmail and Slack to deliver weather reports exactly when and where you need them.
+## 🌟 Key Features 
 
-- 📞 **Emergency Alerts** - With Twilio integration, Articuno.AI can call you with a recorded voice alert during severe weather, ensuring you're always prepared.
+### 🎯 Specialized AI Agents
+- 🌦️ **Articuno.AI Weather Agent** - Real-time weather updates, forecasts, and intelligent climate insights powered by OpenWeatherMap and Gemini AI
+- 👨‍💻 **Bikram.AI** - Your friendly Full-stack Developer companion with expertise in React, Node.js, Three.js, and modern web technologies
+- 📺 **ChatWithVideo** - Analyze and chat with YouTube videos using AI-powered transcript analysis
+- 📚 **Wikipedia DeepSearch** - Quick access to Wikipedia knowledge with intelligent article summaries
 
-- 🧠 **Advanced AI Models** - Interact with various LLMs like GPT-40, DeepSeek, Gemini 2.0 Flash, Mistral AI, and more.
+### 🤖 20+ Advanced AI Models
+Access industry-leading AI models including:
+- **OpenAI**: GPT-4o, GPT-4o-mini
+- **DeepSeek**: DeepSeek R1, DeepSeek V3
+- **Google**: Gemini 2.0 Flash, Gemini 2.5 Flash
+- **xAI**: Grok-3, Grok-3 Mini
+- **Mistral**: Ministral 3B, Codestral 2501
+- **Microsoft**: Phi-4, Phi-4 Mini
+- **Meta**: Llama 3.1 8B, Llama 3.3 70B
+- **Cohere**: Command A, Command R+
 
-- 🔗 **GitHub PAT Integration** - Seamless model access through GitHub Personal Access Tokens.
+### 💾 Persistent Chat History
+- **MongoDB Integration** - All conversations saved with full context
+- **Session Management** - Create, retrieve, and manage multiple chat sessions
+- **Chat Statistics** - Track message counts, timestamps, and conversation analytics
+- **Session Search** - Find and resume previous conversations easily
 
-- 🧩 **Basic AI models** - Included to boost productivity.
+### 🎨 Modern User Interface
+- **Dark Theme Design** - Easy on the eyes with a sleek modern aesthetic
+- **Organized Sidebar** - Categorized bot selection (Agents & AI Assistants)
+- **Collapsible Categories** - Clean interface with expandable sections
+- **Real-time Updates** - Instant message delivery and status indicators
 
-- 🚀 **User-friendly UI** - Modern dark theme with an intuitive design.
-
-- 🪶 **Flexible Architecture** - Lightweight website developed with Flask.
+### 🔧 Advanced Capabilities
+- 🖼️ **Multi-modal Support** - Text, image, and audio processing
+- 🎤 **Voice Input** - Speech-to-text transcription for hands-free interaction
+- 📝 **Markdown Rendering** - Beautiful formatting for code and structured content
+- 🔄 **Context Awareness** - AI remembers conversation history within sessions
+- 📊 **Session Analytics** - Track usage statistics and conversation metrics
 
 ## 🛠️ Technologies Used
-- **Frontend:** HTML, CSS, JavaScript
-- **Backend:** Python (Flask)
-- **Database:** FlaskSQL
-- **Authentication:** GitHub PAT Integration
-- **APIs:** OpenWeatherMap, Twilio, Gmail, Slack
-- **Deployment:** TBD
 
-## 🧠 Available AI Models 
+### Backend
+- **Framework:** Flask 2.3.3
+- **Database:** MongoDB (PyMongo 4.6.1)
+- **AI Integration:** 
+  - Azure AI Inference
+  - Google Generative AI (Gemini)
+  - LangChain & LangChain Community
+  - OpenAI API
+- **Audio Processing:** PyDub, FFmpeg, SpeechRecognition
 
-### 🤖 Agents
-- **Articuno.AI:** Your intelligent weather assistant powered by Gemini, providing real-time forecasts, emergency alerts, and seamless integration with Gmail, Slack, and Twilio. 🌦️
+### Frontend
+- **Core:** HTML5, CSS3, JavaScript
+- **Styling:** Modern dark theme with responsive design
+- **Libraries:** 
+  - Font Awesome 6.5.1 (icons)
+  - GitHub Markdown CSS (markdown rendering)
+  - EmailJS (email integration)
 
-- **Bikram.AI:** Your friendly Full-stack Developer companion! Built with the personality of Bikram Mondal, specializing in web development, React, Node.js, Three.js, and helping you learn through errors. Let's build amazing things together! 🚀
+### APIs & Services
+- **OpenWeatherMap** - Weather data and forecasts
+- **GitHub Models** - AI model access via GitHub PAT
+- **YouTube Transcript API** - Video transcript extraction
+- **Wikipedia API** - Knowledge retrieval
+- **Twilio** - SMS and voice alerts (optional)
+- **Gmail & Slack** - Notification integrations (optional)
 
-- **Wikipedia DeepSearch:** Quick access to Wikipedia knowledge with instant article summaries and information retrieval. 📚
+### Development Tools
+- **Environment Management:** python-dotenv
+- **Data Processing:** Requests, JSON utilities
+- **Markdown:** Python-Markdown, Pygments (syntax highlighting)
 
-### 🧠 AI Assistants
-- **GPT-4o:** OpenAI's flagship model with advanced multimodal capabilities for text, vision, and code generation. 💡
+## 🧠 Available AI Models & Agents
 
-- **GPT-4o-mini:** Efficient and cost-effective variant of GPT-4o with strong performance across tasks. ⚡
+### 🤖 Specialized Agents (4)
 
-- **DeepSeek R1:** Open-weight reasoning model optimized for complex problem-solving and coding tasks. 🐳
+#### Articuno.AI 🌦️
+Your intelligent weather assistant powered by Gemini AI
+- Real-time weather data via OpenWeatherMap API
+- 3-day weather forecasts with detailed conditions
+- Natural language weather queries
+- Location detection from text
+- Emergency weather alerts (with Twilio)
+- Gmail & Slack integration for notifications
 
-- **DeepSeek V3:** Advanced 671B parameter model with superior reasoning and comprehensive capabilities. 🚀
+#### Bikram.AI 🚀
+Your friendly Full-stack Developer companion
+- Personality based on Bikram Mondal
+- Expert in React, Node.js, Three.js, TypeScript
+- Web development best practices
+- Code debugging and optimization
+- Learning through errors philosophy
+- GitHub and open-source expertise
 
-- **Gemini 2.0 Flash:** Google's fast-response multimodal LLM with excellent balance of speed and quality. ✨
+#### ChatWithVideo 📺
+AI-powered YouTube video analysis
+- Extract and analyze video transcripts
+- Conversational Q&A about video content
+- Session-based video memory
+- Supports multiple YouTube URL formats
+- Powered by GPT-4o via Azure
 
-- **Gemini 2.5 Flash:** Latest Gemini model with enhanced reasoning and multimodal understanding capabilities. 🌟
+#### Wikipedia DeepSearch 📚
+Instant access to Wikipedia knowledge
+- Quick article summaries
+- Intelligent information retrieval
+- Natural language queries
+- Context-aware responses
 
-- **Grok-3:** xAI's powerful 314B parameter model with real-time information access and advanced reasoning. 🧠
+### 🧠 AI Assistants (16)
 
-- **Grok-3 Mini:** Compact version of Grok-3 optimized for faster responses while maintaining quality. ⚡
+#### OpenAI Models
+- **GPT-4o** - Flagship multimodal model with vision and advanced reasoning capabilities
+- **GPT-4o-mini** - Fast, efficient variant perfect for quick responses and general tasks
 
-- **Ministral 3B:** Mistral AI's compact 3B parameter model optimized for edge deployment and efficiency. 🪶
+#### DeepSeek Models
+- **DeepSeek R1** - Open-weight reasoning model for complex problem-solving and coding
+- **DeepSeek V3** - 671B parameter powerhouse with superior reasoning (deepseek-ai/DeepSeek-V3-0324)
 
-- **Codestral 2501:** Mistral AI's specialized 22B parameter model designed for code generation and technical tasks. 💻
+#### Google Models
+- **Gemini 2.0 Flash** - Fast multimodal LLM balancing speed and quality
+- **Gemini 2.5 Flash** - Latest Gemini with enhanced reasoning and understanding
 
-## ⚙️ Installation
+#### xAI Models
+- **Grok-3** - 314B parameter model with witty personality and real-time knowledge
+- **Grok-3 Mini** - Compact Grok variant with fast, engaging responses
 
-1. Clone the repository:
+#### Mistral AI Models
+- **Ministral 3B** - Compact 3B parameter model optimized for efficiency
+- **Codestral 2501** - 22B parameter specialist for code generation and technical tasks
+
+#### Microsoft Models
+- **Phi-4** - Microsoft's capable mid-size model with strong reasoning
+- **Phi-4 Mini** - Lightweight version for fast inference
+
+#### Meta Models
+- **Meta Llama 3.1 8B** - Efficient open-source model for general tasks
+- **Meta Llama 3.3 70B** - Powerful large-scale model with advanced capabilities
+
+#### Cohere Models
+- **Cohere Command A** - Enterprise-grade conversational AI
+- **Cohere Command R+** - Enhanced reasoning and retrieval-augmented generation
+
+## ⚙️ Installation & Setup
+
+### Prerequisites
+- Python 3.8 or higher
+- MongoDB (local or cloud instance)
+- FFmpeg (for audio processing)
+- GitHub Personal Access Token (for GitHub Models)
+
+### Step-by-Step Installation
+
+1. **Clone the repository**
 ```bash
 git clone https://github.com/BikramMondal5/Articuno.AI.git
-```
-
-2. Navigate to the project directory:
-```bash
 cd Articuno.AI
 ```
 
-3. Install dependencies
+2. **Install Python dependencies**
 ```bash
 pip install -r requirements.txt
 ```
+
+3. **Install MongoDB**
+   - **Local Installation:** Download from [mongodb.com](https://www.mongodb.com/try/download/community)
+   - **Cloud:** Use MongoDB Atlas (free tier available)
+   - Default connection: `mongodb://127.0.0.1:27017/`
+
+4. **Install FFmpeg** (for voice input)
+   - **Windows:** Download from [ffmpeg.org](https://ffmpeg.org/download.html) and add to PATH
+   - **Linux:** `sudo apt install ffmpeg`
+   - **macOS:** `brew install ffmpeg`
+
+5. **Configure Environment Variables**
    
-4. Configure API Keys
-   - Create a `.env` file with the following keys:
-   ```
+   Create a `.env` file in the root directory:
+   ```env
+   # Required
+   GITHUB_TOKEN=your_github_personal_access_token
+   GEMINI_API_KEY=your_google_gemini_api_key
+   
+   # Optional - Weather Features
    OPENWEATHER_API_KEY=your_openweather_api_key
-   GEMINI_API_KEY=your_gemini_api_key
-   TWILIO_ACCOUNT_SID=your_twilio_sid
-   TWILIO_AUTH_TOKEN=your_twilio_token
+   
+   # Optional - Voice Alerts
+   TWILIO_ACCOUNT_SID=your_twilio_account_sid
+   TWILIO_AUTH_TOKEN=your_twilio_auth_token
+   TWILIO_PHONE_NUMBER=your_twilio_phone_number
+   
+   # Optional - Database
+   MONGODB_URI=mongodb://127.0.0.1:27017/
+   
+   # Optional - Flask
+   SECRET_KEY=your_secret_key_for_sessions
+   
+   # Optional - FFmpeg Path (if not in PATH)
+   FFMPEG_PATH=C:\Program Files\ffmpeg\bin\ffmpeg.exe
    ```
 
-5. Run `python app.py`
+6. **Get API Keys**
+   - **GitHub Token:** [Generate PAT](https://github.com/settings/tokens) with appropriate scopes
+   - **Gemini API:** Get from [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - **OpenWeather:** Free key from [openweathermap.org](https://openweathermap.org/api)
 
-6. Open your web browser and go to `http://127.0.0.1:5000/` to interact with AI models.
+7. **Start MongoDB**
+   ```bash
+   # If using local MongoDB
+   mongod
+   ```
+
+8. **Run the application**
+   ```bash
+   python app.py
+   ```
+
+9. **Access the platform**
+   
+   Open your browser and navigate to: `http://127.0.0.1:5000/`
+
+### Database Management
+
+**Clear chat history:**
+```bash
+python clear_sessions.py
+```
+
+**Test MongoDB connection:**
+```bash
+python test_mongodb.py
+```
+
+## 📁 Project Structure
+
+```
+Articuno.AI/
+├── agent/                      # AI model integrations
+│   ├── articuno_weather.py    # Weather agent
+│   ├── Bikram_AI.py           # Developer assistant
+│   ├── ChatWithVideo.py       # YouTube video analyzer
+│   ├── wikipedia_agent.py     # Wikipedia search
+│   ├── gpt_4o.py              # GPT-4o integration
+│   ├── gpt_4o_mini.py         # GPT-4o-mini integration
+│   ├── gemini_flash.py        # Gemini 2.0 Flash
+│   ├── gemini_2.5_flash.py    # Gemini 2.5 Flash
+│   ├── DeepSeek_V3_0324.py    # DeepSeek V3
+│   ├── grok3.py               # Grok-3
+│   ├── grok_3_mini.py         # Grok-3 Mini
+│   ├── Ministral_3B.py        # Ministral 3B
+│   ├── Codestral_2501.py      # Codestral 2501
+│   ├── Phi_4.py               # Phi-4
+│   ├── Phi_4_mini.py          # Phi-4 Mini
+│   ├── Meta_Llama_3.1_8B.py   # Llama 3.1 8B
+│   ├── Meta_Llama_3.3_70B.py  # Llama 3.3 70B
+│   ├── cohere_command_a.py    # Cohere Command A
+│   └── Cohere_command_r_plus.py # Cohere Command R+
+├── database/                   # MongoDB integration
+│   ├── __init__.py
+│   └── db_manager.py          # Database operations
+├── static/                     # Frontend assets
+│   ├── script.js              # Main JavaScript
+│   ├── session_manager.js     # Session management
+│   ├── styles.css             # Styling
+│   └── icons/                 # UI icons and images
+├── templates/                  # HTML templates
+│   └── index.html             # Main interface
+├── app.py                      # Flask application
+├── requirements.txt            # Python dependencies
+├── clear_sessions.py          # Database cleanup utility
+├── test_mongodb.py            # MongoDB connection test
+└── README.md                   # Documentation
+```
+
+## 🚀 Usage
+
+### Basic Interaction
+1. Select an AI model or agent from the sidebar
+2. Type your message or click the microphone for voice input
+3. For image-capable models (GPT-4o, Gemini), upload images
+4. View responses with markdown formatting and syntax highlighting
+
+### Session Management
+- **New Session:** Click "New Chat" to start fresh
+- **Session History:** Access previous conversations from the sidebar
+- **Session Stats:** View message counts and timestamps
+- **Delete Sessions:** Remove unwanted chat history
+
+### Weather Queries (Articuno.AI)
+```
+"What's the weather in Tokyo?"
+"Give me a 3-day forecast for London"
+"Will it rain in Seattle today?"
+```
+
+### Video Analysis (ChatWithVideo)
+```
+1. Paste YouTube URL
+2. Wait for transcript extraction
+3. Ask questions about the video content
+```
+
+### Developer Help (Bikram.AI)
+```
+"How do I implement useState in React?"
+"Explain Node.js event loop"
+"Best practices for Three.js optimization"
+```
+
+## 🔧 API Endpoints
+
+### Chat
+- `POST /api/chat` - Send message to AI model
+- `POST /api/transcribe` - Audio to text conversion
+
+### Sessions
+- `POST /api/session/new` - Create new session
+- `GET /api/session/history/<session_id>` - Get chat history
+- `GET /api/session/list` - List all sessions
+- `GET /api/session/<session_id>/stats` - Session statistics
+- `DELETE /api/session/<session_id>/delete` - Delete session
+
+### Weather
+- `GET /api/weather` - Fetch weather data
+
+### Search
+- `GET /api/search` - Search conversations
+
+## 🌟 Features in Detail
+
+### Multi-modal Capabilities
+- **Text:** All models support text input/output
+- **Images:** GPT-4o, Gemini models support image analysis
+- **Voice:** Speech-to-text for hands-free interaction
+- **Video:** ChatWithVideo analyzes YouTube content
+
+### Session Persistence
+- All conversations automatically saved to MongoDB
+- Resume chats anytime with full context
+- Search through message history
+- Export chat sessions (future feature)
+
+### Markdown Support
+- Code syntax highlighting with Pygments
+- Tables, lists, and formatting
+- LaTeX math equations (future feature)
+- Embedded media support
 
 ## ☎️ Contact
-For any queries or feedback, feel free to reach me at `codesnippets45@gmail.com`. 
+For queries, feedback, or collaboration opportunities:
+- **Email:** codesnippets45@gmail.com
+- **GitHub:** [@BikramMondal5](https://github.com/BikramMondal5)
 
 ## 🤝 Contributing
-Contributions are welcome! Feel free to open an issue or submit a pull request to enhance Articuno.AI.
+Contributions are welcome! Here's how you can help:
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/AmazingFeature`)
+3. **Commit your changes** (`git commit -m 'Add some AmazingFeature'`)
+4. **Push to the branch** (`git push origin feature/AmazingFeature`)
+5. **Open a Pull Request**
+
+### Areas for Contribution
+- Adding new AI model integrations
+- Improving UI/UX design
+- Database optimization
+- API documentation
+- Bug fixes and testing
+- Feature enhancements
 
 ## 📜 License
-This project is licensed under the `MIT License`.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+- OpenAI, Google, xAI, Microsoft, Meta, Cohere, Mistral AI for their amazing AI models
+- GitHub Models for model access infrastructure
+- MongoDB for database solutions
+- The open-source community for various libraries and tools
+
+## 📊 Project Status
+- **Version:** 2.0
+- **Status:** Active Development
+- **Last Updated:** December 2025
+
+---
+
+<div align="center">
+
+**Made with ❤️ by Bikram Mondal**
+
+⭐ Star this repo if you find it useful!
+
+</div>
