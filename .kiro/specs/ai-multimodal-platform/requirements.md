@@ -153,12 +153,12 @@ This document specifies the requirements for a client-side multi-modal AI platfo
 
 ### Requirement 12
 
-**User Story:** As a user, I want to enter any YouTube video URL into the application, so that I can get a summary of the video content without watching the entire video.
+**User Story:** As a user, I want to enter a YouTube video URL into the application, so that I can get a comprehensive summary of the video content without watching the entire video.
 
 #### Acceptance Criteria
 
-1. WHEN a user enters a valid YouTube video URL in the input field THEN the system SHALL accept the URL and initiate the content fetching process
-2. WHEN a user submits an empty URL field THEN the system SHALL prevent submission and display an error message
+1. WHEN a user enters a valid YouTube video URL (standard, short, or embed format) THEN the system SHALL accept the URL and initiate the transcript fetching process
+2. WHEN a user submits an empty input field THEN the system SHALL prevent submission and display an error message
 3. WHEN a user enters an invalid YouTube video URL format THEN the system SHALL validate the URL and return an appropriate error message
 4. WHEN the YouTube video URL points to a non-existent or unavailable video THEN the system SHALL handle the error gracefully and inform the user
 5. WHEN a user submits a YouTube video URL THEN the system SHALL provide visual feedback indicating processing is in progress
@@ -191,13 +191,13 @@ This document specifies the requirements for a client-side multi-modal AI platfo
 
 **User Story:** As a user, I want to see the summary displayed in a clear and formatted way, so that I can easily read and understand the key points.
 
-#### Acceptance Criteria 16
+#### Acceptance Criteria
 
 1. WHEN a summary is generated successfully THEN the User Interface SHALL display the formatted HTML summary to the user
-2. WHEN displaying the summary THEN the User Interface SHALL preserve Markdown formatting including headings, lists, and emphasis
+2. WHEN displaying the summary THEN the User Interface SHALL preserve Markdown formatting including headings, lists, emojis, and emphasis
 3. WHEN an error occurs during processing THEN the User Interface SHALL display a clear error message explaining what went wrong
 4. WHEN the summary is displayed THEN the User Interface SHALL maintain the existing application styling and layout consistency
-5. WHEN multiple URLs are summarized in sequence THEN the User Interface SHALL clear previous results before displaying new summaries
+5. WHEN a user submits another video URL THEN the User Interface SHALL process the new request while maintaining conversation history
 
 ### Requirement 17
 
@@ -205,23 +205,23 @@ This document specifies the requirements for a client-side multi-modal AI platfo
 
 #### Acceptance Criteria
 
-1. WHEN implementing the YouTube video summarizer THEN the system SHALL follow the existing agent file structure and naming conventions
+1. WHEN implementing the YouTube video summarizer THEN the system SHALL follow the existing agent file structure in the `agent/` directory
 2. WHEN the YouTube video summarizer agent is created THEN it SHALL use the same Azure AI Inference client configuration as other agents
-3. WHEN processing requests THEN the YouTube video summarizer SHALL use the same Flask route patterns as other agents
+3. WHEN processing requests THEN the YouTube video summarizer SHALL integrate with Flask using consistent route patterns
 4. WHEN handling errors THEN the YouTube video summarizer SHALL follow the same error handling patterns used by existing agents
-5. WHEN returning responses THEN the YouTube video summarizer SHALL use the same JSON response format as other agents
+5. WHEN returning responses THEN the YouTube video summarizer SHALL use the same JSON response format as other agents with success/error structure
 
 ### Requirement 18
 
-**User Story:** As a user, I want the system to handle various types of YouTube videos, so that I can summarize different kinds of content including tutorials, lectures, and presentations.
+**User Story:** As a user, I want the system to handle various types of YouTube videos and allow me to ask questions about them, so that I can get deeper insights beyond the initial summary.
 
 #### Acceptance Criteria
 
-1. WHEN the YouTube video URL points to a tutorial video THEN the Content Extractor SHALL successfully extract and summarize the tutorial content
-2. WHEN the YouTube video URL points to an educational lecture THEN the Content Extractor SHALL successfully extract and summarize the lecture content
-3. WHEN the YouTube video URL points to a presentation or talk THEN the Content Extractor SHALL successfully extract and summarize the presentation
-4. WHEN the YouTube video has auto-generated captions THEN the system SHALL attempt to extract available transcript content
-5. WHEN the YouTube video has disabled captions or is age-restricted THEN the system SHALL handle the limitation gracefully and inform the user
+1. WHEN the YouTube video URL points to a tutorial video THEN the system SHALL successfully extract and summarize the tutorial content
+2. WHEN the YouTube video URL points to an educational lecture THEN the system SHALL successfully extract and summarize the lecture content
+3. WHEN the YouTube video URL points to a presentation or talk THEN the system SHALL successfully extract and summarize the presentation
+4. WHEN a video has been analyzed THEN the user SHALL be able to ask follow-up questions about the video content
+5. WHEN the YouTube video has disabled transcripts or is unavailable THEN the system SHALL handle the limitation gracefully and inform the user
 
 ### Requirement 19
 
