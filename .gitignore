@@ -47,7 +47,7 @@ logs/
 # OS specific
 .DS_Store
 Thumbs.db
-
+ 
 # Virtual Environment
 bin/
 include/
