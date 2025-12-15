@@ -1,21 +1,20 @@
-flask==2.3.3
+flask
 azure-ai-inference
 azure-core
-markdown==3.5.1
+markdown
 youtube-transcript-api
 Pygments==2.17.2
 openai
-# SpeechRecognition==3.10.0
+SpeechRecognition
 pyaudio
-pydub==0.25.1
+pydub
 ffmpeg-python
-requests==2.32.5
-# google-generativeai==0.3.0
-python-dotenv==1.0.0
-langchain==1.1.0
-langchain-core==1.1.0
-langchain-community==0.4.1
+requests
+google-generativeai
+python-dotenv
+langchain
+langchain-core
+langchain-community
 langchain-google-genai
 wikipedia
-Pygments==2.17.2
-pymongo==4.6.1
+pymongo
