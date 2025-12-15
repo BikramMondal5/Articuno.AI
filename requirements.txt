@@ -1,20 +1,43 @@
+# Web Framework
 flask
+
+# AI/ML APIs
 azure-ai-inference
 azure-core
-markdown
-youtube-transcript-api
-Pygments==2.17.2
 openai
-SpeechRecognition
-pyaudio
-pydub
-ffmpeg-python
-requests
 google-generativeai
-python-dotenv
+
+# LangChain & LangGraph (for agents)
 langchain
 langchain-core
 langchain-community
 langchain-google-genai
+langgraph
+
+# RAG System Dependencies
+chromadb
+pypdf
+
+# Utilities
+markdown
+Pygments==2.17.2
+python-dotenv
+requests
 wikipedia
+
+# Audio Processing
+SpeechRecognition
+pyaudio
+pydub
+ffmpeg-python
+
+# Video/YouTube
+youtube-transcript-api
+
+# Database
 pymongo
+
+# Optional (for RAG API server)
+# fastapi
+# uvicorn
+
